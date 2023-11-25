@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/_18sdp"
+    tools:context=".SignUpActivity">
+
+<LinearLayout
+    android:id="@+id/layout_signupNow"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="end"
+    android:layout_marginTop="36dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/notokufiarabic_bold"
+        android:text="سجل الأن!"
+        android:textColor="@color/mainColor"
+        android:textSize="@dimen/_24sdp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/notokufiarabic_regular"
+        android:text="انشئ حسابك الخاص وتعلم"
+        android:textColor="@color/mainColor"
+        android:textSize="@dimen/_18sdp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_signupNow"
+        app:layout_constraintTop_toBottomOf="@id/tv_signupNow" />
+</LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_enter_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="end"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@id/layout_signupNow">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="الأسم"
+            android:textSize="@dimen/_14ssp"
+            android:fontFamily="@font/notokufiarabic_medium"
+            android:textColor="@color/mainColor"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:drawableEnd="@drawable/ic_person"
+            android:drawableTint="@color/mainColor"
+            android:hint=" اكتب اسمك هنا"
+            android:textSize="@dimen/_15ssp"
+            android:fontFamily="@font/notokufiarabic_regular"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/et_signup"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="31dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_enter_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="end"
+
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@id/layout_enter_name">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="البريد الالكتروني"
+            android:textSize="@dimen/_14ssp"
+            android:fontFamily="@font/notokufiarabic_medium"
+            android:textColor="@color/mainColor"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:inputType="textEmailAddress"
+            android:drawableEnd="@drawable/ic_email"
+            android:drawableTint="@color/mainColor"
+            android:hint=" اكتب البريد الالكتروني هنا"
+            android:textSize="@dimen/_15ssp"
+            android:fontFamily="@font/notokufiarabic_regular"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/et_signup"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="31dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_enter_password"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="end"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@id/layout_enter_email">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="كلمة المرور"
+            android:textSize="@dimen/_14ssp"
+            android:fontFamily="@font/notokufiarabic_medium"
+            android:textColor="@color/mainColor"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:inputType="textVisiblePassword"
+            android:drawableEnd="@drawable/ic_password"
+            android:drawableTint="@color/mainColor"
+            android:hint=" اكتب كلمة المرور هنا"
+            android:textSize="@dimen/_15ssp"
+            android:fontFamily="@font/notokufiarabic_regular"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/et_signup"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="31dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_confirm_password"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="end"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@id/layout_enter_password">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="تاكيد كلمة المرور"
+            android:textSize="@dimen/_14ssp"
+            android:fontFamily="@font/notokufiarabic_medium"
+            android:textColor="@color/mainColor"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:inputType="textVisiblePassword"
+            android:drawableEnd="@drawable/ic_password"
+            android:drawableTint="@color/mainColor"
+            android:hint=" اكتب كلمة المرور مرة اخرى هنا"
+            android:textSize="@dimen/_15ssp"
+            android:fontFamily="@font/notokufiarabic_regular"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/et_signup"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="31dp" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_45sdp"
+        android:background="@drawable/btn_signup"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_confirm_password"
+        app:layout_constraintVertical_bias="0.335">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notokufiarabic_medium"
+            android:text="انشئ حساب"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
