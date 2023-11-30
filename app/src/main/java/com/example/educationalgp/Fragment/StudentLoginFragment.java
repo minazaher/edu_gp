@@ -1,64 +1,110 @@
-package com.example.educationalgp;
+package com.example.educationalgp.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StudentLoginFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.example.educationalgp.Activity.StudentProfile;
+import com.example.educationalgp.Repository.StudentRepository;
+import com.example.educationalgp.Repository.StudentRepository.onAuthenticationListener;
+import com.example.educationalgp.ViewModel.StudentViewModel;
+import com.example.educationalgp.databinding.FragmentStudentLoginBinding;
+
 public class StudentLoginFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private FragmentStudentLoginBinding binding;
+    private final StudentViewModel studentViewModel;
+    String username;
     public StudentLoginFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StudentLoginFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static StudentLoginFragment newInstance(String param1, String param2) {
-        StudentLoginFragment fragment = new StudentLoginFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        studentViewModel = new StudentViewModel();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_student_login, container, false);
+        binding = FragmentStudentLoginBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+
+        binding.btnStudentLogin.setOnClickListener(v -> loginStudent());
+
+        return view;
     }
+
+
+    private void loginStudent() {
+        username = binding.etStudentName.getText().toString();
+        if (isUsernameValid()){
+            studentViewModel.loginUser(username, new onAuthenticationListener() {
+                @Override
+                public void onSuccess() {
+                    goToStudentProfile();
+                    showToast("تم تسجيل الدخول");
+                }
+
+                @Override
+                public void onFailure(String errorMessage) {
+                    if (studentNotExist(errorMessage))
+                        signupStudent(username);
+                }
+            });
+
+            studentViewModel.getLoggedInUser().observe(getViewLifecycleOwner(), user -> {
+                if (user == null) {
+                    signupStudent(username);
+                }
+            });
+        }
+
+    }
+
+    private void signupStudent(String username) {
+        studentViewModel.signupUser(username, new onAuthenticationListener() {
+            @Override
+            public void onSuccess() {
+                showToast("تم انشاء حساب جديد");
+                goToStudentProfile();
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                String toastMessage = String.format("لم نستطع انشاء حساب جديد بسبب:  %s", errorMessage);
+                showToast(toastMessage);
+            }
+        });
+    }
+
+    private void goToStudentProfile(){
+        Intent intent = new Intent(getActivity(), StudentProfile.class);
+        startActivity(intent);
+    }
+
+
+    private void showToast(String msg){
+        Toast.makeText(requireContext(), msg ,
+                Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean studentNotExist(String errorMsg){
+        return errorMsg.equals("The supplied auth credential is incorrect, malformed or has expired.");
+    }
+
+    private boolean isUsernameValid(){
+        if(TextUtils.isEmpty(username)){
+            binding.etStudentName.setError("من فضلك اكتب اسمك هنا");
+            return false;
+        }
+        return true;
+    }
+
 }

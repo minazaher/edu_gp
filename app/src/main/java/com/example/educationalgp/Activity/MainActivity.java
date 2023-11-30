@@ -1,4 +1,4 @@
-package com.example.educationalgp;
+package com.example.educationalgp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,7 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Bundle;
+
+import com.example.educationalgp.R;
 
 public class MainActivity extends AppCompatActivity {
 

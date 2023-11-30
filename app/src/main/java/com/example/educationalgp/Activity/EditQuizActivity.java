@@ -1,4 +1,4 @@
-package com.example.educationalgp;
+package com.example.educationalgp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 

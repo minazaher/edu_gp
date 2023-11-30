@@ -1,24 +1,19 @@
 package com.example.educationalgp.Model;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
-@Entity(tableName = "users")
-public class User {
+public class Student {
 
-    @PrimaryKey(autoGenerate = true)
     private int id;
-    @PrimaryKey
     private String username;
 
-    public User() {
+    public Student() {
     }
 
-    public User(String username) {
+    public Student(String username) {
         this.username = username;
     }
 
-    public User(int id, String username) {
+    public Student(int id, String username) {
         this.id = id;
         this.username = username;
     }

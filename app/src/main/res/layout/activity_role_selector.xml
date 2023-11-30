@@ -1,9 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RoleSelectorActivity">
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingTop="20dp"
+    android:layout_gravity="center"
+    tools:context=".Activity.RoleSelectorActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:fontFamily="@font/notokufiarabic_bold"
+        android:text=" مرحبا! يرجى اختيار دورك"
+        android:textColor="@color/mainColor"
+        android:textSize="@dimen/_23sdp" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_50sdp"
+        android:fontFamily="@font/notokufiarabic_regular"
+        android:text=" هل انت معلم ام طالب؟"
+        android:textColor="@color/mainColor"
+        android:textSize="@dimen/_18sdp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_signupNow"
+        app:layout_constraintTop_toBottomOf="@id/tv_signupNow" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:layout_weight="2">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/teacher_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:cardBackgroundColor="#295B49"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="15dp"
+            android:layout_gravity="center"
+            android:paddingTop="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                app:cardBackgroundColor="#295B49">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="15dp"
+                    android:fontFamily="@font/notokufiarabic_medium"
+                    android:text="مُــعــلــم"
+                    android:textColor="@color/white"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_120sdp"
+                    android:layout_marginStart="@dimen/_40sdp"
+                    android:layout_gravity="end"
+                    android:src="@drawable/teacher" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/student_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#6FD4F2"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                app:cardBackgroundColor="#6FD4F2">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="15dp"
+                    android:text="  طـــالب"
+                    android:fontFamily="@font/notokufiarabic_regular"
+                    android:textColor="@color/white"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_marginStart="@dimen/_40sdp"
+
+                    android:layout_height="@dimen/_120sdp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/student_placeholder" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+</LinearLayout>

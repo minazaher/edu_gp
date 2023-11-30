@@ -4,6 +4,247 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TeacherProfile">
+    tools:context=".Activity.TeacherProfile">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topProfile"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp"
+        android:background="@color/mainColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image_teacher_profile"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginTop="128dp"
+        android:src="@drawable/student_placeholder"
+        app:civ_border_color="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardElevation="@dimen/_10sdp"
+        android:background="@color/mainColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topProfile">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/mainColor"
+            android:fontFamily="sans-serif-medium"
+            android:padding="@dimen/_6sdp"
+            android:text=" 8X21Gf"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18sdp"
+            app:drawableStartCompat="@drawable/baseline_content_copy_24"
+            app:drawableTint="@color/white"/>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/tv_teacherName_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/notokufiarabic_semibold"
+        android:text="اسم المُعلم"
+        android:textColor="@color/mainColor"
+        android:textSize="@dimen/_22sdp"
+
+        android:layout_marginBottom="@dimen/_24sdp"
+        app:layout_constraintEnd_toEndOf="@id/image_teacher_profile"
+        app:layout_constraintStart_toStartOf="@id/image_teacher_profile"
+        app:layout_constraintTop_toBottomOf="@id/image_teacher_profile" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_teacherName_profile">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:paddingHorizontal="@dimen/_15sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_teacherName_profile">
+
+            <TextView
+                android:id="@+id/text_overview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/notokufiarabic_medium"
+                android:gravity="right"
+                android:text="نظرة سريعة"
+                android:textColor="@color/mainColor"
+                android:textSize="@dimen/_17ssp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="@dimen/_15sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_100sdp"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_10sdp"
+                    android:weightSum="3"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_40sdp"
+                            android:fontFamily="@font/notokufiarabic_bold"
+                            android:text="85%"
+                            android:textAlignment="center"
+                            android:textColor="@color/mainColor"
+                            android:textSize="@dimen/_20ssp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_40sdp"
+                            android:fontFamily="@font/notokufiarabic_bold"
+                            android:text="المتوسط"
+                            android:textAlignment="center"
+                            android:textColor="@color/mainColor"
+                            android:textSize="@dimen/_18ssp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_40sdp"
+                            android:fontFamily="@font/notokufiarabic_bold"
+                            android:text="3"
+                            android:textAlignment="center"
+                            android:textColor="@color/mainColor"
+                            android:textSize="@dimen/_20ssp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_40sdp"
+                            android:fontFamily="@font/notokufiarabic_bold"
+                            android:text="اختبارات"
+                            android:textAlignment="center"
+                            android:textColor="@color/mainColor"
+                            android:textSize="@dimen/_18ssp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_40sdp"
+                            android:fontFamily="@font/notokufiarabic_bold"
+                            android:text="50"
+                            android:textAlignment="center"
+                            android:textColor="@color/mainColor"
+                            android:textSize="@dimen/_20ssp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_40sdp"
+                            android:fontFamily="@font/notokufiarabic_bold"
+                            android:text="طالب"
+                            android:textAlignment="center"
+                            android:textColor="@color/mainColor"
+                            android:textSize="@dimen/_18ssp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:paddingHorizontal="@dimen/_15sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_overview">
+
+            <TextView
+                android:id="@+id/text_students"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/notokufiarabic_medium"
+                android:gravity="right"
+                android:text="متابعة الطلاب"
+                android:textColor="@color/mainColor"
+                android:textSize="@dimen/_16ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_students"
+                tools:listitem="@layout/student_grade_item" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_editQuiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_24sdp"
+        android:background="@color/mainColor"
+        android:backgroundTint="@color/mainColor"
+        android:clickable="false"
+        android:contentDescription="@string/app_name"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:maxImageSize="@dimen/_24sdp"
+        app:srcCompat="@drawable/ic_edit"
+        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,9 @@
-package com.example.educationalgp;
+package com.example.educationalgp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.example.educationalgp.databinding.ActivityRoleSelectorBinding;
 

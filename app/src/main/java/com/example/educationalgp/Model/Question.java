@@ -1,2 +1,4 @@
-package com.example.educationalgp.Model;public class Question {
+package com.example.educationalgp.Model;
+
+public class Question {
 }

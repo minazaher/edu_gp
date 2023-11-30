@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "362040686161",
+    "project_id": "educationalgp",
+    "storage_bucket": "educationalgp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362040686161:android:a83f943484981be334aa70",
+        "android_client_info": {
+          "package_name": "com.example.educationalgp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdMPLPmRlSv24zSSqXUwNDsOXZpDC0tIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

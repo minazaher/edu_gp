@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="@dimen/_18sdp"
+    tools:context=".Fragment.StudentLoginFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -20,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/notokufiarabic_bold"
-            android:text="مرحبا بعودتك!"
+            android:text="مرحبا بك!"
             android:textColor="@color/mainColor"
             android:textSize="@dimen/_24sdp" />
 
@@ -28,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/notokufiarabic_regular"
-            android:text="سجل دخولك وتابع طلابك"
+            android:text="سجل دخولك الان وتابع مستواك"
             android:textColor="@color/mainColor"
             android:textSize="@dimen/_18sdp"
             app:layout_constraintEnd_toEndOf="@+id/tv_signupNow"
@@ -45,17 +46,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="البريد الالكتروني"
+            android:text="الأسم"
             android:textSize="@dimen/_14ssp"
             android:fontFamily="@font/notokufiarabic_medium"
             android:textColor="@color/mainColor"/>
         <EditText
+            android:id="@+id/et_studentName"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
             android:inputType="textEmailAddress"
             android:drawableEnd="@drawable/ic_email"
             android:drawableTint="@color/mainColor"
-            android:hint=" اكتب البريد الالكتروني هنا"
+            android:hint="  اكتب اسمك هنا"
             android:textSize="@dimen/_15ssp"
             android:fontFamily="@font/notokufiarabic_regular"
             android:paddingHorizontal="@dimen/_10sdp"
@@ -75,7 +77,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="كلمة المرور"
+            android:text="الكود الخاص بالمادة"
             android:textSize="@dimen/_14ssp"
             android:fontFamily="@font/notokufiarabic_medium"
             android:textColor="@color/mainColor"/>
@@ -85,7 +87,7 @@
             android:inputType="textVisiblePassword"
             android:drawableEnd="@drawable/ic_password"
             android:drawableTint="@color/mainColor"
-            android:hint=" اكتب كلمة المرور هنا"
+            android:hint=" اكتب الكود هنا"
             android:textSize="@dimen/_15ssp"
             android:fontFamily="@font/notokufiarabic_regular"
             android:paddingHorizontal="@dimen/_10sdp"
@@ -97,6 +99,7 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_studentLogin"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_45sdp"
         android:background="@drawable/btn_signup"

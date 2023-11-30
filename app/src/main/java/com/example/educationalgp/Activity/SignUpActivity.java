@@ -1,8 +1,10 @@
-package com.example.educationalgp;
+package com.example.educationalgp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.educationalgp.R;
 
 public class SignUpActivity extends AppCompatActivity {
 

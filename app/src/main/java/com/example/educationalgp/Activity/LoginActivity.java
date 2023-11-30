@@ -1,9 +1,12 @@
-package com.example.educationalgp;
+package com.example.educationalgp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.educationalgp.R;
+import com.example.educationalgp.Fragment.StudentLoginFragment;
+import com.example.educationalgp.Fragment.TeacherLoginFragment;
 import com.example.educationalgp.databinding.ActivityLoginBinding;
 import androidx.fragment.app.Fragment;
 
