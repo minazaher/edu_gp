@@ -51,6 +51,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             android:fontFamily="@font/notokufiarabic_medium"
             android:textColor="@color/mainColor"/>
         <EditText
+            android:id="@+id/et_teacherEmailLogin"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
             android:inputType="textEmailAddress"
@@ -81,6 +82,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             android:fontFamily="@font/notokufiarabic_medium"
             android:textColor="@color/mainColor"/>
         <EditText
+            android:id="@+id/et_teacherPasswordLogin"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
             android:inputType="textVisiblePassword"
@@ -102,7 +104,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintBottom_toTopOf="@+id/btn_teacherLogin"
         app:layout_constraintEnd_toEndOf="@+id/layout_enter_email"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/layout_enter_email"
@@ -110,6 +112,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         app:layout_constraintVertical_bias="0.118">
 
         <TextView
+            android:id="@+id/btn_signupNow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/mainColor"
@@ -126,7 +129,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/btn_teacherLogin"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_45sdp"
         android:background="@drawable/btn_signup"

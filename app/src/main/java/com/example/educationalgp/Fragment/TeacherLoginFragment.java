@@ -1,66 +1,112 @@
 package com.example.educationalgp.Fragment;
 
+import static com.example.educationalgp.ApplicationClass.*;
+
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import com.example.educationalgp.R;
+import com.example.educationalgp.Activity.SignUpActivity;
+import com.example.educationalgp.Activity.TeacherProfile;
+import com.example.educationalgp.ApplicationClass;
+import com.example.educationalgp.Repository.StudentRepository;
+import com.example.educationalgp.ViewModel.TeacherViewModel;
+import com.example.educationalgp.databinding.FragmentTeacherLoginBinding;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TeacherLoginFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.regex.Pattern;
+
 public class TeacherLoginFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private FragmentTeacherLoginBinding binding;
+    final TeacherViewModel teacherViewModel;
+    String username, email, password;
     public TeacherLoginFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TeacherLoginFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TeacherLoginFragment newInstance(String param1, String param2) {
-        TeacherLoginFragment fragment = new TeacherLoginFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        teacherViewModel = new TeacherViewModel();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_teacher_login, container, false);
+        binding = FragmentTeacherLoginBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+
+        binding.btnTeacherLogin.setOnClickListener(v -> loginTeacher());
+        binding.btnSignupNow.setOnClickListener(v -> goToSignupPage());
+
+        return view;    }
+
+
+
+    private void loginTeacher() {
+        getData();
+            teacherViewModel.loginTeacher(email, password, new StudentRepository.onAuthenticationListener() {
+                @Override
+                public void onSuccess() {
+                    goToTeacherProfile();
+                }
+
+                @Override
+                public void onFailure(String errorMessage) {
+                    Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(requireContext(), "من فضلك تأكد من بياناتك مرة اخرى", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+    }
+
+
+    private void getData(){
+        getEmail();
+        getPassword();
+    }
+
+    private void getPassword(){
+        String p = binding.etTeacherPasswordLogin.getText().toString();
+        if(TextUtils.isEmpty(p)){
+            binding.etTeacherEmailLogin.setError("من فضلك ادخل كلمة المرور هنا");
+        }
+        else{
+            password = p;
+        }
+    }
+
+    private void getEmail(){
+        String e = binding.etTeacherEmailLogin.getText().toString();
+        if(TextUtils.isEmpty(e)){
+            binding.etTeacherEmailLogin.setError("من فضلك ادخل البريد الالكتروني هنا");
+        }
+        else if(!isValidEmail(e)){
+            binding.etTeacherEmailLogin.setError("من فضلك تأكد من صيغة البريد الالكتروني");
+        }
+        else
+            email = e;
+    }
+
+    private boolean isValidEmail(String e) {
+        return Pattern.matches(EMAIL_REGEX_PATTERN, e);
+    }
+
+    private void goToSignupPage() {
+        Intent intent = new Intent(getActivity(), SignUpActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToTeacherProfile() {
+        Intent intent = new Intent(getActivity(), TeacherProfile.class);
+        startActivity(intent);
     }
 }

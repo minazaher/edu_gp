@@ -10,6 +10,9 @@ import com.google.firebase.storage.FirebaseStorage;
 
 public class ApplicationClass extends Application {
     public static String DEFAULT_STUDENT_PASSWORD = "NO_PASSWORD";
+
+    public static final String EMAIL_REGEX_PATTERN =
+            "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
     public FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     public FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     public FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();

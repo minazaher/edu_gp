@@ -7,8 +7,8 @@ import com.example.educationalgp.Repository.StudentRepository;
 import com.google.firebase.auth.FirebaseUser;
 
 public class StudentViewModel extends ViewModel {
-        private StudentRepository studentRepository;
-        private LiveData<FirebaseUser> loggedInStudent;
+        private final StudentRepository studentRepository;
+        private final LiveData<FirebaseUser> loggedInStudent;
 
         public StudentViewModel() {
             studentRepository = new StudentRepository();
