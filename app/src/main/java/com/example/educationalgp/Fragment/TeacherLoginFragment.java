@@ -11,12 +11,10 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.educationalgp.Activity.SignUpActivity;
-import com.example.educationalgp.Activity.TeacherProfile;
-import com.example.educationalgp.ApplicationClass;
+import com.example.educationalgp.Activity.TeacherProfileActivity;
 import com.example.educationalgp.Repository.StudentRepository;
 import com.example.educationalgp.ViewModel.TeacherViewModel;
 import com.example.educationalgp.databinding.FragmentTeacherLoginBinding;
@@ -102,17 +100,14 @@ public class TeacherLoginFragment extends Fragment {
             email = e;
     }
 
-    private boolean isValidEmail(String e) {
-        return Pattern.matches(EMAIL_REGEX_PATTERN, e);
-    }
-
     private void goToSignupPage() {
         Intent intent = new Intent(getActivity(), SignUpActivity.class);
         startActivity(intent);
     }
 
     private void goToTeacherProfile() {
-        Intent intent = new Intent(getActivity(), TeacherProfile.class);
+        Intent intent = new Intent(getActivity(), TeacherProfileActivity.class);
+        intent.putExtra("email", email);
         startActivity(intent);
     }
 }

@@ -51,6 +51,7 @@
             android:fontFamily="@font/notokufiarabic_medium"
             android:textColor="@color/mainColor"/>
         <EditText
+            android:id="@+id/et_teacherNameSignup"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
             android:drawableEnd="@drawable/ic_person"
@@ -81,6 +82,7 @@
             android:fontFamily="@font/notokufiarabic_medium"
             android:textColor="@color/mainColor"/>
         <EditText
+            android:id="@+id/et_teacherEmailSignup"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
             android:inputType="textEmailAddress"
@@ -112,6 +114,7 @@
             android:fontFamily="@font/notokufiarabic_medium"
             android:textColor="@color/mainColor"/>
         <EditText
+            android:id="@+id/et_teacherPasswordSignup"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
             android:inputType="textVisiblePassword"
@@ -143,6 +146,7 @@
             android:fontFamily="@font/notokufiarabic_medium"
             android:textColor="@color/mainColor"/>
         <EditText
+            android:id="@+id/et_teacherConfirmPasswordSignup"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
             android:inputType="textVisiblePassword"
@@ -159,6 +163,7 @@
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/layout_signinNow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -171,6 +176,7 @@
         app:layout_constraintVertical_bias="0.118">
 
         <TextView
+            android:id="@+id/btn_loginNow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/mainColor"
@@ -187,14 +193,15 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_signup"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_45sdp"
         android:background="@drawable/btn_signup"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_confirm_password"
-        app:layout_constraintVertical_bias="0.335">
+        app:layout_constraintTop_toBottomOf="@+id/layout_signinNow"
+        >
 
         <TextView
             android:layout_width="wrap_content"

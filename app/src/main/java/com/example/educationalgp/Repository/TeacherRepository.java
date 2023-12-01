@@ -2,17 +2,17 @@ package com.example.educationalgp.Repository;
 
 import android.util.Log;
 
-import com.example.educationalgp.ApplicationClass;
-import com.example.educationalgp.Model.Student;
 import com.example.educationalgp.Model.Teacher;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.security.SecureRandom;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class TeacherRepository {
 
@@ -37,8 +37,8 @@ public class TeacherRepository {
                 });
     }
 
-    public void signup(String username,String email, String password,final StudentRepository.onAuthenticationListener listener) {
-        firebaseAuth.createUserWithEmailAndPassword(username, ApplicationClass.DEFAULT_STUDENT_PASSWORD)
+    public void signup(String username, String email, String password, final StudentRepository.onAuthenticationListener listener) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         listener.onSuccess();
@@ -49,23 +49,22 @@ public class TeacherRepository {
 
                 });
     }
-    private void saveToFirestore(String username, String email, String password){
-        Teacher teacher = createNewTeacher(username, email, password);
-        DocumentReference studentsCollection = firebaseFirestore.collection("teachers").document(teacher.getId());
 
-        studentsCollection.set(teacher)
+    private void saveToFirestore(String username, String email, String password) {
+        Teacher teacher = createNewTeacher(username, email, password);
+        DocumentReference teacherCollection = firebaseFirestore.collection("teachers").document(teacher.getId());
+
+        teacherCollection.set(teacher)
                 .addOnCompleteListener(task ->
                         Log.d("Firestore", "DocumentSnapshot added with ID " + teacher.getId()))
                 .addOnFailureListener(e ->
                         Log.d("Firestore", "DocumentSnapshot not added because of : " + e.getMessage()));
     }
 
-    private Teacher createNewTeacher(String username, String email, String password){
+    private Teacher createNewTeacher(String username, String email, String password) {
         String id = generateTeacherCodeCode();
         return new Teacher(id, username, email, password);
     }
-
-
 
     public static String generateTeacherCodeCode() {
         StringBuilder stringBuilder = new StringBuilder(6);
@@ -75,7 +74,48 @@ public class TeacherRepository {
             char randomChar = ALLOWED_CHARACTERS.charAt(randomIndex);
             stringBuilder.append(randomChar);
         }
-
         return stringBuilder.toString();
+    }
+
+    public void getTeacherByEmail(String email, TeacherCallback callback) {
+        CollectionReference teachersCollection = firebaseFirestore.collection("teachers");
+        teachersCollection.whereEqualTo("email", email).get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            String code = document.getId();
+                            String username = document.getString("username");
+                            String password = document.getString("password");
+                            Object studentNamesObject = document.get("students");
+                            String[] students = getStudentNames(studentNamesObject);
+
+                            Teacher teacher = new Teacher(code, username, email, password, students);
+
+                            callback.onTeacherLoaded(teacher);
+                            return;
+                        }
+                    } else {
+                        Log.w("Firestore", "Error getting documents: ", task.getException());
+                    }
+                });
+    }
+
+    // Define a callback interface
+    public interface TeacherCallback {
+        void onTeacherLoaded(Teacher teacher);
+    }
+
+    private String[] getStudentNames(Object studentNamesObj) {
+        ArrayList<String> students = new ArrayList<>();
+        if (studentNamesObj instanceof List<?>) {
+            List<?> studentNamesList = (List<?>) studentNamesObj;
+
+            for (Object obj : studentNamesList) {
+                if (obj instanceof String) {
+                    students.add((String) obj);
+                }
+            }
+        }
+        return students.toArray(new String[students.size()]);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.educationalgp.Model;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class Teacher {
 
@@ -17,7 +18,16 @@ public class Teacher {
         this.id = id;
         this.username = username;
         this.email = email;
-        this.password = password;}
+        this.password = password;
+    }
+
+    public Teacher(String id, String username, String email, String password, String[] students) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.students = students;
+    }
 
     public String getId() {
         return id;
@@ -59,4 +69,14 @@ public class Teacher {
         this.students = students;
     }
 
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", students=" + Arrays.toString(students) +
+                '}';
+    }
 }

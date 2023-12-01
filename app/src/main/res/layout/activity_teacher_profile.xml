@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.TeacherProfile">
+    tools:context=".Activity.TeacherProfileActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topProfile"
@@ -36,13 +36,16 @@
         android:background="@color/mainColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topProfile">
+
         <TextView
+            android:id="@+id/tv_teacherCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/mainColor"
             android:fontFamily="sans-serif-medium"
             android:padding="@dimen/_6sdp"
-            android:text=" 8X21Gf"
+            android:text=""
+            android:textIsSelectable="true"
             android:textColor="@color/white"
             android:textSize="@dimen/_18sdp"
             app:drawableStartCompat="@drawable/baseline_content_copy_24"
@@ -149,7 +152,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_40sdp"
                             android:fontFamily="@font/notokufiarabic_bold"
-                            android:text="3"
+                            android:text="4"
                             android:textAlignment="center"
                             android:textColor="@color/mainColor"
                             android:textSize="@dimen/_20ssp" />
@@ -172,6 +175,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tv_studentsCount"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_40sdp"
                             android:fontFamily="@font/notokufiarabic_bold"
@@ -234,7 +238,7 @@
         android:id="@+id/fab_editQuiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_24sdp"
+        android:layout_marginEnd="36dp"
         android:background="@color/mainColor"
         android:backgroundTint="@color/mainColor"
         android:clickable="false"
@@ -243,6 +247,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.784"
         app:maxImageSize="@dimen/_24sdp"
         app:srcCompat="@drawable/ic_edit"
         app:tint="@color/white" />

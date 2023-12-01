@@ -28,7 +28,7 @@
         </activity>
 
         <activity
-            android:name=".Activity.TeacherProfile"
+            android:name=".Activity.TeacherProfileActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.RoleSelectorActivity"

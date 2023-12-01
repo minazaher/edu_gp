@@ -91,8 +91,7 @@ public class StudentLoginFragment extends Fragment {
 
 
     private void showToast(String msg){
-        Toast.makeText(requireContext(), msg ,
-                Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), msg , Toast.LENGTH_SHORT).show();
     }
 
     private boolean studentNotExist(String errorMsg){
