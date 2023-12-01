@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 public class TeacherLoginFragment extends Fragment {
     private FragmentTeacherLoginBinding binding;
     final TeacherViewModel teacherViewModel;
-    String username, email, password;
+    String email = "", password="";
     public TeacherLoginFragment() {
         teacherViewModel = new TeacherViewModel();
     }
@@ -52,6 +52,7 @@ public class TeacherLoginFragment extends Fragment {
 
     private void loginTeacher() {
         getData();
+        if(isDataValid()){
             teacherViewModel.loginTeacher(email, password, new StudentRepository.onAuthenticationListener() {
                 @Override
                 public void onSuccess() {
@@ -65,7 +66,12 @@ public class TeacherLoginFragment extends Fragment {
                 }
             });
 
+        }
 
+    }
+
+    private boolean isDataValid() {
+        return !email.isEmpty() && !password.isEmpty() && isValidEmail(email);
     }
 
 
@@ -77,7 +83,7 @@ public class TeacherLoginFragment extends Fragment {
     private void getPassword(){
         String p = binding.etTeacherPasswordLogin.getText().toString();
         if(TextUtils.isEmpty(p)){
-            binding.etTeacherEmailLogin.setError("من فضلك ادخل كلمة المرور هنا");
+            binding.etTeacherPasswordLogin.setError("من فضلك ادخل كلمة المرور هنا");
         }
         else{
             password = p;
