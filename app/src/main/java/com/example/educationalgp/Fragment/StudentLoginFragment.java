@@ -15,12 +15,14 @@ import com.example.educationalgp.Activity.StudentProfile;
 import com.example.educationalgp.Repository.StudentRepository;
 import com.example.educationalgp.Repository.StudentRepository.onAuthenticationListener;
 import com.example.educationalgp.ViewModel.StudentViewModel;
+import com.example.educationalgp.ViewModel.TeacherViewModel;
 import com.example.educationalgp.databinding.FragmentStudentLoginBinding;
 
 public class StudentLoginFragment extends Fragment {
     private FragmentStudentLoginBinding binding;
     private final StudentViewModel studentViewModel;
-    String username;
+
+    String username= "", code = "";
     public StudentLoginFragment() {
         studentViewModel = new StudentViewModel();
     }
@@ -44,8 +46,9 @@ public class StudentLoginFragment extends Fragment {
 
     private void loginStudent() {
         username = binding.etStudentName.getText().toString();
-        if (isUsernameValid()){
-            studentViewModel.loginUser(username, new onAuthenticationListener() {
+        code = binding.etStudentEnterCode.getText().toString();
+        if (isUsernameValid() && isTeacherCodeValid()){
+            studentViewModel.loginUser(username, code,new onAuthenticationListener() {
                 @Override
                 public void onSuccess() {
                     goToStudentProfile();
@@ -69,7 +72,7 @@ public class StudentLoginFragment extends Fragment {
     }
 
     private void signupStudent(String username) {
-        studentViewModel.signupUser(username, new onAuthenticationListener() {
+        studentViewModel.signupUser(username, code,new onAuthenticationListener() {
             @Override
             public void onSuccess() {
                 showToast("تم انشاء حساب جديد");
@@ -101,6 +104,15 @@ public class StudentLoginFragment extends Fragment {
     private boolean isUsernameValid(){
         if(TextUtils.isEmpty(username)){
             binding.etStudentName.setError("من فضلك اكتب اسمك هنا");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isTeacherCodeValid(){
+        String c = binding.etStudentEnterCode.getText().toString();
+        if(TextUtils.isEmpty(c)){
+            binding.etStudentEnterCode.setError("من فضلك ادخل كود المعلم هنا");
             return false;
         }
         return true;

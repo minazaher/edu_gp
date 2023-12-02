@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.educationalgp.ApplicationClass;
 import com.example.educationalgp.Model.Student;
+import com.example.educationalgp.ViewModel.TeacherViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -25,10 +26,12 @@ import java.util.UUID;
 public class StudentRepository {
     private final FirebaseAuth firebaseAuth;
     private final FirebaseFirestore firebaseFirestore;
+    TeacherViewModel teacherViewModel;
 
     public StudentRepository() {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
+        teacherViewModel = new TeacherViewModel();
     }
 
     public LiveData<FirebaseUser> getLoggedInUser() {
@@ -38,23 +41,26 @@ public class StudentRepository {
         return userLiveData;
     }
 
-    public void login(String username, final onAuthenticationListener listener) {
+    public void login(String username,String teacherCode, final onAuthenticationListener listener) {
         firebaseAuth.signInWithEmailAndPassword(username, ApplicationClass.DEFAULT_STUDENT_PASSWORD)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         listener.onSuccess();
+                        teacherViewModel.addStudentToTeacher(teacherCode, username);
                     } else {
                         listener.onFailure(task.getException().getMessage());
                     }
                 });
     }
 
-        public void signup(String username, final onAuthenticationListener listener) {
+        public void signup(String username,String teacherCode, final onAuthenticationListener listener) {
         firebaseAuth.createUserWithEmailAndPassword(username, ApplicationClass.DEFAULT_STUDENT_PASSWORD)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         listener.onSuccess();
                         saveToFirestore(username);
+                        teacherViewModel.addStudentToTeacher(teacherCode, username);
+
                     } else {
                         listener.onFailure(task.getException().getMessage());
                     }

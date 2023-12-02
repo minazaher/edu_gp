@@ -82,6 +82,7 @@
             android:fontFamily="@font/notokufiarabic_medium"
             android:textColor="@color/mainColor"/>
         <EditText
+            android:id="@+id/et_studentEnterCode"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
             android:inputType="textVisiblePassword"

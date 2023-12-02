@@ -26,4 +26,7 @@ public class TeacherViewModel extends ViewModel {
     public void getTeacherByEmail(String email, TeacherRepository.TeacherCallback callback){
          teacherRepository.getTeacherByEmail(email,callback);
     }
+    public void addStudentToTeacher(String code, String studentName){
+        teacherRepository.addStudentToTeacher(code,studentName);
+    }
 }
