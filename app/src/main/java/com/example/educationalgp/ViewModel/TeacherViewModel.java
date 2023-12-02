@@ -29,4 +29,5 @@ public class TeacherViewModel extends ViewModel {
     public void addStudentToTeacher(String code, String studentName){
         teacherRepository.addStudentToTeacher(code,studentName);
     }
+
 }

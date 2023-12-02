@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.educationalgp.ApplicationClass;
+import com.example.educationalgp.Model.Grade;
 import com.example.educationalgp.Model.Student;
 import com.example.educationalgp.ViewModel.TeacherViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -17,10 +18,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 public class StudentRepository {
@@ -81,13 +86,16 @@ public class StudentRepository {
 
     private Student createNewStudent(String username){
         String id = UUID.randomUUID().toString();
-        Map<String, Integer> quizGrades = new HashMap<>();
-        quizGrades.put("Un1gen", 0);
-        quizGrades.put("Un1less1", 0);
-        quizGrades.put("Un1less2", 0);
-        quizGrades.put("Un1less3", 0);
+        List<Grade> quizGrades = new ArrayList<>();
         return new Student(id, username, quizGrades);
     }
+
+    public void addStudentGrade(LiveData<FirebaseUser> loggedInUser, String gradeId) {
+        DocumentReference studentsCollection = firebaseFirestore.collection("students").document(Objects.requireNonNull(loggedInUser.getValue().getEmail()));
+        studentsCollection.update("grades", FieldValue.arrayUnion(gradeId));
+    }
+
+
     public interface onAuthenticationListener {
         void onSuccess();
 

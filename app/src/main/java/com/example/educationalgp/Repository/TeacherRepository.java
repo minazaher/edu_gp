@@ -2,11 +2,7 @@ package com.example.educationalgp.Repository;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
 import com.example.educationalgp.Model.Teacher;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -18,7 +14,6 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class TeacherRepository {
 
@@ -52,27 +47,25 @@ public class TeacherRepository {
                     } else {
                         listener.onFailure(task.getException().getMessage());
                     }
-
                 });
     }
 
     private void saveToFirestore(String username, String email, String password) {
         Teacher teacher = createNewTeacher(username, email, password);
-        DocumentReference teacherCollection = firebaseFirestore.collection("teachers").document(teacher.getId());
+        DocumentReference teachersDocumentRef = firebaseFirestore.collection("teachers").document(teacher.getId());
 
-        teacherCollection.set(teacher)
+        teachersDocumentRef.set(teacher)
                 .addOnCompleteListener(task ->
                         Log.d("Firestore", "DocumentSnapshot added with ID " + teacher.getId()))
                 .addOnFailureListener(e ->
                         Log.d("Firestore", "DocumentSnapshot not added because of : " + e.getMessage()));
     }
-
     private Teacher createNewTeacher(String username, String email, String password) {
-        String id = generateTeacherCodeCode();
+        String id = generateTeacherCode();
         return new Teacher(id, username, email, password);
     }
 
-    public static String generateTeacherCodeCode() {
+    public static String generateTeacherCode() {
         StringBuilder stringBuilder = new StringBuilder(6);
 
         for (int i = 0; i < 6; i++) {
@@ -80,6 +73,7 @@ public class TeacherRepository {
             char randomChar = ALLOWED_CHARACTERS.charAt(randomIndex);
             stringBuilder.append(randomChar);
         }
+
         return stringBuilder.toString();
     }
 
@@ -119,9 +113,7 @@ public class TeacherRepository {
     }
 
     public void addStudentToTeacher(String code, String name){
-        //If teacher array of student doesn't contain student name
         if(!isTeacherArrayContainStudent(code, name)){
-            //Add student
             addStudentToTeacherArray(code, name);
         }
 
@@ -150,6 +142,7 @@ public class TeacherRepository {
                 });
         return isContaining[0];
     }
+
 
     public interface TeacherCallback {
         void onTeacherLoaded(Teacher teacher);

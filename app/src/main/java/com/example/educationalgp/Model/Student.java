@@ -4,15 +4,22 @@ package com.example.educationalgp.Model;
 import com.google.firebase.firestore.PropertyName;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Student {
 
     private String id;
     private String username;
-    private Map<String,Integer> quizGrades;
+    List<Grade> grades;
     public Student() {
 
+    }
+
+    public Student(String id, String username, List<Grade> grades) {
+        this.id = id;
+        this.username = username;
+        this.grades = grades;
     }
 
     public Student(String username) {
@@ -22,12 +29,6 @@ public class Student {
     public Student(String id, String username) {
         this.id = id;
         this.username = username;
-    }
-
-    public Student(String id, String username, Map<String, Integer> quizGrades) {
-        this.id = id;
-        this.username = username;
-        this.quizGrades = quizGrades;
     }
 
     public String getId() {
@@ -45,13 +46,17 @@ public class Student {
     public void setUsername(String username) {
         this.username = username;
     }
-    @PropertyName("quizGrades")
+    @PropertyName("grades")
 
-    public Map<String, Integer> getQuizGrades() {
-        return quizGrades;
+    public List<Grade> getGrades() {
+        return grades;
     }
-    @PropertyName("quizGrades")
-    public void setQuizGrades(Map<String, Integer> quizGrades) {
-        this.quizGrades = quizGrades;
+    @PropertyName("grades")
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
     }
+
+
+
 }
