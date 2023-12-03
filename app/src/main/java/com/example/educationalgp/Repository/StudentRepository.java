@@ -51,7 +51,7 @@ public class StudentRepository {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         listener.onSuccess();
-                        teacherViewModel.addStudentToTeacher(teacherCode, username);
+                        teacherViewModel.addStudentToTeacher(teacherCode, new Student(username));
                     } else {
                         listener.onFailure(task.getException().getMessage());
                     }
@@ -64,7 +64,7 @@ public class StudentRepository {
                     if (task.isSuccessful()) {
                         listener.onSuccess();
                         saveToFirestore(username);
-                        teacherViewModel.addStudentToTeacher(teacherCode, username);
+                        teacherViewModel.addStudentToTeacher(teacherCode, new Student(username));
 
                     } else {
                         listener.onFailure(task.getException().getMessage());

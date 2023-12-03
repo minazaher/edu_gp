@@ -3,6 +3,7 @@ package com.example.educationalgp.ViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.educationalgp.Model.Student;
 import com.example.educationalgp.Model.Teacher;
 import com.example.educationalgp.Repository.StudentRepository;
 import com.example.educationalgp.Repository.TeacherRepository;
@@ -26,8 +27,8 @@ public class TeacherViewModel extends ViewModel {
     public void getTeacherByEmail(String email, TeacherRepository.TeacherCallback callback){
          teacherRepository.getTeacherByEmail(email,callback);
     }
-    public void addStudentToTeacher(String code, String studentName){
-        teacherRepository.addStudentToTeacher(code,studentName);
+    public void addStudentToTeacher(String code, Student student){
+        teacherRepository.addStudentToTeacher(code,student);
     }
 
 }

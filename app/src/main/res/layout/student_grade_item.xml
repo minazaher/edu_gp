@@ -11,11 +11,12 @@
     android:layout_height="match_parent">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circleImageView"
+        android:id="@+id/holder_student_img"
         android:layout_width="@dimen/_50sdp"
         android:layout_height="@dimen/_60sdp"
         android:src="@drawable/student_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,10 +29,10 @@
         android:textAlignment="center"
         android:textColor="@color/mainColor"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/circleImageView"
+        app:layout_constraintEnd_toEndOf="@+id/holder_student_img"
         app:layout_constraintHorizontal_bias="0.461"
-        app:layout_constraintStart_toStartOf="@+id/circleImageView"
-        app:layout_constraintTop_toBottomOf="@+id/circleImageView"
+        app:layout_constraintStart_toStartOf="@+id/holder_student_img"
+        app:layout_constraintTop_toBottomOf="@+id/holder_student_img"
         app:layout_constraintVertical_bias="0.257" />
 
     <TextView
@@ -44,10 +45,10 @@
         android:textStyle="bold"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/circleImageView"
+        app:layout_constraintEnd_toEndOf="@+id/holder_student_img"
         app:layout_constraintHorizontal_bias="0.461"
-        app:layout_constraintStart_toStartOf="@+id/circleImageView"
-        app:layout_constraintTop_toBottomOf="@+id/circleImageView"
+        app:layout_constraintStart_toStartOf="@+id/holder_student_img"
+        app:layout_constraintTop_toBottomOf="@+id/holder_student_img"
         app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

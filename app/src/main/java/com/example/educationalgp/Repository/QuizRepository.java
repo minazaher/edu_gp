@@ -30,7 +30,6 @@ public class QuizRepository {
 
     }
 
-    // Fetch a quiz by its ID
     public void getQuizById(String quizId, OnQuizFetchListener listener) {
         quizCollection.document(quizId).get()
                 .addOnSuccessListener(documentSnapshot -> {

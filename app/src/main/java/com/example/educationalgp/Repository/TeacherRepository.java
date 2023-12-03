@@ -2,6 +2,7 @@ package com.example.educationalgp.Repository;
 
 import android.util.Log;
 
+import com.example.educationalgp.Model.Student;
 import com.example.educationalgp.Model.Teacher;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -12,7 +13,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TeacherRepository {
@@ -87,7 +87,7 @@ public class TeacherRepository {
                             String username = document.getString("username");
                             String password = document.getString("password");
                             Object studentNamesObject = document.get("students");
-                            String[] students = getStudentNames(studentNamesObject);
+                            List<Student> students = getTeacherStudents(studentNamesObject);
                             Teacher teacher = new Teacher(code, username, email, password, students);
                             callback.onTeacherLoaded(teacher);
                             return;
@@ -98,43 +98,42 @@ public class TeacherRepository {
                 });
     }
 
-    private String[] getStudentNames(Object studentNamesObj) {
-        ArrayList<String> students = new ArrayList<>();
+    private List<Student> getTeacherStudents(Object studentNamesObj) {
+        List<Student> students = new ArrayList<>();
         if (studentNamesObj instanceof List<?>) {
             List<?> studentNamesList = (List<?>) studentNamesObj;
 
             for (Object obj : studentNamesList) {
                 if (obj instanceof String) {
-                    students.add((String) obj);
+                    students.add((Student) obj);
                 }
             }
         }
-        return students.toArray(new String[students.size()]);
+        return students;
     }
 
-    public void addStudentToTeacher(String code, String name){
-        if(!isTeacherArrayContainStudent(code, name)){
-            addStudentToTeacherArray(code, name);
+    public void addStudentToTeacher(String code, Student student){
+        if(!isTeacherArrayContainStudent(code, student)){
+            addStudentToTeacherArray(code, student);
         }
 
     }
 
-    private void addStudentToTeacherArray(String code,String name){
+    private void addStudentToTeacherArray(String code, Student student){
         firebaseFirestore.collection("teachers")
-                .document(code).update("students", FieldValue.arrayUnion(name))
+                .document(code).update("students", FieldValue.arrayUnion(student))
                 .addOnSuccessListener(unused -> System.out.println("Student Added!"))
                 .addOnFailureListener(e -> System.out.println("Failed Due To:" + e.getMessage()));
     }
-    private boolean isTeacherArrayContainStudent(String code, String studentName) {
+    private boolean isTeacherArrayContainStudent(String code, Student student) {
         final boolean[] isContaining = {false};
         CollectionReference teachersCollection = firebaseFirestore.collection("teachers");
         teachersCollection.whereEqualTo("id", code).get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            Object studentNamesObject = document.get("students");
-                            String[] students = getStudentNames(studentNamesObject);
-                            isContaining[0] = Arrays.asList(students).contains(studentName);
+                            List<Student> students = document.toObject(Teacher.class).getStudents();
+                            isContaining[0] = students.contains(student);
                         }
                     } else {
                         Log.w("Firestore", "Error getting documents: ", task.getException());

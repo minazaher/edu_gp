@@ -12,7 +12,9 @@ public class Quiz {
     private List<Question> questionList;
     private String teacherCode;
 
+    public Quiz(){
 
+    }
     public Quiz(int totalMarks, List<Question> questionList, String teacherCode) {
         this.totalMarks = questionList.size();
         this.questionList = questionList;

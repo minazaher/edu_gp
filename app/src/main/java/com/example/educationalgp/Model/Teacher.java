@@ -1,7 +1,7 @@
 package com.example.educationalgp.Model;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.List;
 
 public class Teacher {
 
@@ -9,7 +9,7 @@ public class Teacher {
     private String username;
     private String email;
     private String password;
-    private String[] students;
+    private List<Student> students;
 
     public Teacher() {
     }
@@ -21,7 +21,7 @@ public class Teacher {
         this.password = password;
     }
 
-    public Teacher(String id, String username, String email, String password, String[] students) {
+    public Teacher(String id, String username, String email, String password, List<Student> students) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -61,11 +61,11 @@ public class Teacher {
         this.password = password;
     }
 
-    public String[] getStudents() {
+    public List<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(String[] students) {
+    public void setStudents(List<Student> students) {
         this.students = students;
     }
 
@@ -76,7 +76,7 @@ public class Teacher {
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", students=" + Arrays.toString(students) +
+                ", students=" + students.toString() +
                 '}';
     }
 }

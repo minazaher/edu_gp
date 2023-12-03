@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.educationalgp.Model.Grade;
 import com.example.educationalgp.R;
+import com.example.educationalgp.Repository.GradeRepository;
 
 public class StudentProfile extends AppCompatActivity {
 
@@ -13,4 +15,5 @@ public class StudentProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_profile);
     }
+
 }

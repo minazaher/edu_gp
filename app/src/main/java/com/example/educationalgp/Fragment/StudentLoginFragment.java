@@ -23,11 +23,10 @@ import com.example.educationalgp.databinding.FragmentStudentLoginBinding;
 public class StudentLoginFragment extends Fragment {
     private FragmentStudentLoginBinding binding;
     private final StudentViewModel studentViewModel;
-    GradeRepository gradeRepository ;
     String username= "", code = "";
     public StudentLoginFragment() {
         studentViewModel = new StudentViewModel();
-        gradeRepository = new GradeRepository();
+
     }
 
     @Override
@@ -55,7 +54,6 @@ public class StudentLoginFragment extends Fragment {
                 @Override
                 public void onSuccess() {
                     goToStudentProfile();
-                    saveQuizGrade(code, username);
                     showToast("تم تسجيل الدخول");
                 }
 
@@ -122,10 +120,5 @@ public class StudentLoginFragment extends Fragment {
         return true;
     }
 
-    private void saveQuizGrade(String teacherCode, String studentName){
-        Grade grade = new Grade(code,studentName, 20, 80 );
-        grade.setId("test2");
-        gradeRepository.addNewGrade(grade);
-    }
 
 }

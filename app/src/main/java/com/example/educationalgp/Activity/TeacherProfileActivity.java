@@ -1,17 +1,23 @@
 package com.example.educationalgp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
+import com.example.educationalgp.Adapter.StudentsAdapter;
+import com.example.educationalgp.Model.Grade;
+import com.example.educationalgp.Model.Student;
 import com.example.educationalgp.Model.Teacher;
 import com.example.educationalgp.ViewModel.TeacherViewModel;
 import com.example.educationalgp.databinding.ActivityTeacherProfileBinding;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class TeacherProfileActivity extends AppCompatActivity {
 
@@ -26,12 +32,9 @@ public class TeacherProfileActivity extends AppCompatActivity {
         binding = ActivityTeacherProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         teacherViewModel = new TeacherViewModel();
-        binding.fabEditQuiz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(TeacherProfileActivity.this, EditQuizActivity.class);
-                startActivity(intent);
-            }
+        binding.fabEditQuiz.setOnClickListener(v -> {
+            Intent intent = new Intent(TeacherProfileActivity.this, EditQuizActivity.class);
+            startActivity(intent);
         });
         getTeacherData();
     }
@@ -51,11 +54,19 @@ public class TeacherProfileActivity extends AppCompatActivity {
     private void setTeacherUI() {
         binding.tvTeacherCode.setText(accountOwner.getId());
         binding.tvTeacherNameProfile.setText(accountOwner.getUsername());
-        binding.tvStudentsCount.setText(String.valueOf(accountOwner.getStudents().length));
+        if (accountOwner.getStudents() != null) {
+            initializeStudentRecView();
+        }
+        binding.tvStudentsCount.setText(String.valueOf(accountOwner.getStudents().size()));
     }
 
-    private void getTeacherStudents(){
-        String email = getIntent().getStringExtra("email");
-        System.out.println(Arrays.deepToString(new String[]{Arrays.toString(accountOwner.getStudents())}));
+    private List<Student> getTeacherStudents(){
+        return accountOwner.getStudents();
     }
+    private void initializeStudentRecView(){
+        RecyclerView recyclerView = binding.studentRecyclerView;
+        recyclerView.setAdapter(new StudentsAdapter(getTeacherStudents()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+    }
+
 }
