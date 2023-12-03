@@ -22,16 +22,17 @@
         <activity
             android:name=".Activity.QuizActivity"
             android:exported="true" >
+
+        </activity>
+        <activity
+            android:name=".Activity.StudentProfileActivity"
+            android:exported="true">
             <intent-filter>
 
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".Activity.StudentProfile"
-            android:exported="true">
         </activity>
 
         <activity

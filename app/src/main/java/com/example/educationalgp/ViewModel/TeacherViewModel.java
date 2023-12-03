@@ -3,6 +3,7 @@ package com.example.educationalgp.ViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.educationalgp.Model.Grade;
 import com.example.educationalgp.Model.Student;
 import com.example.educationalgp.Model.Teacher;
 import com.example.educationalgp.Repository.StudentRepository;
@@ -29,6 +30,10 @@ public class TeacherViewModel extends ViewModel {
     }
     public void addStudentToTeacher(String code, Student student){
         teacherRepository.addStudentToTeacher(code,student);
+    }
+
+    public void updateStudentGrade(String code, String studentName, Grade grade){
+        teacherRepository.updateStudentGradeForTeacher(code, studentName, grade);
     }
 
 }

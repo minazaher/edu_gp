@@ -6,6 +6,9 @@ public class Grade {
     private String studentName;
     private int mark;
     private float percentage;
+    public Grade(){
+
+    }
 
     public Grade(String teacherCode, String studentName, int mark, float percentage) {
         this.teacherCode = teacherCode;

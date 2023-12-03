@@ -2,11 +2,18 @@ package com.example.educationalgp.Repository;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.example.educationalgp.Model.Grade;
 import com.example.educationalgp.Model.Student;
 import com.example.educationalgp.Model.Teacher;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -14,6 +21,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class TeacherRepository {
 
@@ -97,7 +105,31 @@ public class TeacherRepository {
                     }
                 });
     }
+    private void getTeacherByCode(String code, TeacherCallback callback) {
+        CollectionReference teachersCollection = firebaseFirestore.collection("teachers");
+        teachersCollection.document(code).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if (documentSnapshot.exists()){
+                       Teacher teacher =  documentSnapshot.toObject(Teacher.class);
+                       callback.onTeacherLoaded(teacher);
+                    }
+            }
+        });
+    }
 
+    public void updateStudentGradeForTeacher(String code, String studentName, Grade grade){
+        getTeacherByCode(code, teacher -> {
+            System.out.println(teacher.getStudents().toString());
+            Optional<Student> student = teacher.getStudents().stream()
+                    .filter(s -> s.getUsername().equals(studentName))
+                    .findFirst();
+            student.ifPresent(value -> value.getGrades().add(grade));
+            FirebaseFirestore.getInstance().collection("teachers").document(teacher.getId())
+                    .set(teacher);
+        });
+    }
     private List<Student> getTeacherStudents(Object studentNamesObj) {
         List<Student> students = new ArrayList<>();
         if (studentNamesObj instanceof List<?>) {

@@ -11,13 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.educationalgp.Activity.StudentProfile;
-import com.example.educationalgp.Model.Grade;
-import com.example.educationalgp.Repository.GradeRepository;
-import com.example.educationalgp.Repository.StudentRepository;
+import com.example.educationalgp.Activity.QuizActivity;
+import com.example.educationalgp.Activity.StudentProfileActivity;
 import com.example.educationalgp.Repository.StudentRepository.onAuthenticationListener;
 import com.example.educationalgp.ViewModel.StudentViewModel;
-import com.example.educationalgp.ViewModel.TeacherViewModel;
 import com.example.educationalgp.databinding.FragmentStudentLoginBinding;
 
 public class StudentLoginFragment extends Fragment {
@@ -90,7 +87,7 @@ public class StudentLoginFragment extends Fragment {
     }
 
     private void goToStudentProfile(){
-        Intent intent = new Intent(getActivity(), StudentProfile.class);
+        Intent intent = new Intent(getActivity(), StudentProfileActivity.class);
         startActivity(intent);
     }
 

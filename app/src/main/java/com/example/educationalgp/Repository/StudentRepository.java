@@ -51,7 +51,9 @@ public class StudentRepository {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         listener.onSuccess();
-                        teacherViewModel.addStudentToTeacher(teacherCode, new Student(username));
+                        Student student = new Student(username);
+                        student.setGrades(new ArrayList<>());;
+                        teacherViewModel.addStudentToTeacher(teacherCode, student);
                     } else {
                         listener.onFailure(task.getException().getMessage());
                     }
@@ -90,8 +92,9 @@ public class StudentRepository {
         return new Student(id, username, quizGrades);
     }
 
-    public void addStudentGrade(LiveData<FirebaseUser> loggedInUser, String gradeId) {
-        DocumentReference studentsCollection = firebaseFirestore.collection("students").document(Objects.requireNonNull(loggedInUser.getValue().getEmail()));
+    public void addStudentGrade(String gradeId) {
+        DocumentReference studentsCollection = firebaseFirestore.collection("students").
+                document("mina@gmail.com");
         studentsCollection.update("grades", FieldValue.arrayUnion(gradeId));
     }
 

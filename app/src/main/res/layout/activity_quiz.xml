@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/tv_quizCounter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
@@ -57,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_120sdp"
             android:scaleType="centerCrop"
-            android:src="@drawable/unit_placeholder"
+            android:src="@drawable/img_unit1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
@@ -199,7 +200,6 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/submit_question"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_35sdp"
         android:layout_marginHorizontal="@dimen/_40sdp"
@@ -212,12 +212,27 @@
         app:layout_constraintVertical_bias="0.335">
 
         <TextView
+            android:id="@+id/tv_submit_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/notokufiarabic_regular"
             android:text="تاكيد الاجابة"
             android:textColor="@color/white"
             android:textSize="@dimen/_16sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_submit_quiz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notokufiarabic_regular"
+            android:text="انهاء الاختبار"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sdp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
