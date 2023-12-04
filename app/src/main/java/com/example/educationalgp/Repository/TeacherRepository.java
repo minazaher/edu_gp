@@ -20,6 +20,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -94,8 +95,18 @@ public class TeacherRepository {
                             String code = document.getId();
                             String username = document.getString("username");
                             String password = document.getString("password");
-                            Object studentNamesObject = document.get("students");
-                            List<Student> students = getTeacherStudents(studentNamesObject);
+                            List<HashMap<String, Object>> studentsData = (List<HashMap<String, Object>>)
+                                    document.get("students");
+                            List<Student> students = new ArrayList<>();
+                            if (studentsData != null) {
+                                for (HashMap<String, Object> studentData : studentsData) {
+                                    String studentId = (String) studentData.get("id");
+                                    String studentUsername = (String) studentData.get("username");
+                                    List<Grade> grades = (List<Grade>) studentData.get("grades");
+                                    Student student = new Student(studentId, studentUsername , grades);
+                                    students.add(student);
+                                }
+                            }
                             Teacher teacher = new Teacher(code, username, email, password, students);
                             callback.onTeacherLoaded(teacher);
                             return;

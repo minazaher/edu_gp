@@ -8,7 +8,7 @@
     tools:context=".Activity.StudentProfileActivity">
 
     <LinearLayout
-        android:id="@+id/layout_teacher_login"
+        android:id="@+id/layout_studentProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
@@ -191,8 +191,32 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_goToActivity"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:background="@drawable/btn_signup"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_studentProfile">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notokufiarabic_medium"
+            android:text="متابعة"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.educationalgp.Model.Grade;
 import com.example.educationalgp.Model.Question;
 import com.example.educationalgp.Model.Quiz;
+import com.example.educationalgp.R;
 import com.example.educationalgp.Repository.GradeRepository;
 import com.example.educationalgp.Repository.QuizRepository;
 import com.example.educationalgp.ViewModel.GradeViewModel;
@@ -27,7 +29,11 @@ public class QuizActivity extends AppCompatActivity {
     String selectedAns = "", correctAns = "";
     int correctAnswers, incorrectAnswers;
     Quiz currentQuiz;
+    private int currentQuestionNumber = 0;
+
     GradeRepository gradeRepository;
+    String unit = "", lesson = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,38 +41,67 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         quizViewModel = new QuizViewModel();
         gradeRepository = new GradeRepository();
-        quizId = getIntent().getStringExtra("quizId");
-        loadQuiz(counter -> {
-            checkAnswer(selectedAns, correctAns);
-            counter++;
-            getQuestion(counter);
-            setCounter(counter+1, currentQuiz.getQuestionList().size());
-
-        });
+        unit = getIntent().getStringExtra("unit");
+        lesson = getIntent().getStringExtra("lesson");
+        quizId = unit.concat(lesson);
+        loadQuiz();
+    }
+    private void resetSelectedAnswer(){
+        binding.option1.setBackgroundResource(0);
+        binding.option2.setBackgroundResource(0);
+        binding.option3.setBackgroundResource(0);
+        binding.option4.setBackgroundResource(0);
+        selectedAns = "";
     }
 
-    private void getQuestion(int i) {
-        Question currentQuestion = questionList.get(i);
+    private void getQuestion(int c) {
+        Question currentQuestion = questionList.get(c);
         correctAns = currentQuestion.getAnswer();
         binding.question.setText(currentQuestion.getQuestionText());
         binding.option1.setText(currentQuestion.getOption_1());
         binding.option2.setText(currentQuestion.getOption_2());
-        binding.option3.setText(currentQuestion.getOption_3());
-        binding.option4.setText(currentQuestion.getOption_4());
-        if(questionList.get(i).getImgUrl() != null){
-//            Glide.with(this).asDrawable().into(binding.imgQuestion);
+
+        if (isMCQ(currentQuestion)){
+            binding.option3.setText(currentQuestion.getOption_3());
+            binding.option4.setText(currentQuestion.getOption_4());
         }
-        if (i+1 == questionList.size()){
+        else {
+            binding.layoutOption3.setVisibility(View.GONE);
+            binding.layoutOption4.setVisibility(View.GONE);
+        }
+
+        if (c+1 == questionList.size()){
             binding.tvSubmitQuestion.setVisibility(View.GONE);
             binding.tvSubmitQuiz.setVisibility(View.VISIBLE);
         }
 
-        binding.option1.setOnClickListener(v -> selectedAns = binding.option1.getText().toString());
-        binding.option2.setOnClickListener(v -> selectedAns = binding.option2.getText().toString());
-        binding.option3.setOnClickListener(v -> selectedAns = binding.option3.getText().toString());
-        binding.option4.setOnClickListener(v -> selectedAns = binding.option4.getText().toString());
+        View[] optionViews = {binding.option1, binding.option2, binding.option3, binding.option4};
+        String[] optionTexts = {
+                binding.option1.getText().toString(),
+                binding.option2.getText().toString(),
+                binding.option3.getText().toString(),
+                binding.option4.getText().toString()
+        };
+
+        for (int i = 0; i < optionViews.length; i++) {
+            int finalI = i;
+            optionViews[i].setOnClickListener(v -> {
+                selectedAns = optionTexts[finalI];
+                optionViews[finalI].setBackgroundResource(R.drawable.selected_answer_bg);
+                for (int j = 0; j < optionViews.length; j++) {
+                    if (j != finalI) {
+                        optionViews[j].setBackgroundResource(0);
+                    }
+                }
+            });
+        }
 
     }
+
+    private boolean isMCQ(Question currentQuestion) {
+        return currentQuestion.getOption_3() !=null && currentQuestion.getOption_4() !=null;
+    }
+
     private void setCounter(int position, int total){
         String pos = String.valueOf(position);
         String tot = String.valueOf(total);
@@ -75,8 +110,6 @@ public class QuizActivity extends AppCompatActivity {
     }
     private void checkAnswer(String selectedAnswer, String correctAnswer) {
         boolean isCorrect = selectedAnswer.equals(correctAnswer);
-        System.out.println("selected answer is : " + selectedAnswer);
-        System.out.println("correctAnswer  is : " + correctAnswer);
 
         if (isCorrect) {
             Toast.makeText(this, "Correct Answer!", Toast.LENGTH_SHORT).show();
@@ -88,26 +121,16 @@ public class QuizActivity extends AppCompatActivity {
 
     }
 
-    private void loadQuiz(onQuestionSolvedCallback callback) {
-       quizViewModel.loadQuiz("test", new QuizRepository.OnQuizFetchListener() {
+    private void loadQuiz() {
+        quizViewModel.loadQuiz("un2less1", new QuizRepository.OnQuizFetchListener() {
             @Override
             public void onQuizFetched(Quiz quiz) {
                 currentQuiz = quiz;
-                if (quiz != null){
+                if (quiz != null) {
                     questionList = quiz.getQuestionList();
-                    int currentQuestionNumber =0;
-                    questionList.add(new Question());
                     getQuestion(currentQuestionNumber);
-                    setCounter(currentQuestionNumber+1, questionList.size());
-                    binding.tvSubmitQuestion.setOnClickListener(v -> {
-                        callback.onQuestionSolved(currentQuestionNumber);
-                    });
-                    binding.tvSubmitQuiz.setOnClickListener(v -> {
-                        if (currentQuestionNumber+1 == quiz.getTotalMarks()){{
-                            calculateStudentMark();
-                            saveGrade();
-                        }}
-                    });
+                    setCounter(currentQuestionNumber + 1, questionList.size());
+                    setupButtonListeners();
                 }
             }
 
@@ -118,6 +141,29 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
+    private void setupButtonListeners() {
+        binding.tvSubmitQuestion.setOnClickListener(v -> {
+            checkAnswer(selectedAns, correctAns);
+            resetSelectedAnswer();
+            moveNextOrFinish();
+        });
+
+        binding.tvSubmitQuiz.setOnClickListener(v -> {
+            calculateStudentMark();
+            saveGrade();
+        });
+    }
+
+    private void moveNextOrFinish() {
+        if (currentQuestionNumber < questionList.size() - 1) {
+            currentQuestionNumber++; // Move to the next question
+            getQuestion(currentQuestionNumber);
+            setCounter(currentQuestionNumber + 1, questionList.size());
+        } else {
+            binding.tvSubmitQuestion.setEnabled(false); // Disable the question submission button
+            binding.tvSubmitQuiz.callOnClick(); // Automatically trigger quiz submission
+        }
+    }
     private void calculateStudentMark() {
         System.out.println("Correct Answers : " + correctAnswers);
         System.out.println("Incorrect Answers : " + incorrectAnswers);
@@ -129,9 +175,5 @@ public class QuizActivity extends AppCompatActivity {
                 (float)correctAnswers/currentQuiz.getTotalMarks());
         grade.setId("NOT NULL");
         gradeRepository.addNewGrade(grade);
-    }
-
-    private interface onQuestionSolvedCallback{
-        void onQuestionSolved(int counter);
     }
 }

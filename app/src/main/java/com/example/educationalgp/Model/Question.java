@@ -13,6 +13,15 @@ public class Question {
     public Question() {
     }
 
+    public Question(String questionText, String option_1, String option_2, String option_3, String option_4, String answer) {
+        this.questionText = questionText;
+        this.option_1 = option_1;
+        this.option_2 = option_2;
+        this.option_3 = option_3;
+        this.option_4 = option_4;
+        this.answer = answer;
+    }
+
     public String getQuestionText() {
         return questionText;
     }

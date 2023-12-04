@@ -54,8 +54,10 @@ public class TeacherProfileActivity extends AppCompatActivity {
     private void setTeacherUI() {
         binding.tvTeacherCode.setText(accountOwner.getId());
         binding.tvTeacherNameProfile.setText(accountOwner.getUsername());
+        System.out.println("Fuck : " + getTeacherStudents().get(0).getGrades().get(0));
         if (accountOwner.getStudents() != null) {
-            initializeStudentRecView();
+                initializeStudentRecView();
+
         }
         binding.tvStudentsCount.setText(String.valueOf(accountOwner.getStudents().size()));
     }

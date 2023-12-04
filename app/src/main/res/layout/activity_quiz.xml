@@ -100,6 +100,7 @@
                 android:id="@+id/option_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/_4sdp"
                 android:fontFamily="@font/notokufiarabic_medium"
                 android:text="الطاقة الكهربائيه"
                 android:textColor="@color/mainColor"
@@ -128,6 +129,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/notokufiarabic_medium"
+                android:padding="@dimen/_4sdp"
                 android:text="الطاقة الحراريه"
                 android:textColor="@color/mainColor"
                 android:textSize="@dimen/_14ssp" />
@@ -143,11 +145,12 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_option3"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginVertical="@dimen/_5sdp"
-            android:background="#00BF00"
             android:gravity="end"
             android:orientation="horizontal">
 
@@ -156,21 +159,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/notokufiarabic_medium"
-                android:text="الطاقة الميكانيكية"
-                android:textColor="@color/white"
+                android:padding="@dimen/_4sdp"
+                android:text="الطاقة الحراريه"
+                android:textColor="@color/mainColor"
                 android:textSize="@dimen/_14ssp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/notokufiarabic_medium"
-                android:text="جـ ) "
-                android:textColor="@color/white"
+                android:text="ب ) "
+                android:textColor="@color/mainColor"
                 android:textSize="@dimen/_14ssp" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_option4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -185,6 +190,7 @@
                 android:fontFamily="@font/notokufiarabic_medium"
                 android:text="الطاقة الصوتيه"
                 android:textColor="@color/mainColor"
+                android:padding="@dimen/_4sdp"
                 android:textSize="@dimen/_14ssp" />
 
             <TextView

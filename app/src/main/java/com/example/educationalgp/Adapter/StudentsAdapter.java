@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.educationalgp.Model.Grade;
 import com.example.educationalgp.Model.Student;
 import com.example.educationalgp.R;
 
@@ -34,7 +35,7 @@ public class StudentsAdapter extends RecyclerView.Adapter<StudentsAdapter.viewho
     public void onBindViewHolder(@NonNull StudentsAdapter.viewholder holder, int position) {
         holder.imageView.setImageResource(R.drawable.student_placeholder);
         holder.name.setText(students.get(position).getUsername());
-        holder.grade.setText(String.valueOf(students.get(position).getGrades().get(0).getPercentage()));
+        holder.grade.setText(position);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.educationalgp;
 import android.app.Application;
 
 
+import com.example.educationalgp.Model.Question;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -21,5 +22,9 @@ public class ApplicationClass extends Application {
     public static boolean isValidEmail(String e) {
         return Pattern.matches(EMAIL_REGEX_PATTERN, e);
     }
+
+
+
+
 
 }
