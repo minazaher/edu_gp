@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
+import com.bumptech.glide.Glide;
 import com.example.educationalgp.Model.Grade;
 import com.example.educationalgp.Model.Question;
 import com.example.educationalgp.Model.Quiz;
@@ -26,7 +27,7 @@ import java.util.List;
 
 public class QuizActivity extends AppCompatActivity {
     ActivityQuizBinding binding;
-    String quizId;
+    String quizId, teacherId;
     QuizViewModel quizViewModel;
     List<Question> questionList;
     String selectedAns = "", correctAns = "";
@@ -51,14 +52,19 @@ public class QuizActivity extends AppCompatActivity {
 
         if (isTeacher){
             setTeacherUI();
+            teacherId = getIntent().getStringExtra("teacherId");
+            loadQuizForTeacher();
+        }
+        else {
+            loadQuizForStudent();
         }
         quizId = "un1less1";
-        loadQuiz();
+
     }
 
     private void setTeacherUI() {
-        binding.tvSubmitQuiz.setVisibility(View.GONE);
-        binding.tvSubmitQuestion.setVisibility(View.GONE);
+        binding.tvSubmitQuestion.setText("السؤال التالي");
+        binding.tvSubmitQuestion.setOnClickListener(v -> moveNextOrFinish());
         binding.imgEdit.setVisibility(View.VISIBLE);
         binding.imgEdit.setOnClickListener(v -> selectQuestionToEdit());
     }
@@ -98,6 +104,15 @@ public class QuizActivity extends AppCompatActivity {
             binding.layoutOption4.setVisibility(View.GONE);
         }
 
+        if (currentQuestion.getImgUrl() == null){
+            binding.imgQuestion.setVisibility(View.GONE);
+            binding.questionImage.setVisibility(View.GONE);
+        }
+        else {
+            binding.imgQuestion.setVisibility(View.VISIBLE);
+            binding.questionImage.setVisibility(View.VISIBLE);
+            Glide.with(this).asBitmap().load(currentQuestion.getImgUrl()).into(binding.imgQuestion);
+        }
         if (c+1 == questionList.size()){
             binding.tvSubmitQuestion.setVisibility(View.GONE);
             binding.tvSubmitQuiz.setVisibility(View.VISIBLE);
@@ -149,7 +164,7 @@ public class QuizActivity extends AppCompatActivity {
 
     }
 
-    private void loadQuiz() {
+    private void loadQuizForStudent() {
         quizViewModel.loadQuiz("un2less1", new QuizRepository.OnQuizFetchListener() {
             @Override
             public void onQuizFetched(Quiz quiz) {
@@ -159,6 +174,25 @@ public class QuizActivity extends AppCompatActivity {
                     getQuestion(currentQuestionNumber);
                     setCounter(currentQuestionNumber + 1, questionList.size());
                     setupButtonListeners();
+                }
+            }
+
+            @Override
+            public void onQuizFetchFailure(String errorMessage) {
+                Toast.makeText(QuizActivity.this, "No Quiz For this Lesson", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void loadQuizForTeacher() {
+        quizViewModel.loadQuiz("un2less1", new QuizRepository.OnQuizFetchListener() {
+            @Override
+            public void onQuizFetched(Quiz quiz) {
+                currentQuiz = quiz;
+                if (quiz != null) {
+                    questionList = quiz.getQuestionList();
+                    getQuestion(currentQuestionNumber);
+                    setCounter(currentQuestionNumber + 1, questionList.size());
+                    moveNextOrFinish();
                 }
             }
 

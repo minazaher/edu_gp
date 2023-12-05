@@ -60,11 +60,13 @@
                 android:imeOptions="actionDone"
                 android:importantForAutofill="no"
                 android:includeFontPadding="false"
-                android:textDirection="rtl"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:paddingHorizontal="@dimen/_5sdp"
                 android:textColor="@color/mainColor"
-                android:textSize="@dimen/_16ssp"
+                android:textDirection="rtl"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/image_back" />
 
                 <EditText
@@ -163,7 +165,7 @@
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/question_image"
+                android:id="@+id/question_image_card"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_110sdp"
                 android:layout_marginHorizontal="@dimen/_40sdp"
@@ -175,10 +177,10 @@
                 app:layout_constraintTop_toBottomOf="@id/layout_question_answers">
 
                 <ImageView
+                    android:id="@+id/question_image"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_120sdp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_unit1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/toolbar" />
@@ -194,7 +196,7 @@
                 android:padding="@dimen/_4sdp"
                 android:src="@drawable/baseline_delete_outline_24"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/question_image"
+                app:layout_constraintTop_toTopOf="@id/question_image_card"
                 app:tint="#ff0000" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

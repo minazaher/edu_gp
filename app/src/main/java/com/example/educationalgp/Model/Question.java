@@ -91,4 +91,18 @@ public class Question implements Serializable {
     public boolean isMCQ(){
         return this.option_3 != null && this.getOption_4() !=null;
     }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id='" + id + '\'' +
+                ", questionText='" + questionText + '\'' +
+                ", option_1='" + option_1 + '\'' +
+                ", option_2='" + option_2 + '\'' +
+                ", option_3='" + option_3 + '\'' +
+                ", option_4='" + option_4 + '\'' +
+                ", answer='" + answer + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                '}';
+    }
 }
