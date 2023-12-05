@@ -2,11 +2,13 @@ package com.example.educationalgp.Repository;
 
 import androidx.annotation.NonNull;
 
+import com.example.educationalgp.Model.Question;
 import com.example.educationalgp.Model.Quiz;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class QuizRepository {
@@ -16,17 +18,8 @@ public class QuizRepository {
 
     public void createQuiz(Quiz quiz) {
         quizCollection.document(quiz.getId()).set(quiz)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        System.out.println("quiz added");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        System.out.println("quiz not added cus" +e.getMessage());
-                    }
-                });
+                .addOnCompleteListener(task -> System.out.println("quiz added"))
+                .addOnFailureListener(e -> System.out.println("quiz not added cus" +e.getMessage()));
 
     }
 
@@ -41,6 +34,19 @@ public class QuizRepository {
                     }
                 })
                 .addOnFailureListener(e -> listener.onQuizFetchFailure(e.getMessage()));
+    }
+
+    public void updateQuiz(Question oldQuestion, Question newQuestion, String id) {
+        deleteQuestion(oldQuestion, id);
+        addQuestion(newQuestion, id);
+    }
+
+    private void addQuestion(Question newQuestion, String id) {
+        quizCollection.document(id).update("questions", FieldValue.arrayUnion(newQuestion));
+    }
+
+    private void deleteQuestion(Question oldQuestion, String id) {
+        quizCollection.document(id).update("questions", FieldValue.arrayRemove(oldQuestion));
     }
 
 

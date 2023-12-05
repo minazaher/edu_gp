@@ -49,9 +49,9 @@
                 app:tint="@color/mainColor" />
 
             <EditText
-                android:id="@+id/et_noteTitle"
+                android:id="@+id/et_questionTitle"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_35sdp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_25sdp"
                 android:background="@null"
@@ -63,44 +63,36 @@
                 android:textDirection="rtl"
                 android:inputType="text"
                 android:paddingHorizontal="@dimen/_5sdp"
-                android:textColor="@color/white"
+                android:textColor="@color/mainColor"
                 android:textSize="@dimen/_16ssp"
                 app:layout_constraintTop_toBottomOf="@id/image_back" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/spinner_select_category"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_25sdp"
-                app:layout_constraintBottom_toTopOf="@id/layout_question_answers"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_noteTitle">
-
-                <AutoCompleteTextView
-                    android:id="@+id/category_auto_complete"
+                <EditText
+                    android:id="@+id/et_rightAnswer"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/_40sdp"
                     android:fontFamily="@font/notokufiarabic_medium"
-                    android:hint="اختر نوع السؤال"
+                    android:hint="اكتب الاجابة الصحيحة هنا"
                     android:maxLines="3"
-                    android:textColor="@color/white"
-
+                    android:background="@null"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
                     android:textDirection="rtl"
-                    android:textSize="@dimen/_14ssp" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintBottom_toTopOf="@id/layout_question_answers"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_questionTitle"/>
 
             <LinearLayout
                 android:id="@+id/layout_question_answers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_18sdp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/spinner_select_category">
+                app:layout_constraintTop_toBottomOf="@id/et_rightAnswer">
 
                 <EditText
                     android:id="@+id/layout_question_answer_1"

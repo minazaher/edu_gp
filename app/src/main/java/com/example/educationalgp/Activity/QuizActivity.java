@@ -2,19 +2,22 @@ package com.example.educationalgp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
 
-import com.bumptech.glide.Glide;
 import com.example.educationalgp.Model.Grade;
 import com.example.educationalgp.Model.Question;
 import com.example.educationalgp.Model.Quiz;
 import com.example.educationalgp.R;
 import com.example.educationalgp.Repository.GradeRepository;
 import com.example.educationalgp.Repository.QuizRepository;
-import com.example.educationalgp.ViewModel.GradeViewModel;
 import com.example.educationalgp.ViewModel.QuizViewModel;
 import com.example.educationalgp.databinding.ActivityQuizBinding;
 
@@ -33,7 +36,8 @@ public class QuizActivity extends AppCompatActivity {
 
     GradeRepository gradeRepository;
     String unit = "", lesson = "";
-
+    private AlertDialog dialogViewResult;
+    boolean isTeacher;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,9 +47,31 @@ public class QuizActivity extends AppCompatActivity {
         gradeRepository = new GradeRepository();
         unit = getIntent().getStringExtra("unit");
         lesson = getIntent().getStringExtra("lesson");
-        quizId = unit.concat(lesson);
+        isTeacher = getIntent().getBooleanExtra("isTeacher", false);
+
+        if (isTeacher){
+            setTeacherUI();
+        }
+        quizId = "un1less1";
         loadQuiz();
     }
+
+    private void setTeacherUI() {
+        binding.tvSubmitQuiz.setVisibility(View.GONE);
+        binding.tvSubmitQuestion.setVisibility(View.GONE);
+        binding.imgEdit.setVisibility(View.VISIBLE);
+        binding.imgEdit.setOnClickListener(v -> selectQuestionToEdit());
+    }
+
+    private void selectQuestionToEdit() {
+        Question question = currentQuiz.getQuestionList().get(currentQuestionNumber);
+        Intent intent = new Intent(QuizActivity.this, EditQuizActivity.class );
+        intent.putExtra("question", question);
+        intent.putExtra("quiz", true);
+
+        startActivity(intent);
+    }
+
     private void resetSelectedAnswer(){
         binding.option1.setBackgroundResource(0);
         binding.option2.setBackgroundResource(0);
@@ -64,6 +90,8 @@ public class QuizActivity extends AppCompatActivity {
         if (isMCQ(currentQuestion)){
             binding.option3.setText(currentQuestion.getOption_3());
             binding.option4.setText(currentQuestion.getOption_4());
+            binding.layoutOption3.setVisibility(View.VISIBLE);
+            binding.layoutOption4.setVisibility(View.VISIBLE);
         }
         else {
             binding.layoutOption3.setVisibility(View.GONE);
@@ -151,6 +179,7 @@ public class QuizActivity extends AppCompatActivity {
         binding.tvSubmitQuiz.setOnClickListener(v -> {
             calculateStudentMark();
             saveGrade();
+            showResult(5);
         });
     }
 
@@ -164,10 +193,11 @@ public class QuizActivity extends AppCompatActivity {
             binding.tvSubmitQuiz.callOnClick(); // Automatically trigger quiz submission
         }
     }
-    private void calculateStudentMark() {
+    private int calculateStudentMark() {
         System.out.println("Correct Answers : " + correctAnswers);
         System.out.println("Incorrect Answers : " + incorrectAnswers);
         System.out.println("percentage is : " + correctAnswers/questionList.size());
+        return correctAnswers/questionList.size();
     }
 
     private void saveGrade(){
@@ -176,4 +206,24 @@ public class QuizActivity extends AppCompatActivity {
         grade.setId("NOT NULL");
         gradeRepository.addNewGrade(grade);
     }
-}
+    private void showResult(int result){
+        if(dialogViewResult == null){
+            AlertDialog.Builder  builder = new AlertDialog.Builder(this);
+            View view = LayoutInflater.from(this).inflate(R.layout.layout_view_result,
+                    (ViewGroup) findViewById(R.id.layout_viewResultContainer));
+            builder.setView(view);
+            dialogViewResult = builder.create();
+            if(dialogViewResult.getWindow() != null){
+                dialogViewResult.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+            TextView tv_reseult = view.findViewById(R.id.tv_Result);
+            tv_reseult.setText(String.format("لقد حصلت على %d", result));
+            view.findViewById(R.id.textBack).setOnClickListener(view1 -> {
+                Intent intent = new Intent(QuizActivity.this, StudentProfileActivity.class);
+                startActivity(intent);
+            });
+    }
+        dialogViewResult.show();
+        }
+    }
+

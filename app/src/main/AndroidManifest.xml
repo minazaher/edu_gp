@@ -17,6 +17,8 @@
         <activity
             android:name=".Activity.EditQuizActivity"
             android:exported="true" >
+
+
         </activity>
 
         <activity

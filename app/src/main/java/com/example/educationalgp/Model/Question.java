@@ -2,7 +2,9 @@ package com.example.educationalgp.Model;
 
 import com.google.firebase.firestore.DocumentId;
 
-public class Question {
+import java.io.Serializable;
+
+public class Question implements Serializable {
     @DocumentId
     private String id;
     private String questionText;
@@ -84,5 +86,9 @@ public class Question {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public boolean isMCQ(){
+        return this.option_3 != null && this.getOption_4() !=null;
     }
 }

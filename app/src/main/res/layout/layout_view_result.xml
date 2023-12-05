@@ -1,6 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/layout_viewResultContainer"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:paddingTop="@dimen/_7sdp"
+    android:paddingHorizontal="@dimen/_7sdp"
+    android:layout_margin="@dimen/_10sdp"
+    android:background="@drawable/selected_lesson_bg">
+
+    <TextView
+        android:id="@+id/tv_confirmNoteText"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_24sdp"
+        android:layout_marginHorizontal="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:fontFamily="@font/notokufiarabic_bold"
+        android:includeFontPadding="false"
+        android:text="نتيجة الاختبار"
+        android:textColor="@color/white"
+        android:textDirection="rtl"
+        android:textSize="@dimen/_14ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_Result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="@null"
+        android:fontFamily="@font/notokufiarabic_medium"
+        android:text="لقد حصلت على نسبة 85.5%"
+        android:importantForAutofill="no"
+        android:textAlignment="center"
+        android:includeFontPadding="false"
+        android:paddingHorizontal="@dimen/_8sdp"
+        android:textColor="@color/white"
+        android:textDirection="rtl"
+        android:textSize="@dimen/_13ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_confirmNoteText" />
+
+    <TextView
+        android:id="@+id/textBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:fontFamily="@font/notokufiarabic_medium"
+        android:includeFontPadding="false"
+        android:padding="@dimen/_8sdp"
+        android:text="عودة"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_13ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_Result" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.educationalgp.Model.Question;
 import com.example.educationalgp.Model.Quiz;
 import com.example.educationalgp.Repository.QuizRepository;
 
@@ -25,4 +26,7 @@ public class QuizViewModel extends ViewModel {
     }
 
 
+    public void updateQuiz(Question oldQuestion, Question newQuestion, String id) {
+        quizRepository.updateQuiz(oldQuestion, newQuestion, id);
+    }
 }
