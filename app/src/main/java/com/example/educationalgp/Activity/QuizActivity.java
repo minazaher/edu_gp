@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import com.example.educationalgp.Repository.QuizRepository;
 import com.example.educationalgp.ViewModel.QuizViewModel;
 import com.example.educationalgp.databinding.ActivityQuizBinding;
 
+import org.w3c.dom.Text;
+
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -33,7 +36,7 @@ public class QuizActivity extends AppCompatActivity {
     String selectedAns = "", correctAns = "";
     int correctAnswers, incorrectAnswers;
     Quiz currentQuiz;
-    private int currentQuestionNumber = 0;
+    private int currentQuestionNumber = 14;
 
     GradeRepository gradeRepository;
     String unit = "", lesson = "";
@@ -48,17 +51,18 @@ public class QuizActivity extends AppCompatActivity {
         gradeRepository = new GradeRepository();
         unit = getIntent().getStringExtra("unit");
         lesson = getIntent().getStringExtra("lesson");
+
         isTeacher = getIntent().getBooleanExtra("isTeacher", false);
 
         if (isTeacher){
             setTeacherUI();
-            teacherId = getIntent().getStringExtra("teacherId");
+//            teacherId = getIntent().getStringExtra("teacherId");
             loadQuizForTeacher();
         }
         else {
             loadQuizForStudent();
         }
-        quizId = "un1less1";
+        quizId = "un1less2";
 
     }
 
@@ -153,19 +157,38 @@ public class QuizActivity extends AppCompatActivity {
     }
     private void checkAnswer(String selectedAnswer, String correctAnswer) {
         boolean isCorrect = selectedAnswer.equals(correctAnswer);
-
         if (isCorrect) {
             Toast.makeText(this, "Correct Answer!", Toast.LENGTH_SHORT).show();
+            highlightCorrectAnswer();
             correctAnswers++;
         } else {
             Toast.makeText(this, "Incorrect Answer!", Toast.LENGTH_SHORT).show();
+            highlightCorrectAnswer();
+            highlightIncorrectAnswer();
             incorrectAnswers++;
         }
 
     }
 
+    private void highlightIncorrectAnswer() {
+        TextView[] optionViews = {binding.option1, binding.option2, binding.option3, binding.option4};
+        for (TextView v:optionViews) {
+            if(v.getText().toString().equals(selectedAns)){
+                v.setBackgroundResource(R.color.red);
+            }
+        }
+    }
+
+    private void highlightCorrectAnswer(){
+        TextView[] optionViews = {binding.option1, binding.option2, binding.option3, binding.option4};
+        for (TextView v:optionViews) {
+            if(v.getText().toString().equals(correctAns)){
+                v.setBackgroundResource(R.color.green);
+            }
+        }
+    }
     private void loadQuizForStudent() {
-        quizViewModel.loadQuiz("un2less1", new QuizRepository.OnQuizFetchListener() {
+        quizViewModel.loadQuiz("un2less2", new QuizRepository.OnQuizFetchListener() {
             @Override
             public void onQuizFetched(Quiz quiz) {
                 currentQuiz = quiz;
@@ -206,14 +229,18 @@ public class QuizActivity extends AppCompatActivity {
     private void setupButtonListeners() {
         binding.tvSubmitQuestion.setOnClickListener(v -> {
             checkAnswer(selectedAns, correctAns);
-            resetSelectedAnswer();
-            moveNextOrFinish();
+            new Handler().postDelayed(() -> {
+                resetSelectedAnswer();
+                moveNextOrFinish();
+            },2000);
+
         });
 
         binding.tvSubmitQuiz.setOnClickListener(v -> {
+            checkAnswer(selectedAns, correctAns);
             calculateStudentMark();
             saveGrade();
-            showResult(5);
+            showResult(2);
         });
     }
 
@@ -227,20 +254,19 @@ public class QuizActivity extends AppCompatActivity {
             binding.tvSubmitQuiz.callOnClick(); // Automatically trigger quiz submission
         }
     }
-    private int calculateStudentMark() {
+    private void calculateStudentMark() {
         System.out.println("Correct Answers : " + correctAnswers);
         System.out.println("Incorrect Answers : " + incorrectAnswers);
         System.out.println("percentage is : " + correctAnswers/questionList.size());
-        return correctAnswers/questionList.size();
     }
 
     private void saveGrade(){
-        Grade grade = new Grade("tu2wdF", "student@gmail.com", correctAnswers,
+        Grade grade = new Grade("q8PEC8", "mina@gmail.com", correctAnswers,
                 (float)correctAnswers/currentQuiz.getTotalMarks());
-        grade.setId("NOT NULL");
+        grade.setId("Test Grade");
         gradeRepository.addNewGrade(grade);
     }
-    private void showResult(int result){
+    private void showResult(float result){
         if(dialogViewResult == null){
             AlertDialog.Builder  builder = new AlertDialog.Builder(this);
             View view = LayoutInflater.from(this).inflate(R.layout.layout_view_result,
@@ -251,13 +277,19 @@ public class QuizActivity extends AppCompatActivity {
                 dialogViewResult.getWindow().setBackgroundDrawable(new ColorDrawable(0));
             }
             TextView tv_reseult = view.findViewById(R.id.tv_Result);
-            tv_reseult.setText(String.format("لقد حصلت على %d", result));
+            String res = correctAnswers + "/" + questionList.size();
+            tv_reseult.setText("درجة الاختبار هي : " + res );
             view.findViewById(R.id.textBack).setOnClickListener(view1 -> {
                 Intent intent = new Intent(QuizActivity.this, StudentProfileActivity.class);
                 startActivity(intent);
             });
     }
         dialogViewResult.show();
+        }
+
+
+        public interface onResultCalculated {
+                void onResult(float res);
         }
     }
 

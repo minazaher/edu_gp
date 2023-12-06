@@ -34,8 +34,9 @@ public class TeacherProfileActivity extends AppCompatActivity {
         teacherViewModel = new TeacherViewModel();
 
         binding.fabEditQuiz.setOnClickListener(v -> {
-            Intent intent = new Intent(TeacherProfileActivity.this, EditQuizActivity.class);
-//            intent.putExtra("teacherId", accountOwner.getId());
+            Intent intent = new Intent(TeacherProfileActivity.this, StudentProfileActivity.class);
+            intent.putExtra("isTeacher", true);
+            intent.putExtra("teacherId", accountOwner.getId());
             startActivity(intent);
         });
 
@@ -57,11 +58,11 @@ public class TeacherProfileActivity extends AppCompatActivity {
     private void setTeacherUI() {
         binding.tvTeacherCode.setText(accountOwner.getId());
         binding.tvTeacherNameProfile.setText(accountOwner.getUsername());
-        System.out.println("Fuck : " + getTeacherStudents().get(0).getGrades().get(0));
-        if (accountOwner.getStudents() != null) {
-//                initializeStudentRecView();
 
+        if (accountOwner.getStudents() != null) {
+                initializeStudentRecView();
         }
+
         binding.tvStudentsCount.setText(String.valueOf(accountOwner.getStudents().size()));
     }
 

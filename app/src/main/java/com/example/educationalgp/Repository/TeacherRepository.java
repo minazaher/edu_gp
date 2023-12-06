@@ -95,15 +95,26 @@ public class TeacherRepository {
                             String code = document.getId();
                             String username = document.getString("username");
                             String password = document.getString("password");
-                            List<HashMap<String, Object>> studentsData = (List<HashMap<String, Object>>)
-                                    document.get("students");
+                            List<HashMap<String, Object>> studentsData = (List<HashMap<String, Object>>) document.get("students");
                             List<Student> students = new ArrayList<>();
                             if (studentsData != null) {
                                 for (HashMap<String, Object> studentData : studentsData) {
                                     String studentId = (String) studentData.get("id");
                                     String studentUsername = (String) studentData.get("username");
-                                    List<Grade> grades = (List<Grade>) studentData.get("grades");
-                                    Student student = new Student(studentId, studentUsername , grades);
+                                    List <HashMap<String, Object>> grades = (List<HashMap<String, Object>>) studentData.get("grades");
+                                   List<Grade> gradeList = new ArrayList<>();
+                                    assert grades != null;
+                                    for (HashMap<String, Object> grade : grades) {
+                                        String gradeId = (String) grade.get("id");
+                                        long mark = (long) grade.get("mark");
+                                        double percent = (double) grade.get("percentage");
+                                        String name = (String) grade.get("studentName");
+                                        String c = (String) grade.get("teacherCode");
+                                        Grade grade1 = new Grade(c, name, (int) mark, (float) percent);
+                                        grade1.setId(gradeId);
+                                        gradeList.add(grade1);
+                                    }
+                                    Student student = new Student(studentId, studentUsername , gradeList);
                                     students.add(student);
                                 }
                             }
@@ -118,15 +129,12 @@ public class TeacherRepository {
     }
     private void getTeacherByCode(String code, TeacherCallback callback) {
         CollectionReference teachersCollection = firebaseFirestore.collection("teachers");
-        teachersCollection.document(code).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    DocumentSnapshot documentSnapshot = task.getResult();
-                    if (documentSnapshot.exists()){
-                       Teacher teacher =  documentSnapshot.toObject(Teacher.class);
-                       callback.onTeacherLoaded(teacher);
-                    }
-            }
+        teachersCollection.document(code).get().addOnCompleteListener(task -> {
+                DocumentSnapshot documentSnapshot = task.getResult();
+                if (documentSnapshot.exists()){
+                   Teacher teacher =  documentSnapshot.toObject(Teacher.class);
+                   callback.onTeacherLoaded(teacher);
+                }
         });
     }
 

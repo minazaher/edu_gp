@@ -13,6 +13,8 @@ import com.example.educationalgp.Model.Grade;
 import com.example.educationalgp.Model.Student;
 import com.example.educationalgp.R;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class StudentsAdapter extends RecyclerView.Adapter<StudentsAdapter.viewholder> {
@@ -35,7 +37,7 @@ public class StudentsAdapter extends RecyclerView.Adapter<StudentsAdapter.viewho
     public void onBindViewHolder(@NonNull StudentsAdapter.viewholder holder, int position) {
         holder.imageView.setImageResource(R.drawable.student_placeholder);
         holder.name.setText(students.get(position).getUsername());
-        holder.grade.setText(position);
+        holder.grade.setText(String.valueOf(students.get(position).getGrades().get(0).getMark()));
     }
 
     @Override

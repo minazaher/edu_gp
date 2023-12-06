@@ -26,16 +26,29 @@ public class StudentProfileActivity extends AppCompatActivity {
         binding =ActivityStudentProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        boolean isTeacher = getIntent().getBooleanExtra("isTeacher", false);
+        if (isTeacher){
+            binding.tvChooseQuiz.setText("اختر الاختبار الذي تريد تعديله");
+            binding.btnGoToActivity.setOnClickListener(v -> {
+                Intent intent = new Intent(StudentProfileActivity.this, QuizActivity.class);
+                intent.putExtra("unit", unit);
+                intent.putExtra("lesson", lesson);
+                intent.putExtra("isTeacher", true);
+                startActivity(intent);
+            });
+        }
+        else
+            {
+                binding.btnGoToActivity.setOnClickListener(v -> goToActivitySelection(unit,lesson));
+            }
 
         initializeUnitsRecView();
-        initializeLessonsRecView(getUnitThreeLessons());
-        binding.btnGoToActivity.setOnClickListener(v -> goToActivitySelection(unit,lesson));
+        initializeLessonsRecView(getUnitOneLessons());
 
     }
 
 
     private ArrayList<Course> getUnits(){
-
         Course unit1 = new Course("التفاعلات الكيميائية", "https://firebasestorage.googleapis.com/v0/b/educationalgp.appspot.com/o/img_unit1.jpg?alt=media&token=512136c4-e710-400e-b48d-774bf4fd8fa3");
         Course unit2 = new Course("القوى والحركة", "https://firebasestorage.googleapis.com/v0/b/educationalgp.appspot.com/o/img_unit2.jpeg?alt=media&token=16729e81-e112-4779-87e0-b858771cfd2e");
         Course unit3 = new Course("الارض و الكون", "https://firebasestorage.googleapis.com/v0/b/educationalgp.appspot.com/o/img_unit3.jpg?alt=media&token=b63b00ae-1cf8-4858-bfc9-2a505c5d4541");
@@ -121,7 +134,7 @@ public class StudentProfileActivity extends AppCompatActivity {
     }
 
     private void goToActivitySelection(String unit, String lesson){
-        Intent intent = new Intent(StudentProfileActivity.this, QuizActivity.class);
+        Intent intent = new Intent(StudentProfileActivity.this, GameActivity.class);
         intent.putExtra("unit", unit);
         intent.putExtra("lesson", lesson);
         startActivity(intent);
