@@ -127,6 +127,49 @@ public class TeacherRepository {
                     }
                 });
     }
+
+    public void getTeacherById(String id, TeacherCallback callback) {
+        CollectionReference teachersCollection = firebaseFirestore.collection("teachers");
+        teachersCollection.whereEqualTo("id", id).get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            String email = document.getString("email");
+                            String username = document.getString("username");
+                            String password = document.getString("password");
+                            List<HashMap<String, Object>> studentsData = (List<HashMap<String, Object>>) document.get("students");
+                            List<Student> students = new ArrayList<>();
+                            if (studentsData != null) {
+                                for (HashMap<String, Object> studentData : studentsData) {
+                                    String studentId = (String) studentData.get("id");
+                                    String studentUsername = (String) studentData.get("username");
+                                    List <HashMap<String, Object>> grades = (List<HashMap<String, Object>>) studentData.get("grades");
+                                    List<Grade> gradeList = new ArrayList<>();
+                                    assert grades != null;
+                                    for (HashMap<String, Object> grade : grades) {
+                                        String gradeId = (String) grade.get("id");
+                                        long mark = (long) grade.get("mark");
+                                        double percent = (double) grade.get("percentage");
+                                        String name = (String) grade.get("studentName");
+                                        String c = (String) grade.get("teacherCode");
+                                        Grade grade1 = new Grade(c, name, (int) mark, (float) percent);
+                                        grade1.setId(gradeId);
+                                        gradeList.add(grade1);
+                                    }
+                                    Student student = new Student(studentId, studentUsername , gradeList);
+                                    students.add(student);
+                                }
+                            }
+                            Teacher teacher = new Teacher(id, username, email, password, students);
+                            callback.onTeacherLoaded(teacher);
+                            return;
+                        }
+                    } else {
+                        Log.w("Firestore", "Error getting documents: ", task.getException());
+                    }
+                });
+    }
+
     private void getTeacherByCode(String code, TeacherCallback callback) {
         CollectionReference teachersCollection = firebaseFirestore.collection("teachers");
         teachersCollection.document(code).get().addOnCompleteListener(task -> {

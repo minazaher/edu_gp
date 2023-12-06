@@ -12,6 +12,7 @@ import com.example.educationalgp.Adapter.StudentsAdapter;
 import com.example.educationalgp.Model.Grade;
 import com.example.educationalgp.Model.Student;
 import com.example.educationalgp.Model.Teacher;
+import com.example.educationalgp.Repository.TeacherRepository;
 import com.example.educationalgp.ViewModel.TeacherViewModel;
 import com.example.educationalgp.databinding.ActivityTeacherProfileBinding;
 
@@ -41,6 +42,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
         });
 
         getTeacherData();
+
     }
 
 
@@ -48,10 +50,20 @@ public class TeacherProfileActivity extends AppCompatActivity {
     private void getTeacherData() {
         String email = getIntent().getStringExtra("email");
         teacherViewModel.getTeacherByEmail(email, teacher -> {
-            accountOwner = teacher;
-            setTeacherUI();
-            System.out.println(teacher.toString());
-            getTeacherStudents();
+            if(teacher != null){
+                accountOwner = teacher;
+                setTeacherUI();
+                getTeacherStudents();
+            }
+            else {
+                String id = getIntent().getStringExtra("teacherId");
+                teacherViewModel.getTeacherById(id, teacher1 -> {
+                    accountOwner = teacher1;
+                    setTeacherUI();
+                    getTeacherStudents();
+                });
+            }
+
         });
 
     }

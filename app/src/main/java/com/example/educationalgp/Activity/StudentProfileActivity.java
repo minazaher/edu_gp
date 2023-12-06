@@ -18,14 +18,14 @@ public class StudentProfileActivity extends AppCompatActivity {
     ActivityStudentProfileBinding binding;
 
     String unit = "", lesson = "", teacherId ="";
-
+    boolean isTeacher;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityStudentProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        boolean isTeacher = getIntent().getBooleanExtra("isTeacher", false);
+        isTeacher = getIntent().getBooleanExtra("isTeacher", false);
         teacherId = getIntent().getStringExtra("teacherId");
 
         if (isTeacher) {
@@ -43,9 +43,9 @@ public class StudentProfileActivity extends AppCompatActivity {
         binding.tvChooseQuiz.setText("اختر الاختبار الذي تريد تعديله");
         binding.btnGoToActivity.setOnClickListener(v -> {
             Intent intent = new Intent(StudentProfileActivity.this, QuizActivity.class);
-            intent.putExtra("unit", unit);
-            intent.putExtra("lesson", lesson);
+            intent.putExtra("quizId", unit.concat(lesson));
             intent.putExtra("isTeacher", true);
+            intent.putExtra("teacherId", teacherId);
             startActivity(intent);
         });
     }
@@ -156,9 +156,9 @@ public class StudentProfileActivity extends AppCompatActivity {
     }
 
     private void goToActivitySelection(String unit, String lesson) {
-        Intent intent = new Intent(StudentProfileActivity.this, QuizActivity.class);
-        intent.putExtra("quizId",unit.concat(lesson));
-        intent.putExtra("teacherId", teacherId);
+        Intent intent = new Intent(StudentProfileActivity.this, ActivitySelectActivity.class);
+        intent.putExtra("activityId",unit.concat(lesson));
+        intent.putExtra("teacherCode", teacherId);
         startActivity(intent);
     }
 

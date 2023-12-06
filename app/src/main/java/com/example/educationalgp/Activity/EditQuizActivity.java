@@ -40,6 +40,7 @@ public class EditQuizActivity extends AppCompatActivity {
     Question oldQuestion, newQuestion ;
     String teacherId = "";
     String imgUrlBeforeSaving = "";
+    String quizId;
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
     public ActivityResultLauncher<String> selectPhoto;
 
@@ -65,7 +66,8 @@ public class EditQuizActivity extends AppCompatActivity {
         teacherId = getIntent().getStringExtra("teacherId");
 
         if (comingFromQuiz){
-        oldQuestion = (Question) getIntent().getSerializableExtra("question");
+             oldQuestion = (Question) getIntent().getSerializableExtra("question");
+             quizId = getIntent().getStringExtra("quizId");
         }
 
         binding.questionImage.setOnClickListener(v -> {
@@ -100,12 +102,12 @@ public class EditQuizActivity extends AppCompatActivity {
     }
 
     private void updateQuiz(){
-            quizViewModel.loadQuiz("un2less1", new QuizRepository.OnQuizFetchListener() {
+            quizViewModel.loadQuiz(quizId, new QuizRepository.OnQuizFetchListener() {
                 @Override
                 public void onQuizFetched(Quiz quiz) {
                     quiz.getQuestionList().removeIf(question -> question.getQuestionText().equals(oldQuestion.getQuestionText()));
                     quiz.getQuestionList().add(newQuestion);
-                    quiz.setId(quiz.getId().concat("teacherId"));
+                    quiz.setId(quiz.getId().concat(teacherId));
                     quizViewModel.createQuiz(quiz);
                     Toast.makeText(EditQuizActivity.this, "Quiz Edited Successfully", Toast.LENGTH_SHORT).show();
                 }
@@ -118,13 +120,16 @@ public class EditQuizActivity extends AppCompatActivity {
     private Question getNewQuestion() {
         String head = binding.etQuestionTitle.getText().toString();
         String ch1 = binding.layoutQuestionAnswer1.getText().toString();
-        String ch2 = binding.layoutQuestionAnswer1.getText().toString();
-        String ch3 = binding.layoutQuestionAnswer1.getText().toString();
-        String ch4 = binding.layoutQuestionAnswer1.getText().toString();
+        String ch2 = binding.layoutQuestionAnswer2.getText().toString();
+        String ch3 = binding.layoutQuestionAnswer3.getText().toString();
+        String ch4 = binding.layoutQuestionAnswer4.getText().toString();
         String rightAnswer = binding.etRightAnswer.getText().toString();
         String url = imgUrlBeforeSaving;
+
         Question question = new Question(head,ch1, ch2,ch3,ch4,rightAnswer);
-        question.setImgUrl(url);
+        if (!url.isEmpty()){
+            question.setImgUrl(url);
+        }
         return question;
     }
 

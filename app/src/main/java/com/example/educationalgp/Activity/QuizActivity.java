@@ -2,6 +2,7 @@ package com.example.educationalgp.Activity;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.educationalgp.Model.Grade;
@@ -22,6 +24,7 @@ import com.example.educationalgp.Repository.GradeRepository;
 import com.example.educationalgp.Repository.QuizRepository;
 import com.example.educationalgp.ViewModel.QuizViewModel;
 import com.example.educationalgp.databinding.ActivityQuizBinding;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -47,25 +50,62 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         quizViewModel = new QuizViewModel();
         gradeRepository = new GradeRepository();
+
         quizId = getIntent().getStringExtra("quizId");
         teacherId = getIntent().getStringExtra("teacherId");
-
+        isTeacher = getIntent().getBooleanExtra("isTeacher", false);
 
         if (isTeacher) {
             setTeacherUI();
             loadQuizForTeacher();
         } else {
+            setStudentUI();
             loadQuizForStudent();
         }
 
+    }
 
+
+    private void confirmBackToProfile(){
+        Snackbar snackbar = Snackbar.make(binding.getRoot(), "هل تريد العودة للحساب؟", Snackbar.LENGTH_LONG);
+        View snackbarView = snackbar.getView();
+        TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+        snackbar.setAction("تاكيد", v -> {
+            Intent intent = new Intent(QuizActivity.this, TeacherProfileActivity.class);
+            intent.putExtra("teacherId", teacherId);
+            startActivity(intent);
+        });
+
+       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            textView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+        } else {
+            textView.setGravity(GravityCompat.END);
+        }
+        snackbar.show();
+    }
+    @Override
+    public void onBackPressed() {
+        if (isTeacher) {
+            confirmBackToProfile();
+        }
+        else{
+            super.onBackPressed();
+        }
     }
 
     private void setTeacherUI() {
-        binding.tvSubmitQuestion.setText("السؤال التالي");
-        binding.tvSubmitQuestion.setOnClickListener(v -> moveNextOrFinish());
+        binding.layoutTeacherButtons.setVisibility(View.VISIBLE);
+        binding.studentButton.setVisibility(View.GONE);
+        binding.tvNextQuestion.setOnClickListener(v -> moveNext());
+        binding.tvPreviousQuestion.setOnClickListener(v -> movePrevious());
         binding.imgEdit.setVisibility(View.VISIBLE);
         binding.imgEdit.setOnClickListener(v -> selectQuestionToEdit());
+    }
+
+    private void setStudentUI() {
+        binding.layoutTeacherButtons.setVisibility(View.GONE);
+        binding.studentButton.setVisibility(View.VISIBLE);
+        binding.imgEdit.setVisibility(View.GONE);
     }
 
     private void selectQuestionToEdit() {
@@ -73,6 +113,9 @@ public class QuizActivity extends AppCompatActivity {
         Intent intent = new Intent(QuizActivity.this, EditQuizActivity.class);
         intent.putExtra("question", question);
         intent.putExtra("quiz", true);
+        intent.putExtra("quizId", currentQuiz.getId());
+        intent.putExtra("teacherId", teacherId);
+
         startActivity(intent);
     }
 
@@ -225,7 +268,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void loadQuizForTeacher() {
-        quizViewModel.loadQuiz(quizId, new QuizRepository.OnQuizFetchListener() {
+        quizViewModel.getQuizForTeacher(quizId, teacherId,new QuizRepository.OnQuizFetchListener() {
             @Override
             public void onQuizFetched(Quiz quiz) {
                 currentQuiz = quiz;
@@ -234,6 +277,8 @@ public class QuizActivity extends AppCompatActivity {
                     getQuestion(currentQuestionNumber);
                     setCounter(currentQuestionNumber + 1, questionList.size());
                     moveNextOrFinish();
+                }else{
+                    loadQuizById();
                 }
             }
 
@@ -272,6 +317,26 @@ public class QuizActivity extends AppCompatActivity {
             binding.tvSubmitQuiz.callOnClick(); // Automatically trigger quiz submission
         }
     }
+    private void movePrevious() {
+        if (currentQuestionNumber > 0) {
+            currentQuestionNumber--; // Move to the previous question
+            getQuestion(currentQuestionNumber);
+            setCounter(currentQuestionNumber + 1, questionList.size());
+        } else {
+            Toast.makeText(this, "هذا اول سؤال في الاختبار", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void moveNext() {
+        if (currentQuestionNumber < questionList.size() - 1) {
+            currentQuestionNumber++; // Move to the next question
+            getQuestion(currentQuestionNumber);
+            setCounter(currentQuestionNumber + 1, questionList.size());
+        } else {
+            Toast.makeText(this, "هذا اخر سؤال في الاختبار", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     private void calculateStudentMark() {
         System.out.println("Correct Answers : " + correctAnswers);

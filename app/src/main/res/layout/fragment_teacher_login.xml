@@ -11,9 +11,9 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         android:id="@+id/layout_teacher_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="end"
         android:layout_marginTop="36dp"
+        android:gravity="end"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -35,6 +35,34 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             app:layout_constraintEnd_toEndOf="@+id/tv_signupNow"
             app:layout_constraintTop_toBottomOf="@id/tv_signupNow" />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/layout_enter_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_teacher_login">
+
+        <TextView
+            android:id="@+id/btn_signupNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notokufiarabic_bold"
+            android:text="سجل من هنا!"
+            android:textColor="@color/mainColor"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notokufiarabic_medium"
+            android:text="ليس لديك حساب؟" />
+
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/layout_enter_name"
         android:layout_width="match_parent"
@@ -42,7 +70,8 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         android:orientation="vertical"
         android:gravity="end"
         android:layout_marginTop="@dimen/_16sdp"
-        app:layout_constraintTop_toBottomOf="@id/layout_teacher_login">
+        app:layout_constraintTop_toBottomOf="@id/layout_signup"
+       >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -99,6 +128,8 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
 
     </LinearLayout>
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -112,19 +143,19 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         app:layout_constraintVertical_bias="0.118">
 
         <TextView
-            android:id="@+id/btn_signupNow"
+            android:id="@+id/btn_resetPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/mainColor"
             android:fontFamily="@font/notokufiarabic_bold"
             android:textStyle="bold"
-            android:text="سجل من هنا!" />
+            android:text="استرجع الحساب من هنا!" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/notokufiarabic_medium"
-            android:text="ليس لديك حساب؟" />
+            android:text="نسيت كلمة المرور؟" />
 
     </LinearLayout>
 

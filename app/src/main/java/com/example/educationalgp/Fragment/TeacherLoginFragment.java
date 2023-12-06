@@ -18,6 +18,8 @@ import com.example.educationalgp.Activity.TeacherProfileActivity;
 import com.example.educationalgp.Repository.StudentRepository;
 import com.example.educationalgp.ViewModel.TeacherViewModel;
 import com.example.educationalgp.databinding.FragmentTeacherLoginBinding;
+import com.google.firebase.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.regex.Pattern;
 
@@ -43,10 +45,14 @@ public class TeacherLoginFragment extends Fragment {
 
         binding.btnTeacherLogin.setOnClickListener(v -> loginTeacher());
         binding.btnSignupNow.setOnClickListener(v -> goToSignupPage());
-
+        binding.btnResetPassword.setOnClickListener(v -> {resetPassword();});
         return view;    }
 
 
+    private void resetPassword(){
+        getEmail();
+        FirebaseAuth.getInstance().sendPasswordResetEmail(email);
+    }
 
     private void loginTeacher() {
         getData();
@@ -59,8 +65,8 @@ public class TeacherLoginFragment extends Fragment {
 
                 @Override
                 public void onFailure(String errorMessage) {
-                    Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(requireContext(), "من فضلك تأكد من بياناتك مرة اخرى", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "من فضلك تأكد من بياناتك مرة اخرى", Toast.LENGTH_SHORT).show();
                 }
             });
 

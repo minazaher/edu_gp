@@ -96,9 +96,10 @@
         android:paddingHorizontal="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/question"
-        app:layout_constraintVertical_bias="0.148">
+        app:layout_constraintVertical_bias="0.152">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -112,8 +113,8 @@
                 android:id="@+id/option_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_4sdp"
                 android:fontFamily="@font/notokufiarabic_medium"
+                android:padding="@dimen/_4sdp"
                 android:text="الطاقة الكهربائيه"
                 android:textColor="@color/mainColor"
                 android:textSize="@dimen/_14ssp" />
@@ -200,9 +201,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/notokufiarabic_medium"
+                android:padding="@dimen/_4sdp"
                 android:text="الطاقة الصوتيه"
                 android:textColor="@color/mainColor"
-                android:padding="@dimen/_4sdp"
                 android:textSize="@dimen/_14ssp" />
 
             <TextView
@@ -216,10 +217,74 @@
         </LinearLayout>
 
     </LinearLayout>
+<LinearLayout
+    android:id="@+id/layout_teacherButtons"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/_10sdp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/layout_answers">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tv_previousQuestion"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/_35sdp"
+        android:background="@drawable/btn_signup"
+        android:paddingVertical="@dimen/_3sdp"
+        app:layout_constraintVertical_bias="0.335">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notokufiarabic_regular"
+            android:text=" السابق"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tv_nextQuestion"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_weight="1"
+        android:background="@drawable/btn_signup"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tv_nextQuestion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_answers"
+        app:layout_constraintVertical_bias="0.335">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notokufiarabic_regular"
+            android:text="التالي"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/studentButton"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_35sdp"
+        android:visibility="gone"
         android:layout_marginHorizontal="@dimen/_40sdp"
         android:background="@drawable/btn_signup"
         android:paddingVertical="@dimen/_3sdp"
