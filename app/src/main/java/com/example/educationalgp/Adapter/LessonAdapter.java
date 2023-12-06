@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.educationalgp.Model.Course;
 import com.example.educationalgp.R;
+import com.example.educationalgp.onCourseSelected;
 
 import java.util.ArrayList;
 
@@ -22,12 +23,17 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.viewholder
     ArrayList<Course> courses;
     Context context;
     private int selectedPosition = RecyclerView.NO_POSITION;
+    onCourseSelected onLessonSelected;
 
 
-    public LessonAdapter(ArrayList<Course> courses, Context context) {
+
+    public LessonAdapter(ArrayList<Course> courses, Context context, onCourseSelected onLessonSelected) {
         this.courses = courses;
         this.context = context;
+        this.onLessonSelected = onLessonSelected;
+
     }
+
 
 
     @NonNull
@@ -42,7 +48,6 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.viewholder
 
     @Override
     public void onBindViewHolder(@NonNull LessonAdapter.viewholder holder, int position) {
-        System.out.println(courses.get(position));
         holder.courseName.setText(courses.get(position).getName());
         Glide.with(context).asBitmap().load(courses.get(position).getImgUrl()).into(holder.courseImage);
 
@@ -55,6 +60,7 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.viewholder
         holder.card.setOnClickListener(v -> {
             int previousSelectedPosition = selectedPosition;
             selectedPosition = holder.getAdapterPosition();
+            onLessonSelected.onUnitSelected(selectedPosition);
             notifyItemChanged(previousSelectedPosition);
             notifyItemChanged(selectedPosition);
         });

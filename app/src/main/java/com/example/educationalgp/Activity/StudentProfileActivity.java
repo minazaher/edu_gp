@@ -1,54 +1,60 @@
 package com.example.educationalgp.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.educationalgp.Adapter.CourseAdapter;
 import com.example.educationalgp.Adapter.LessonAdapter;
 import com.example.educationalgp.Model.Course;
-import com.example.educationalgp.R;
 import com.example.educationalgp.databinding.ActivityStudentProfileBinding;
+import com.example.educationalgp.onCourseSelected;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class StudentProfileActivity extends AppCompatActivity {
     ActivityStudentProfileBinding binding;
 
-    String unit = "", lesson = "";
+    String unit = "", lesson = "", teacherId ="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding =ActivityStudentProfileBinding.inflate(getLayoutInflater());
+        binding = ActivityStudentProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         boolean isTeacher = getIntent().getBooleanExtra("isTeacher", false);
-        if (isTeacher){
-            binding.tvChooseQuiz.setText("اختر الاختبار الذي تريد تعديله");
-            binding.btnGoToActivity.setOnClickListener(v -> {
-                Intent intent = new Intent(StudentProfileActivity.this, QuizActivity.class);
-                intent.putExtra("unit", unit);
-                intent.putExtra("lesson", lesson);
-                intent.putExtra("isTeacher", true);
-                startActivity(intent);
-            });
+        teacherId = getIntent().getStringExtra("teacherId");
+
+        if (isTeacher) {
+            setTeacherUI();
+        } else {
+            setStudentUI();
         }
-        else
-            {
-                binding.btnGoToActivity.setOnClickListener(v -> goToActivitySelection(unit,lesson));
-            }
 
         initializeUnitsRecView();
         initializeLessonsRecView(getUnitOneLessons());
 
     }
 
+    private void setTeacherUI() {
+        binding.tvChooseQuiz.setText("اختر الاختبار الذي تريد تعديله");
+        binding.btnGoToActivity.setOnClickListener(v -> {
+            Intent intent = new Intent(StudentProfileActivity.this, QuizActivity.class);
+            intent.putExtra("unit", unit);
+            intent.putExtra("lesson", lesson);
+            intent.putExtra("isTeacher", true);
+            startActivity(intent);
+        });
+    }
 
-    private ArrayList<Course> getUnits(){
+    private void setStudentUI() {
+        binding.btnGoToActivity.setOnClickListener(v -> goToActivitySelection(unit, lesson));
+    }
+
+    private ArrayList<Course> getUnits() {
         Course unit1 = new Course("التفاعلات الكيميائية", "https://firebasestorage.googleapis.com/v0/b/educationalgp.appspot.com/o/img_unit1.jpg?alt=media&token=512136c4-e710-400e-b48d-774bf4fd8fa3");
         Course unit2 = new Course("القوى والحركة", "https://firebasestorage.googleapis.com/v0/b/educationalgp.appspot.com/o/img_unit2.jpeg?alt=media&token=16729e81-e112-4779-87e0-b858771cfd2e");
         Course unit3 = new Course("الارض و الكون", "https://firebasestorage.googleapis.com/v0/b/educationalgp.appspot.com/o/img_unit3.jpg?alt=media&token=b63b00ae-1cf8-4858-bfc9-2a505c5d4541");
@@ -59,7 +65,7 @@ public class StudentProfileActivity extends AppCompatActivity {
         return units;
     }
 
-    private void initializeUnitsRecView(){
+    private void initializeUnitsRecView() {
         ArrayList<Course> units = getUnits();
         CourseAdapter courseAdapter = new CourseAdapter(units, this, position -> {
             switch (position) {
@@ -67,8 +73,7 @@ public class StudentProfileActivity extends AppCompatActivity {
                     initializeLessonsRecView(getUnitOneLessons());
                     break;
                 case 1:
-                    unit= "un2";
-                    lesson = "less1";
+                    unit = "un2";
                     initializeLessonsRecView(getUnitTwoLessons());
                     break;
                 case 2:
@@ -84,13 +89,28 @@ public class StudentProfileActivity extends AppCompatActivity {
         binding.unitsRecyclerView.setAdapter(courseAdapter);
 
     }
-    private void initializeLessonsRecView(ArrayList<Course> lessons){
-        LessonAdapter courseAdapter = new LessonAdapter(lessons, this);
+
+    private void initializeLessonsRecView(ArrayList<Course> lessons) {
+        LessonAdapter courseAdapter = new LessonAdapter(lessons, this, this::getSelectedLesson);
         binding.lessonsRecyclerView.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL,
                 false));
         binding.lessonsRecyclerView.setAdapter(courseAdapter);
 
+    }
+
+    private void getSelectedLesson(int pos){
+        switch (pos) {
+            case 0:
+                lesson = "less1";
+                break;
+            case 1:
+                lesson = "less2";
+                break;
+            case 2:
+                lesson = "less3";
+                break;
+        }
     }
 
     private ArrayList<Course> getUnitTwoLessons() {
@@ -106,6 +126,7 @@ public class StudentProfileActivity extends AppCompatActivity {
         return lessons;
 
     }
+
     private ArrayList<Course> getUnitOneLessons() {
         Course lesson1 = new Course("الاتحاد الكيميائى", "https://firebasestorage.googleapis.com/v0/b/educationalgp.appspot.com/o/img_un2less1.jpeg?alt=media&token=ae62cf00-40d3-4893-9f12-1352a47891bc");
         Course lesson2 = new Course("المركبات الكيميائية ", "https://firebasestorage.googleapis.com/v0/b/educationalgp.appspot.com/o/img_un2less2.jpeg?alt=media&token=20b7da54-6a82-4f19-b0ca-9c722f003ced");
@@ -119,8 +140,9 @@ public class StudentProfileActivity extends AppCompatActivity {
         return lessons;
 
     }
+
     private ArrayList<Course> getUnitThreeLessons() {
-        Course lesson1 = new Course("الدرس الأول : الاجرام السماوية", "https://firebasestorage.googleapis.com/v0/b/educationalgp.appspot.com/o/img_un3less1.jpeg?alt=media&token=50f5deb0-d342-4600-abfa-f6136afdbe1e");
+        Course lesson1 = new Course("الاجرام السماوية", "https://firebasestorage.googleapis.com/v0/b/educationalgp.appspot.com/o/img_un3less1.jpeg?alt=media&token=50f5deb0-d342-4600-abfa-f6136afdbe1e");
         Course lesson2 = new Course("الأرض", "https://firebasestorage.googleapis.com/v0/b/educationalgp.appspot.com/o/img_un3less2.jpeg?alt=media&token=420817d5-1c1e-4d8f-a579-2524954241d5");
         Course lesson3 = new Course("الصخور والمعادن", "https://firebasestorage.googleapis.com/v0/b/educationalgp.appspot.com/o/img_un3less3.jpeg?alt=media&token=0c2dbc66-cd9c-4351-9a4e-9d55180bdbce");
         ArrayList<Course> lessons = new ArrayList<>();
@@ -133,13 +155,12 @@ public class StudentProfileActivity extends AppCompatActivity {
 
     }
 
-    private void goToActivitySelection(String unit, String lesson){
-        Intent intent = new Intent(StudentProfileActivity.this, GameActivity.class);
-        intent.putExtra("unit", unit);
-        intent.putExtra("lesson", lesson);
+    private void goToActivitySelection(String unit, String lesson) {
+        Intent intent = new Intent(StudentProfileActivity.this, QuizActivity.class);
+        intent.putExtra("quizId",unit.concat(lesson));
+        intent.putExtra("teacherId", teacherId);
         startActivity(intent);
     }
-
 
 
 }

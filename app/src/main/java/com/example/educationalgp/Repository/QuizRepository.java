@@ -6,8 +6,10 @@ import com.example.educationalgp.Model.Question;
 import com.example.educationalgp.Model.Quiz;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -47,6 +49,13 @@ public class QuizRepository {
 
     private void deleteQuestion(Question oldQuestion, String id) {
         quizCollection.document(id).update("questions", FieldValue.arrayRemove(oldQuestion));
+    }
+
+    public void getQuizForTeacher(String quizId, String teacherCode, OnQuizFetchListener listener){
+        quizCollection.document(quizId.concat(teacherCode)).get().addOnSuccessListener(documentSnapshot -> {
+            Quiz quiz = documentSnapshot.toObject(Quiz.class);
+            listener.onQuizFetched(quiz);
+        }).addOnFailureListener(e -> getQuizById(quizId, listener));
     }
 
 

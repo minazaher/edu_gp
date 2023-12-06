@@ -21,6 +21,9 @@ public class QuizViewModel extends ViewModel {
         quizRepository.getQuizById(quizId, listener);
     }
 
+    public void getQuizForTeacher(String quizId, String teacherCode, QuizRepository.OnQuizFetchListener listener){
+        quizRepository.getQuizForTeacher(quizId, teacherCode, listener);
+    }
     public void createQuiz(Quiz quiz) {
         quizRepository.createQuiz(quiz);
     }

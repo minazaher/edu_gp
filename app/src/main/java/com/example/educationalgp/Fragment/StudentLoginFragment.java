@@ -88,6 +88,8 @@ public class StudentLoginFragment extends Fragment {
 
     private void goToStudentProfile(){
         Intent intent = new Intent(getActivity(), StudentProfileActivity.class);
+        code = binding.etStudentEnterCode.getText().toString();
+        intent.putExtra("teacherId", code);
         startActivity(intent);
     }
 

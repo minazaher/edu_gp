@@ -5,6 +5,6 @@ import com.example.educationalgp.Model.Course;
 import java.util.List;
 
 public interface onCourseSelected {
-    void onUnitSelected(List<Course> Lessons);
+    void onUnitSelected(int pos);
 
 }

@@ -20,6 +20,7 @@ import java.util.List;
 public class StudentsAdapter extends RecyclerView.Adapter<StudentsAdapter.viewholder> {
     List<Student> students;
 
+
     public StudentsAdapter(List<Student> students){
         this.students = students;
     }
