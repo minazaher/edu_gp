@@ -23,7 +23,7 @@ public class GameActivity extends AppCompatActivity {
         WebSettings webSettings = gameWebView.getSettings();
         webSettings.setJavaScriptEnabled(true); // Enable JavaScript (if required by the website)
 
-        gameWebView.loadUrl("https://www.sheppardsoftware.com/science/animals/games/food-chain/");
+        gameWebView.loadUrl("https://wordwall.net/play/65248/393/585");
         // Enable zooming and scrolling
         webSettings.setBuiltInZoomControls(true);
         webSettings.setDisplayZoomControls(false); // Hide the zoom controls
