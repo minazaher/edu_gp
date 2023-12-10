@@ -32,18 +32,21 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void signup() {
-        getTeacherData();
-        teacherViewModel.signupTeacher(username, email, password, new StudentRepository.onAuthenticationListener() {
-            @Override
-            public void onSuccess() {
-                goToLoginPage();
-            }
+        if (getTeacherData()){
+            teacherViewModel.signupTeacher(username, email, password, new StudentRepository.onAuthenticationListener() {
+                @Override
+                public void onSuccess() {
+                    goToLoginPage();
+                }
 
-            @Override
-            public void onFailure(String errorMessage) {
-                Toast.makeText(SignUpActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onFailure(String errorMessage) {
+                    Toast.makeText(SignUpActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else {
+            Toast.makeText(this, "من فضلك تأكد من ادخال بياناتك بشكل صحيح", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void goToLoginPage() {
@@ -52,49 +55,60 @@ public class SignUpActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void getTeacherData() {
-        getUsername();
-        getEmail();
-        getPassword();
+    private boolean getTeacherData() {
+        return getUsername() && getEmail() && getPassword();
     }
 
-    private void getUsername() {
+    private boolean getUsername() {
         String n = binding.etTeacherNameSignup.getText().toString();
         if (TextUtils.isEmpty(n)){
             binding.etTeacherNameSignup.setError("من فضلك ادخل اسمك هنا");
+            return false;
         }
-        else {
-            username = n;
-        }
+        username = n;
+        return true;
+
     }
 
-    private void getEmail(){
+    private boolean getEmail(){
         String e = binding.etTeacherEmailSignup.getText().toString();
         if(TextUtils.isEmpty(e)){
             binding.etTeacherEmailSignup.setError("من فضلك ادخل البريد الالكتروني هنا");
+            return false;
         }
         else if(!isValidEmail(e)){
             binding.etTeacherEmailSignup.setError("من فضلك تأكد من صيغة البريد الالكتروني");
+            return false;
         }
-        else
-            email = e;
+        email = e;
+        return true;
+
     }
 
-    private void getPassword(){
+    private boolean getPassword(){
         String p = binding.etTeacherPasswordSignup.getText().toString();
         String confirm = binding.etTeacherConfirmPasswordSignup.getText().toString();
         if(TextUtils.isEmpty(p)){
             binding.etTeacherPasswordSignup.setError("من فضلك ادخل كلمة المرور هنا");
+            return false;
+        }
+        if(p.length()<6){
+            binding.etTeacherPasswordSignup.setError("من فضلك تأكد من ان كلمة المرور اكثر من 6 احرف او ارقام");
+            return false;
         }
         if(TextUtils.isEmpty(confirm)){
             binding.etTeacherConfirmPasswordSignup.setError("من فضلك ادخل كلمة المرور مرة اخرى هنا");
+            return false;
+
         }
         if(!confirm.equals(p)){
             binding.etTeacherPasswordSignup.setError("من فضلك تحقق من تطابق كلمتي المرور");
+            return false;
         }
-        else{
-            password = p;
-        }
+        password = p;
+
+        return true;
+
     }
 
 
