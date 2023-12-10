@@ -1,5 +1,7 @@
 package com.example.educationalgp.Repository;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -184,6 +186,23 @@ public class TeacherRepository {
         });
     }
 
+    public void getTeachersIDs(TeacherIdCallBack callBack){
+        firebaseFirestore.collection("teachers")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<String> ids = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            ids.add(document.getId());
+                        }
+                        callBack.onTeachersIdsLoaded(ids);
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
+                    }
+                });
+
+    }
+
     public void updateStudentGradeForTeacher(String code, String studentName, Grade grade){
         getTeacherByCode(code, teacher -> {
             System.out.println(teacher.getStudents().toString());
@@ -243,6 +262,10 @@ public class TeacherRepository {
 
     public interface TeacherCallback {
         void onTeacherLoaded(Teacher teacher);
+    }
+
+    public interface TeacherIdCallBack {
+        void onTeachersIdsLoaded(List<String> IDs);
     }
 
 }

@@ -14,15 +14,22 @@ import android.widget.Toast;
 import com.example.educationalgp.Activity.QuizActivity;
 import com.example.educationalgp.Activity.StudentProfileActivity;
 import com.example.educationalgp.Repository.StudentRepository.onAuthenticationListener;
+import com.example.educationalgp.Repository.TeacherRepository;
 import com.example.educationalgp.ViewModel.StudentViewModel;
+import com.example.educationalgp.ViewModel.TeacherViewModel;
 import com.example.educationalgp.databinding.FragmentStudentLoginBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StudentLoginFragment extends Fragment {
     private FragmentStudentLoginBinding binding;
     private final StudentViewModel studentViewModel;
+    private final TeacherViewModel teacherViewModel;
     String username= "", code = "";
     public StudentLoginFragment() {
         studentViewModel = new StudentViewModel();
+        teacherViewModel = new TeacherViewModel();
 
     }
 
@@ -118,7 +125,18 @@ public class StudentLoginFragment extends Fragment {
             binding.etStudentEnterCode.setError("من فضلك ادخل كود المعلم هنا");
             return false;
         }
+        else if (!isTeacherAvailable(code)){
+            binding.etStudentEnterCode.setError("من فضلك ادخل كود معلم صحيح");
+            return false;
+        }
         return true;
+    }
+
+    private boolean isTeacherAvailable(String code){
+        List<String> availableIDs = new ArrayList<>();
+        teacherViewModel.getTeacherIDs(availableIDs::addAll);
+
+        return availableIDs.contains(code);
     }
 
 

@@ -35,6 +35,9 @@ public class TeacherViewModel extends ViewModel {
         teacherRepository.addStudentToTeacher(code,student);
     }
 
+    public void getTeacherIDs(TeacherRepository.TeacherIdCallBack callBack){
+        teacherRepository.getTeachersIDs(callBack);
+    }
     public void updateStudentGrade(String code, String studentName, Grade grade){
         teacherRepository.updateStudentGradeForTeacher(code, studentName, grade);
     }
