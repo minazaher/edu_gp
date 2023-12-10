@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -63,6 +64,8 @@ public class QuizActivity extends AppCompatActivity {
             loadQuizForStudent();
         }
 
+
+
     }
 
 
@@ -73,6 +76,7 @@ public class QuizActivity extends AppCompatActivity {
         snackbar.setAction("تاكيد", v -> {
             Intent intent = new Intent(QuizActivity.this, TeacherProfileActivity.class);
             intent.putExtra("teacherId", teacherId);
+            finish();
             startActivity(intent);
         });
 
@@ -83,15 +87,6 @@ public class QuizActivity extends AppCompatActivity {
         }
         snackbar.show();
     }
-    @Override
-    public void onBackPressed() {
-        if (isTeacher) {
-            confirmBackToProfile();
-        }
-        else{
-            super.onBackPressed();
-        }
-    }
 
     private void setTeacherUI() {
         binding.layoutTeacherButtons.setVisibility(View.VISIBLE);
@@ -100,6 +95,12 @@ public class QuizActivity extends AppCompatActivity {
         binding.tvPreviousQuestion.setOnClickListener(v -> movePrevious());
         binding.imgEdit.setVisibility(View.VISIBLE);
         binding.imgEdit.setOnClickListener(v -> selectQuestionToEdit());
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                confirmBackToProfile();
+            }
+        });
     }
 
     private void setStudentUI() {

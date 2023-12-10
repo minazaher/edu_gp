@@ -47,7 +47,7 @@ public class StudentRepository {
     }
 
     public void login(String username,String teacherCode, final onAuthenticationListener listener) {
-        firebaseAuth.signInWithEmailAndPassword(username, ApplicationClass.DEFAULT_STUDENT_PASSWORD)
+        firebaseAuth.signInWithEmailAndPassword(username+"@gmail.com", ApplicationClass.DEFAULT_STUDENT_PASSWORD)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         listener.onSuccess();
@@ -61,7 +61,7 @@ public class StudentRepository {
     }
 
         public void signup(String username,String teacherCode, final onAuthenticationListener listener) {
-        firebaseAuth.createUserWithEmailAndPassword(username, ApplicationClass.DEFAULT_STUDENT_PASSWORD)
+        firebaseAuth.createUserWithEmailAndPassword(username+"@gmail.com", ApplicationClass.DEFAULT_STUDENT_PASSWORD)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         listener.onSuccess();

@@ -2,7 +2,10 @@ package com.example.educationalgp.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -11,6 +14,8 @@ import com.example.educationalgp.Adapter.LessonAdapter;
 import com.example.educationalgp.Model.Course;
 import com.example.educationalgp.databinding.ActivityStudentProfileBinding;
 import com.example.educationalgp.onCourseSelected;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -36,8 +41,30 @@ public class StudentProfileActivity extends AppCompatActivity {
 
         initializeUnitsRecView();
         initializeLessonsRecView(getUnitOneLessons());
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                confirmSignout();
+            }
+        });
 
     }
+
+    private void confirmSignout() {
+        Snackbar snackbar = Snackbar.make(binding.getRoot(), "هل تريد تسجيل الخروج؟", Snackbar.LENGTH_LONG);
+        View snackbarView = snackbar.getView();
+        TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+        snackbar.setAction("تاكيد", v -> {
+            Intent intent = new Intent(StudentProfileActivity.this, RoleSelectorActivity.class);
+            FirebaseAuth.getInstance().signOut();
+            finish();
+            startActivity(intent);
+        });
+
+        textView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+        snackbar.show();
+    }
+
 
     private void setTeacherUI() {
         binding.tvChooseQuiz.setText("اختر الاختبار الذي تريد تعديله");

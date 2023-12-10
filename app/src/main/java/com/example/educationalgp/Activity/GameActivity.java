@@ -7,11 +7,16 @@ import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
 import com.example.educationalgp.R;
 
 public class GameActivity extends AppCompatActivity {
 
-    private WebView gameWebView;
+    String gameId = "";
+    String LESSON_ONE_GAME_URL = "https://wordwall.net/play/65248/393/585";
+    String LESSON_TWO_GAME_URL = "";
+    String LESSON_THREE_GAME_URL = "https://wordwall.net/embed/32accbb6e7124c12b83b4c0db1b594c3?themeId=26&templateId=49&fontStackId=1";
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -19,12 +24,28 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        gameWebView = findViewById(R.id.game_webview);
+        WebView gameWebView = findViewById(R.id.game_webview);
         WebSettings webSettings = gameWebView.getSettings();
         webSettings.setJavaScriptEnabled(true); // Enable JavaScript (if required by the website)
 
-        gameWebView.loadUrl("https://wordwall.net/play/65248/393/585");
-        // Enable zooming and scrolling
+        gameId = getIntent().getStringExtra("activityId");
+
+        if (gameId != null) {
+            switch (gameId){
+                case "un2less1":
+                    gameWebView.loadUrl(LESSON_ONE_GAME_URL);
+                    break;
+                case "un2less":
+                    gameWebView.loadUrl(LESSON_TWO_GAME_URL);
+                    break;
+                case "un2less3" :
+                    gameWebView.loadUrl(LESSON_THREE_GAME_URL);
+                    break;
+                default:
+                    Toast.makeText(this, "غير متوفر حاليا", Toast.LENGTH_SHORT).show();
+
+            }
+        }
         webSettings.setBuiltInZoomControls(true);
         webSettings.setDisplayZoomControls(false); // Hide the zoom controls
         webSettings.setSupportZoom(true);

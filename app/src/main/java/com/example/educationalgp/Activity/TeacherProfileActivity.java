@@ -1,12 +1,16 @@
 package com.example.educationalgp.Activity;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.educationalgp.Adapter.StudentsAdapter;
 import com.example.educationalgp.Model.Grade;
@@ -15,6 +19,8 @@ import com.example.educationalgp.Model.Teacher;
 import com.example.educationalgp.Repository.TeacherRepository;
 import com.example.educationalgp.ViewModel.TeacherViewModel;
 import com.example.educationalgp.databinding.ActivityTeacherProfileBinding;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +31,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
     ActivityTeacherProfileBinding binding;
     TeacherViewModel teacherViewModel;
     Teacher accountOwner;
+    String id;
 
 
     @Override
@@ -33,6 +40,18 @@ public class TeacherProfileActivity extends AppCompatActivity {
         binding = ActivityTeacherProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         teacherViewModel = new TeacherViewModel();
+        id = getIntent().getStringExtra("teacherId");
+
+        if (id != null){
+            teacherViewModel.getTeacherById(id, teacher1 -> {
+                accountOwner = teacher1;
+                setTeacherUI();
+                getTeacherStudents();
+            });
+        }
+        else {
+            getTeacherData();
+        }
 
         binding.fabEditQuiz.setOnClickListener(v -> {
             Intent intent = new Intent(TeacherProfileActivity.this, StudentProfileActivity.class);
@@ -41,10 +60,29 @@ public class TeacherProfileActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        getTeacherData();
 
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                confirmSignout();
+            }
+        });
     }
 
+    private void confirmSignout() {
+        Snackbar snackbar = Snackbar.make(binding.getRoot(), "هل تريد تسجيل الخروج؟", Snackbar.LENGTH_LONG);
+        View snackbarView = snackbar.getView();
+        TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+        snackbar.setAction("تاكيد", v -> {
+            Intent intent = new Intent(TeacherProfileActivity.this, RoleSelectorActivity.class);
+            FirebaseAuth.getInstance().signOut();
+            finish();
+            startActivity(intent);
+        });
+
+        textView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+        snackbar.show();
+    }
 
 
     private void getTeacherData() {
@@ -55,15 +93,6 @@ public class TeacherProfileActivity extends AppCompatActivity {
                 setTeacherUI();
                 getTeacherStudents();
             }
-            else {
-                String id = getIntent().getStringExtra("teacherId");
-                teacherViewModel.getTeacherById(id, teacher1 -> {
-                    accountOwner = teacher1;
-                    setTeacherUI();
-                    getTeacherStudents();
-                });
-            }
-
         });
 
     }
