@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class StudentProfileActivity extends AppCompatActivity {
     ActivityStudentProfileBinding binding;
@@ -186,12 +188,20 @@ public class StudentProfileActivity extends AppCompatActivity {
     }
 
     private void goToActivitySelection(String unit, String lesson) {
-        Intent intent = new Intent(StudentProfileActivity.this, ActivitySelectActivity.class);
-        intent.putExtra("activityId",unit.concat(lesson));
-        intent.putExtra("teacherCode", teacherId);
-        intent.putExtra("studentName", studentName);
+        String[] availableLessons = new String[]{"un2less1", "un2less2", "un2less3"};
 
-        startActivity(intent);
+        if (Arrays.asList(availableLessons).contains(unit.concat(lesson))){
+            Intent intent = new Intent(StudentProfileActivity.this, ActivitySelectActivity.class);
+            intent.putExtra("activityId",unit.concat(lesson));
+            intent.putExtra("teacherCode", teacherId);
+            intent.putExtra("studentName", studentName);
+            startActivity(intent);
+        }
+        else {
+            Toast.makeText(this, "هذا العنصر غير متوفر الان", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
 

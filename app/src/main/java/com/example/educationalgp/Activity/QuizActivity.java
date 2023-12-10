@@ -353,7 +353,7 @@ public class QuizActivity extends AppCompatActivity {
         System.out.println("Grade Student Name is :" + studentName);
         Grade grade = new Grade(teacherId, studentName, correctAnswers,
                 (float) correctAnswers / currentQuiz.getTotalMarks());
-        grade.setId("Testing Now");
+        grade.setId(UUID.randomUUID().toString());
         gradeRepository.addNewGrade(studentName,grade);
     }
 
@@ -378,9 +378,5 @@ public class QuizActivity extends AppCompatActivity {
         dialogViewResult.show();
     }
 
-
-    public interface onResultCalculated {
-        void onResult(float res);
-    }
 }
 
