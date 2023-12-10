@@ -92,7 +92,7 @@ public class SignUpActivity extends AppCompatActivity {
             binding.etTeacherPasswordSignup.setError("من فضلك ادخل كلمة المرور هنا");
             return false;
         }
-        if(p.length()<6){
+        if( p.length() < 6){
             binding.etTeacherPasswordSignup.setError("من فضلك تأكد من ان كلمة المرور اكثر من 6 احرف او ارقام");
             return false;
         }

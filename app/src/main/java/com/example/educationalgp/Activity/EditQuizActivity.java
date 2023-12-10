@@ -1,5 +1,6 @@
 package com.example.educationalgp.Activity;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -70,13 +71,6 @@ public class EditQuizActivity extends AppCompatActivity {
              quizId = getIntent().getStringExtra("quizId");
         }
 
-        binding.questionImage.setOnClickListener(v -> {
-            Intent intent = new Intent(EditQuizActivity.this, QuizActivity.class);
-            intent.putExtra("isTeacher", true);
-            intent.putExtra("teacherId", teacherId);
-
-            startActivity(intent);
-        });
 
         if (oldQuestion != null) {
             setQuestion();
@@ -90,16 +84,27 @@ public class EditQuizActivity extends AppCompatActivity {
             binding.questionImage.setImageDrawable(null);
         });
 
-        binding.imageBack.setOnClickListener(v -> onBackPressed());
+        binding.imageBack.setOnClickListener(v ->
+                getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent intent = new Intent(EditQuizActivity.this, TeacherProfileActivity.class);
+                intent.putExtra("teacherId", teacherId);
+                startActivity(intent);
+            }
+        }) );
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent intent = new Intent(EditQuizActivity.this, TeacherProfileActivity.class);
+                intent.putExtra("teacherId", teacherId);
+                startActivity(intent);
+            }
+        });
 
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(EditQuizActivity.this, TeacherProfileActivity.class);
-        startActivity(intent);
-    }
 
     private void updateQuiz(){
             quizViewModel.loadQuiz(quizId, new QuizRepository.OnQuizFetchListener() {
@@ -109,11 +114,11 @@ public class EditQuizActivity extends AppCompatActivity {
                     quiz.getQuestionList().add(newQuestion);
                     quiz.setId(quiz.getId().concat(teacherId));
                     quizViewModel.createQuiz(quiz);
-                    Toast.makeText(EditQuizActivity.this, "Quiz Edited Successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditQuizActivity.this, "تم تعديل الاختبار", Toast.LENGTH_SHORT).show();
                 }
                 @Override
                 public void onQuizFetchFailure(String errorMessage) {
-                    Toast.makeText(EditQuizActivity.this, "Cannot edit question" + errorMessage, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditQuizActivity.this, "لم يتم تعديل الاختبار بسبب : " + errorMessage, Toast.LENGTH_SHORT).show();
                 }
             });
     }
