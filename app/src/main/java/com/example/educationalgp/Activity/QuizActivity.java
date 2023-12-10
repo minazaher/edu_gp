@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 public class QuizActivity extends AppCompatActivity {
     ActivityQuizBinding binding;
@@ -39,9 +42,9 @@ public class QuizActivity extends AppCompatActivity {
     int correctAnswers, incorrectAnswers;
     Quiz currentQuiz;
     GradeRepository gradeRepository;
-    String unit = "", lesson = "";
+    String studentName= "";
     boolean isTeacher;
-    private int currentQuestionNumber = 14;
+    private int currentQuestionNumber = 19;
     private AlertDialog dialogViewResult;
 
     @Override
@@ -49,12 +52,15 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityQuizBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+
         quizViewModel = new QuizViewModel();
         gradeRepository = new GradeRepository();
 
         quizId = getIntent().getStringExtra("quizId");
         teacherId = getIntent().getStringExtra("teacherId");
         isTeacher = getIntent().getBooleanExtra("isTeacher", false);
+        studentName = getIntent().getStringExtra("studentName");
 
         if (isTeacher) {
             setTeacherUI();
@@ -63,8 +69,6 @@ public class QuizActivity extends AppCompatActivity {
             setStudentUI();
             loadQuizForStudent();
         }
-
-
 
     }
 
@@ -346,10 +350,11 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void saveGrade() {
-        Grade grade = new Grade("q8PEC8", "mina@gmail.com", correctAnswers,
+        System.out.println("Grade Student Name is :" + studentName);
+        Grade grade = new Grade(teacherId, studentName, correctAnswers,
                 (float) correctAnswers / currentQuiz.getTotalMarks());
-        grade.setId("Test Grade");
-        gradeRepository.addNewGrade(grade);
+        grade.setId("Testing Now");
+        gradeRepository.addNewGrade(studentName,grade);
     }
 
     private void showResult() {

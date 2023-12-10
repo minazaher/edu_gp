@@ -13,6 +13,7 @@ import com.example.educationalgp.databinding.ActivitySelectActivityBinding;
 public class ActivitySelectActivity extends AppCompatActivity {
     String activityId = "", teacherCode = "";
     ActivitySelectActivityBinding binding;
+    String studentName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +22,7 @@ public class ActivitySelectActivity extends AppCompatActivity {
 
         activityId = getIntent().getStringExtra("activityId");
         teacherCode = getIntent().getStringExtra("teacherCode");
+        studentName = getIntent().getStringExtra("studentName");
 
         binding.cardGame.setOnClickListener(v -> goToGame());
 
@@ -31,6 +33,8 @@ public class ActivitySelectActivity extends AppCompatActivity {
         Intent intent = new Intent(ActivitySelectActivity.this, QuizActivity.class);
         intent.putExtra("teacherId", teacherCode);
         intent.putExtra("quizId", activityId);
+        intent.putExtra("studentName", studentName);
+
         startActivity(intent);
     }
 

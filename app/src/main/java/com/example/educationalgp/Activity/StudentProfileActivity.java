@@ -24,6 +24,7 @@ public class StudentProfileActivity extends AppCompatActivity {
 
     String unit = "", lesson = "", teacherId ="";
     boolean isTeacher;
+    String studentName = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +33,8 @@ public class StudentProfileActivity extends AppCompatActivity {
 
         isTeacher = getIntent().getBooleanExtra("isTeacher", false);
         teacherId = getIntent().getStringExtra("teacherId");
+        studentName = getIntent().getStringExtra("studentName");
+
 
         if (isTeacher) {
             setTeacherUI();
@@ -186,6 +189,8 @@ public class StudentProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(StudentProfileActivity.this, ActivitySelectActivity.class);
         intent.putExtra("activityId",unit.concat(lesson));
         intent.putExtra("teacherCode", teacherId);
+        intent.putExtra("studentName", studentName);
+
         startActivity(intent);
     }
 

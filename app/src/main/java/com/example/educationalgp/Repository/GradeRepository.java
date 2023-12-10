@@ -25,13 +25,13 @@ public class GradeRepository {
         teacherViewModel = new TeacherViewModel();
     }
 
-    public void addNewGrade(Grade grade){
+    public void addNewGrade(String studentName,Grade grade){
         DocumentReference documentReference = firebaseFirestore.collection("grades").document(grade.getId());
 
         documentReference.set(grade)
                 .addOnCompleteListener(task -> {
-                    studentRepository.addStudentGrade(grade.getId());
-                    teacherViewModel.updateStudentGrade(grade.getTeacherCode(), grade.getStudentName(), grade);
+                    studentRepository.addStudentGrade(studentName, grade.getId());
+                    teacherViewModel.updateStudentGrade(grade.getTeacherCode(), studentName, grade);
                 })
                 .addOnFailureListener(e -> System.out.println("cannot add grade due to : " + e.getMessage()));
     }

@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class TeacherRepository {
 
@@ -103,17 +104,19 @@ public class TeacherRepository {
                                     String studentUsername = (String) studentData.get("username");
                                     List <HashMap<String, Object>> grades = (List<HashMap<String, Object>>) studentData.get("grades");
                                    List<Grade> gradeList = new ArrayList<>();
-                                    assert grades != null;
-                                    for (HashMap<String, Object> grade : grades) {
-                                        String gradeId = (String) grade.get("id");
-                                        long mark = (long) grade.get("mark");
-                                        double percent = (double) grade.get("percentage");
-                                        String name = (String) grade.get("studentName");
-                                        String c = (String) grade.get("teacherCode");
-                                        Grade grade1 = new Grade(c, name, (int) mark, (float) percent);
-                                        grade1.setId(gradeId);
-                                        gradeList.add(grade1);
+                                    if (grades != null){
+                                        for (HashMap<String, Object> grade : grades) {
+                                            String gradeId = (String) grade.get("id");
+                                            long mark = (long) grade.get("mark");
+                                            double percent = (double) grade.get("percentage");
+                                            String name = (String) grade.get("studentName");
+                                            String c = (String) grade.get("teacherCode");
+                                            Grade grade1 = new Grade(c, name, (int) mark, (float) percent);
+                                            grade1.setId(gradeId);
+                                            gradeList.add(grade1);
+                                        }
                                     }
+
                                     Student student = new Student(studentId, studentUsername , gradeList);
                                     students.add(student);
                                 }
@@ -214,8 +217,9 @@ public class TeacherRepository {
     }
 
     private void addStudentToTeacherArray(String code, Student student){
+        List<Grade> grades = new ArrayList<>();
         firebaseFirestore.collection("teachers")
-                .document(code).update("students", FieldValue.arrayUnion(student))
+                .document(code).update("students", FieldValue.arrayUnion(new Student(UUID.randomUUID().toString(), student.getUsername(), grades)))
                 .addOnSuccessListener(unused -> System.out.println("Student Added!"))
                 .addOnFailureListener(e -> System.out.println("Failed Due To:" + e.getMessage()));
     }
