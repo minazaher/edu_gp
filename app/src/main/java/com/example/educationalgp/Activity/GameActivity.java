@@ -15,7 +15,7 @@ public class GameActivity extends AppCompatActivity {
 
     String gameId = "";
     String LESSON_ONE_GAME_URL = "https://wordwall.net/play/65248/393/585";
-    String LESSON_TWO_GAME_URL = "";
+    String LESSON_TWO_GAME_URL = "https://wordwall.net/ar/embed/eb60bffdc36e4252ab2c8c71a01da040?themeId=2&templateId=25&fontStackId=0";
     String LESSON_THREE_GAME_URL = "https://wordwall.net/embed/32accbb6e7124c12b83b4c0db1b594c3?themeId=26&templateId=49&fontStackId=1";
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -35,7 +35,7 @@ public class GameActivity extends AppCompatActivity {
                 case "un2less1":
                     gameWebView.loadUrl(LESSON_ONE_GAME_URL);
                     break;
-                case "un2less":
+                case "un2less2":
                     gameWebView.loadUrl(LESSON_TWO_GAME_URL);
                     break;
                 case "un2less3" :

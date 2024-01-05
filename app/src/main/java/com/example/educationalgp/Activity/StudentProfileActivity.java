@@ -24,7 +24,7 @@ import java.util.Arrays;
 public class StudentProfileActivity extends AppCompatActivity {
     ActivityStudentProfileBinding binding;
 
-    String unit = "", lesson = "", teacherId ="";
+    String unit = "", lesson = "gen", teacherId ="";
     boolean isTeacher;
     String studentName = "";
     @Override
@@ -188,7 +188,7 @@ public class StudentProfileActivity extends AppCompatActivity {
     }
 
     private void goToActivitySelection(String unit, String lesson) {
-        String[] availableLessons = new String[]{"un2less1", "un2less2", "un2less3"};
+        String[] availableLessons = new String[]{"un2gen","un2less1", "un2less2", "un2less3"};
 
         if (Arrays.asList(availableLessons).contains(unit.concat(lesson))){
             Intent intent = new Intent(StudentProfileActivity.this, ActivitySelectActivity.class);

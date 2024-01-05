@@ -45,11 +45,12 @@ public class QuizActivity extends AppCompatActivity {
     private int currentQuestionNumber = 19;
     private AlertDialog dialogViewResult;
 
-
     private CountDownTimer countDownTimer;
-    private long timeLeftInMillis; // Total time for the timer in milliseconds
-    private final long COUNTDOWN_INTERVAL = 1000; // Interval to update the timer (in milliseconds)
-    private final long QUIZ_TIME = 6000; // Change this to set the quiz time in milliseconds (e.g., 1 minute)
+    private long timeLeftInMillis;
+    private final long COUNTDOWN_INTERVAL = 1000;
+    private final long SHORT_QUIZ_TIME = 1200000; // 20 minutes in milliseconds
+    private final long LONG_QUIZ_TIME = 1800000; // 30 minutes in milliseconds
+
 
 
     @Override
@@ -112,11 +113,12 @@ public class QuizActivity extends AppCompatActivity {
         binding.layoutTeacherButtons.setVisibility(View.GONE);
         binding.studentButton.setVisibility(View.VISIBLE);
         binding.imgEdit.setVisibility(View.GONE);
-        startTimer();
+        startTimer(20);
+
     }
 
-    private void startTimer() {
-        timeLeftInMillis = QUIZ_TIME;
+    private void startTimer(int size) {
+        timeLeftInMillis = size == 15 ? SHORT_QUIZ_TIME : LONG_QUIZ_TIME;
         countDownTimer = new CountDownTimer(timeLeftInMillis, COUNTDOWN_INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -128,7 +130,7 @@ public class QuizActivity extends AppCompatActivity {
             public void onFinish() {
                 binding.tvSubmitQuestion.setActivated(false);
                 binding.tvSubmitQuiz.setActivated(false);
-                binding.tvTimerTextView.setTextColor(getResources().getColor(R.color.red)); // Using color resource
+                binding.tvTimerTextView.setTextColor(getResources().getColor(R.color.red));
                 calculateStudentMark();
                 saveGrade();
                 showResult();
@@ -138,7 +140,7 @@ public class QuizActivity extends AppCompatActivity {
                     finish();
                 },3000);
 
-                Toast.makeText(QuizActivity.this, "Time Finished!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuizActivity.this, "انتهى الوقت!", Toast.LENGTH_SHORT).show();
             }
         }.start();
     }
