@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.educationalgp.Activity.MainActivity;
 import com.example.educationalgp.Activity.QuizActivity;
 import com.example.educationalgp.Activity.StudentProfileActivity;
 import com.example.educationalgp.Repository.StudentRepository.onAuthenticationListener;
@@ -133,10 +134,12 @@ public class StudentLoginFragment extends Fragment {
     }
 
     private boolean isTeacherAvailable(String code){
-        List<String> availableIDs = new ArrayList<>();
-        teacherViewModel.getTeacherIDs(availableIDs::addAll);
-
-        return availableIDs.contains(code);
+//        List<String> availableIDs = new ArrayList<>();
+//        teacherViewModel.getTeacherIDs(availableIDs::addAll);
+//
+//        return MainActivity.teacherIDs.contains(code);
+//
+        return true;
     }
 
 

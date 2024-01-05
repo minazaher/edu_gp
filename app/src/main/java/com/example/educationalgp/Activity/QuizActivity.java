@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,12 +45,19 @@ public class QuizActivity extends AppCompatActivity {
     private int currentQuestionNumber = 19;
     private AlertDialog dialogViewResult;
 
+
+    private CountDownTimer countDownTimer;
+    private long timeLeftInMillis; // Total time for the timer in milliseconds
+    private final long COUNTDOWN_INTERVAL = 1000; // Interval to update the timer (in milliseconds)
+    private final long QUIZ_TIME = 6000; // Change this to set the quiz time in milliseconds (e.g., 1 minute)
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityQuizBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
         quizViewModel = new QuizViewModel();
         gradeRepository = new GradeRepository();
@@ -104,6 +112,51 @@ public class QuizActivity extends AppCompatActivity {
         binding.layoutTeacherButtons.setVisibility(View.GONE);
         binding.studentButton.setVisibility(View.VISIBLE);
         binding.imgEdit.setVisibility(View.GONE);
+        startTimer();
+    }
+
+    private void startTimer() {
+        timeLeftInMillis = QUIZ_TIME;
+        countDownTimer = new CountDownTimer(timeLeftInMillis, COUNTDOWN_INTERVAL) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeftInMillis = millisUntilFinished;
+                updateCountDownText();
+            }
+
+            @Override
+            public void onFinish() {
+                binding.tvSubmitQuestion.setActivated(false);
+                binding.tvSubmitQuiz.setActivated(false);
+                binding.tvTimerTextView.setTextColor(getResources().getColor(R.color.red)); // Using color resource
+                calculateStudentMark();
+                saveGrade();
+                showResult();
+                new Handler().postDelayed(() -> {
+                    Intent intent = new Intent(QuizActivity.this,StudentProfileActivity.class);
+                    startActivity(intent);
+                    finish();
+                },3000);
+
+                Toast.makeText(QuizActivity.this, "Time Finished!", Toast.LENGTH_SHORT).show();
+            }
+        }.start();
+    }
+
+    private void updateCountDownText() {
+        int minutes = (int) (timeLeftInMillis / 1000) / 60;
+        int seconds = (int) (timeLeftInMillis / 1000) % 60;
+
+        String timeLeftFormatted = String.format("%02d:%02d", minutes, seconds);
+        binding.tvTimerTextView.setText(timeLeftFormatted);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
     }
 
     private void selectQuestionToEdit() {
