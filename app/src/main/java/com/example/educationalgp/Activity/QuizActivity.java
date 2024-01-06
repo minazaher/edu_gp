@@ -42,7 +42,7 @@ public class QuizActivity extends AppCompatActivity {
     GradeRepository gradeRepository;
     String studentName = "";
     boolean isTeacher;
-    private int currentQuestionNumber = 19;
+    private int currentQuestionNumber = 10;
     private AlertDialog dialogViewResult;
 
     private CountDownTimer countDownTimer;
@@ -456,6 +456,8 @@ public class QuizActivity extends AppCompatActivity {
             tv_reseult.setText(String.format("درجة الاختبار هي : %s", res));
             view.findViewById(R.id.textBack).setOnClickListener(view1 -> {
                 Intent intent = new Intent(QuizActivity.this, StudentProfileActivity.class);
+                intent.putExtra("teacherId", teacherId);
+                intent.putExtra("studentName", studentName);
                 startActivity(intent);
                 finish();
             });

@@ -127,12 +127,13 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/notokufiarabic_medium"
                 android:padding="@dimen/_4sdp"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:text=""
                 android:textColor="@color/mainColor"
                 android:textSize="@dimen/_14ssp" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_30sdp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/notokufiarabic_medium"
                 android:text="ا  ) "
@@ -156,11 +157,12 @@
                 android:fontFamily="@font/notokufiarabic_medium"
                 android:padding="@dimen/_4sdp"
                 android:text=""
+                android:layout_marginStart="@dimen/_10sdp"
                 android:textColor="@color/mainColor"
                 android:textSize="@dimen/_14ssp" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_30sdp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/notokufiarabic_medium"
                 android:text="ب ) "
@@ -171,7 +173,6 @@
 
         <LinearLayout
             android:id="@+id/layout_option3"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -186,11 +187,12 @@
                 android:fontFamily="@font/notokufiarabic_medium"
                 android:padding="@dimen/_4sdp"
                 android:text=""
+                android:layout_marginStart="@dimen/_10sdp"
                 android:textColor="@color/mainColor"
                 android:textSize="@dimen/_14ssp" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_30sdp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/notokufiarabic_medium"
                 android:text="جـ ) "
@@ -215,11 +217,12 @@
                 android:fontFamily="@font/notokufiarabic_medium"
                 android:padding="@dimen/_4sdp"
                 android:text=""
+                android:layout_marginStart="@dimen/_10sdp"
                 android:textColor="@color/mainColor"
                 android:textSize="@dimen/_14ssp" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_30sdp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/notokufiarabic_medium"
                 android:text="د ) "
