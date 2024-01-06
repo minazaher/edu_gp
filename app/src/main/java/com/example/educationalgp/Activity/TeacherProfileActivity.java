@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TeacherProfileActivity extends AppCompatActivity {
 
@@ -112,7 +113,12 @@ public class TeacherProfileActivity extends AppCompatActivity {
     }
     private void initializeStudentRecView(){
         RecyclerView recyclerView = binding.studentRecyclerView;
-        recyclerView.setAdapter(new StudentsAdapter(getTeacherStudents()));
+        recyclerView.setAdapter(new StudentsAdapter(
+                getTeacherStudents().stream()
+                        .filter(x -> !x.getGrades().isEmpty())
+                        .collect(Collectors.toList())
+        ));
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
     }
 
