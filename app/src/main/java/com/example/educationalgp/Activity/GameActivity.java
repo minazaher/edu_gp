@@ -28,24 +28,26 @@ public class GameActivity extends AppCompatActivity {
         WebSettings webSettings = gameWebView.getSettings();
         webSettings.setJavaScriptEnabled(true); // Enable JavaScript (if required by the website)
 
-        gameId = getIntent().getStringExtra("activityId");
+        gameId = getIntent().getStringExtra("gameId");
 
-        if (gameId != null) {
-            switch (gameId){
+        if (gameId == null) {
+            Toast.makeText(this, "لم يتم استرداد معرّف اللعبة", Toast.LENGTH_SHORT).show();
+        } else {
+            switch (gameId) {
                 case "un2less1":
                     gameWebView.loadUrl(LESSON_ONE_GAME_URL);
                     break;
                 case "un2less2":
                     gameWebView.loadUrl(LESSON_TWO_GAME_URL);
                     break;
-                case "un2less3" :
+                case "un2less3":
                     gameWebView.loadUrl(LESSON_THREE_GAME_URL);
                     break;
                 default:
                     Toast.makeText(this, "غير متوفر حاليا", Toast.LENGTH_SHORT).show();
-
             }
         }
+
         webSettings.setBuiltInZoomControls(true);
         webSettings.setDisplayZoomControls(false); // Hide the zoom controls
         webSettings.setSupportZoom(true);

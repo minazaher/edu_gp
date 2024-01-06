@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.educationalgp.Activity.MainActivity;
-import com.example.educationalgp.Activity.QuizActivity;
 import com.example.educationalgp.Activity.StudentProfileActivity;
 import com.example.educationalgp.Repository.StudentRepository.onAuthenticationListener;
 import com.example.educationalgp.Repository.TeacherRepository;
@@ -121,26 +119,32 @@ public class StudentLoginFragment extends Fragment {
     }
 
     private boolean isTeacherCodeValid(){
-        String c = binding.etStudentEnterCode.getText().toString();
+        final boolean[] isValid = {true};
+        String c = binding.etStudentEnterCode.getText().toString().trim();
         if(TextUtils.isEmpty(c)){
+            isValid[0] = false;
             binding.etStudentEnterCode.setError("من فضلك ادخل كود المعلم هنا");
-            return false;
         }
-        else if (!isTeacherAvailable(code)){
-            binding.etStudentEnterCode.setError("من فضلك ادخل كود معلم صحيح");
-            return false;
-        }
-        return true;
+        isTeacherAvailable(code, isAvailable -> {
+            if (!isAvailable){
+                binding.etStudentEnterCode.setError("من فضلك ادخل كود صحيح");
+            }
+            isValid[0] = isAvailable;
+        });
+        return isValid[0];
     }
 
-    private boolean isTeacherAvailable(String code){
-//        List<String> availableIDs = new ArrayList<>();
-//        teacherViewModel.getTeacherIDs(availableIDs::addAll);
-//
-//        return MainActivity.teacherIDs.contains(code);
-//
-        return true;
+    private void isTeacherAvailable(String code, OnTeacherAvailabilityChecked callback) {
+        teacherViewModel.getTeacherIDs(IDs -> {
+            boolean isAvailable = IDs.contains(code);
+            callback.onAvailabilityChecked(isAvailable);
+        });
+
     }
 
+
+    interface OnTeacherAvailabilityChecked {
+        void onAvailabilityChecked(boolean isAvailable);
+    }
 
 }

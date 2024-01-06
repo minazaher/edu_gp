@@ -457,6 +457,7 @@ public class QuizActivity extends AppCompatActivity {
             view.findViewById(R.id.textBack).setOnClickListener(view1 -> {
                 Intent intent = new Intent(QuizActivity.this, StudentProfileActivity.class);
                 startActivity(intent);
+                finish();
             });
         }
         dialogViewResult.show();
