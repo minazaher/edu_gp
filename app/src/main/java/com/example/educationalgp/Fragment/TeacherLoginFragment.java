@@ -65,7 +65,6 @@ public class TeacherLoginFragment extends Fragment {
 
                 @Override
                 public void onFailure(String errorMessage) {
-//                    Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show();
                     Toast.makeText(requireContext(), "من فضلك تأكد من بياناتك مرة اخرى", Toast.LENGTH_SHORT).show();
                 }
             });

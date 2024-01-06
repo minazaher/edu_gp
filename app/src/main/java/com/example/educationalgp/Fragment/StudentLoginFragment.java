@@ -25,6 +25,7 @@ public class StudentLoginFragment extends Fragment {
     private FragmentStudentLoginBinding binding;
     private final StudentViewModel studentViewModel;
     private final TeacherViewModel teacherViewModel;
+    private final String STUDENT_DOESNT_EXIST_ERR_MSG = "The supplied auth credential is incorrect, malformed or has expired.";
     String username= "", code = "";
     public StudentLoginFragment() {
         studentViewModel = new StudentViewModel();
@@ -107,7 +108,7 @@ public class StudentLoginFragment extends Fragment {
     }
 
     private boolean studentNotExist(String errorMsg){
-        return errorMsg.equals("The supplied auth credential is incorrect, malformed or has expired.");
+        return errorMsg.equals(STUDENT_DOESNT_EXIST_ERR_MSG);
     }
 
     private boolean isUsernameValid(){

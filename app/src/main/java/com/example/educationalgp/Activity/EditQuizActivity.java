@@ -219,7 +219,7 @@ public class EditQuizActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(String error) {
-                Toast.makeText(EditQuizActivity.this, "Cannot Save Image" + error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditQuizActivity.this, "لا يمكن حفظ الصورة بسبب : " + error, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -231,7 +231,7 @@ public class EditQuizActivity extends AppCompatActivity {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 selectImage();
             else {
-                Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "تم رفض الاذن!", Toast.LENGTH_SHORT).show();
             }
         }
     }

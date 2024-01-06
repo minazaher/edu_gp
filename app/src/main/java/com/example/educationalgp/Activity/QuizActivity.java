@@ -279,11 +279,11 @@ public class QuizActivity extends AppCompatActivity {
     private void checkAnswer(String selectedAnswer, String correctAnswer) {
         boolean isCorrect = selectedAnswer.equals(correctAnswer);
         if (isCorrect) {
-            Toast.makeText(this, "Correct Answer!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "اجابة صحيحة!", Toast.LENGTH_SHORT).show();
             highlightCorrectAnswer();
             correctAnswers++;
         } else {
-            Toast.makeText(this, "Incorrect Answer!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "اجابة خاطئة!", Toast.LENGTH_SHORT).show();
             highlightCorrectAnswer();
             highlightIncorrectAnswer();
             incorrectAnswers++;
@@ -326,7 +326,7 @@ public class QuizActivity extends AppCompatActivity {
 
             @Override
             public void onQuizFetchFailure(String errorMessage) {
-                Toast.makeText(QuizActivity.this, "No Quiz For this Lesson", Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuizActivity.this, "لا يوجد اختبار لهذا الدرس", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -349,7 +349,7 @@ public class QuizActivity extends AppCompatActivity {
 
             @Override
             public void onQuizFetchFailure(String errorMessage) {
-                Toast.makeText(QuizActivity.this, "No Quiz For this Lesson", Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuizActivity.this, "لا يوجد اختبار لهذا الدرس", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -372,7 +372,7 @@ public class QuizActivity extends AppCompatActivity {
 
             @Override
             public void onQuizFetchFailure(String errorMessage) {
-                Toast.makeText(QuizActivity.this, "No Quiz For this Lesson", Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuizActivity.this, "لا يوجد اختبار لهذا الدرس", Toast.LENGTH_SHORT).show();
             }
         });
     }

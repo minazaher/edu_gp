@@ -37,7 +37,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private Question createTorF(String head, String ans){
-        return new Question(head, "صح", "خطأ", "", "", ans);
-    }
 }
