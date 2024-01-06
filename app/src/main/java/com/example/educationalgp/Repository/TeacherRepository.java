@@ -228,11 +228,13 @@ public class TeacherRepository {
         return students;
     }
 
-    public void addStudentToTeacher(String code, Student student){
-        if(!isTeacherArrayContainStudent(code, student)){
-            addStudentToTeacherArray(code, student);
-        }
-
+    public void addStudentToTeacher(String code, Student student) {
+        checkIfTeacherContainsStudent(code, student, contains -> {
+            if (!contains) {
+                addStudentToTeacherArray(code, student);
+                System.out.println("The teacher array contains the student name");
+            }
+        });
     }
 
     private void addStudentToTeacherArray(String code, Student student){
@@ -242,21 +244,32 @@ public class TeacherRepository {
                 .addOnSuccessListener(unused -> System.out.println("Student Added!"))
                 .addOnFailureListener(e -> System.out.println("Failed Due To:" + e.getMessage()));
     }
-    private boolean isTeacherArrayContainStudent(String code, Student student) {
-        final boolean[] isContaining = {false};
+
+    private void checkIfTeacherContainsStudent(String code, Student student, OnContainsStudentListener listener) {
         CollectionReference teachersCollection = firebaseFirestore.collection("teachers");
         teachersCollection.whereEqualTo("id", code).get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        boolean isContaining = false;
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             List<Student> students = document.toObject(Teacher.class).getStudents();
-                            isContaining[0] = students.contains(student);
+                            boolean isUsernameAbsent = students.stream()
+                                    .noneMatch(s -> s.getUsername().equals(student.getUsername()));
+                            if (!isUsernameAbsent) {
+                                isContaining = true;
+                                break;
+                            }
                         }
+                        listener.onContainsStudent(isContaining);
                     } else {
                         Log.w("Firestore", "Error getting documents: ", task.getException());
+                        listener.onContainsStudent(false); // Assuming not found in case of an error
                     }
                 });
-        return isContaining[0];
+    }
+
+    private interface OnContainsStudentListener {
+        void onContainsStudent(boolean contains);
     }
 
 

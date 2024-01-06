@@ -118,7 +118,6 @@ public class TeacherProfileActivity extends AppCompatActivity {
                         .filter(x -> !x.getGrades().isEmpty())
                         .collect(Collectors.toList())
         ));
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
     }
 
