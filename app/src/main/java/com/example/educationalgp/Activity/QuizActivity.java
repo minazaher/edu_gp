@@ -113,7 +113,6 @@ public class QuizActivity extends AppCompatActivity {
         binding.layoutTeacherButtons.setVisibility(View.GONE);
         binding.studentButton.setVisibility(View.VISIBLE);
         binding.imgEdit.setVisibility(View.GONE);
-        startTimer(20);
 
     }
 
@@ -318,6 +317,7 @@ public class QuizActivity extends AppCompatActivity {
                     questionList = quiz.getQuestionList();
                     getQuestionForStudent(currentQuestionNumber);
                     setCounter(currentQuestionNumber + 1, questionList.size());
+                    startTimer(questionList.size());
                     setupButtonListeners();
                 } else {
                     loadQuizById(true);
@@ -338,8 +338,10 @@ public class QuizActivity extends AppCompatActivity {
                 currentQuiz = quiz;
                 if (quiz != null) {
                     questionList = quiz.getQuestionList();
-                    if (isStudent)
+                    if (isStudent){
+                        startTimer(questionList.size());
                         getQuestionForStudent(currentQuestionNumber);
+                    }
                     else
                         getQuestionForTeacher(currentQuestionNumber);
                     setCounter(currentQuestionNumber + 1, questionList.size());

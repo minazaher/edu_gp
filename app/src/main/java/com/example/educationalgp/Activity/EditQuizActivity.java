@@ -92,7 +92,8 @@ public class EditQuizActivity extends AppCompatActivity {
                 intent.putExtra("teacherId", teacherId);
                 startActivity(intent);
             }
-        }) );
+        })
+        );
 
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
