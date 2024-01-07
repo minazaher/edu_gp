@@ -28,6 +28,7 @@ import com.example.educationalgp.databinding.ActivityQuizBinding;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.MessageFormat;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -313,6 +314,7 @@ public class QuizActivity extends AppCompatActivity {
                 currentQuiz = quiz;
                 if (quiz != null) {
                     questionList = quiz.getQuestionList();
+                    Collections.shuffle(questionList);
                     getQuestionForStudent(currentQuestionNumber);
                     setCounter(currentQuestionNumber + 1, questionList.size());
                     startTimer(questionList.size());
@@ -336,6 +338,7 @@ public class QuizActivity extends AppCompatActivity {
                 currentQuiz = quiz;
                 if (quiz != null) {
                     questionList = quiz.getQuestionList();
+                    Collections.shuffle(questionList);
                     if (isStudent){
                         startTimer(questionList.size());
                         getQuestionForStudent(currentQuestionNumber);
@@ -360,8 +363,10 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onQuizFetched(Quiz quiz) {
                 currentQuiz = quiz;
+
                 if (quiz != null) {
                     questionList = quiz.getQuestionList();
+                    Collections.shuffle(questionList);
                     getQuestionForTeacher(currentQuestionNumber);
                     setCounter(currentQuestionNumber + 1, questionList.size());
                     moveNextOrFinish();
