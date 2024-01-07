@@ -113,6 +113,13 @@ public class QuizActivity extends AppCompatActivity {
         binding.studentButton.setVisibility(View.VISIBLE);
         binding.imgEdit.setVisibility(View.GONE);
 
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Toast.makeText(QuizActivity.this, "لا يمكنك الخروج من الاختبار حتى اكماله", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void startTimer(int size) {
