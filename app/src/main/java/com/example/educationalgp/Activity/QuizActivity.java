@@ -49,16 +49,14 @@ public class QuizActivity extends AppCompatActivity {
     private long timeLeftInMillis;
     private final long COUNTDOWN_INTERVAL = 1000;
     private final long SHORT_QUIZ_TIME = 1200000; // 20 minutes in milliseconds
-    private final long LONG_QUIZ_TIME = 1800000; // 30 minutes in milliseconds
-
-
+    private final long LONG_QUIZ_TIME = 2100000 ; // 35 minutes in milliseconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityQuizBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
         quizViewModel = new QuizViewModel();
         gradeRepository = new GradeRepository();

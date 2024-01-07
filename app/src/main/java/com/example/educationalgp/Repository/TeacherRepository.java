@@ -74,7 +74,7 @@ public class TeacherRepository {
     }
     private Teacher createNewTeacher(String username, String email, String password) {
         String id = generateTeacherCode();
-        return new Teacher(id, username, email, password);
+        return new Teacher(id, username, email, password, new ArrayList<Student>());
     }
 
     public static String generateTeacherCode() {
@@ -253,11 +253,13 @@ public class TeacherRepository {
                         boolean isContaining = false;
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             List<Student> students = document.toObject(Teacher.class).getStudents();
-                            boolean isUsernameAbsent = students.stream()
-                                    .noneMatch(s -> s.getUsername().equals(student.getUsername()));
-                            if (!isUsernameAbsent) {
-                                isContaining = true;
-                                break;
+                            if(students != null){
+                                boolean isUsernameAbsent = students.stream()
+                                        .noneMatch(s -> s.getUsername().equals(student.getUsername()));
+                                if (!isUsernameAbsent) {
+                                    isContaining = true;
+                                    break;
+                                }
                             }
                         }
                         listener.onContainsStudent(isContaining);
