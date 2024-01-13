@@ -90,7 +90,7 @@
             android:id="@+id/student_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="#6FD4F2"
+            app:cardBackgroundColor="#d0ccce"
             app:cardCornerRadius="10dp"
             app:cardElevation="15dp"
             android:layout_marginTop="15dp"
@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="20dp"
-                app:cardBackgroundColor="#6FD4F2">
+                app:cardBackgroundColor="#d0ccce">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -115,9 +115,10 @@
                 <ImageView
                     android:layout_width="@dimen/_120sdp"
                     android:layout_marginStart="@dimen/_40sdp"
-
                     android:layout_height="@dimen/_120sdp"
-                    android:scaleType="centerCrop"
+                    android:scaleType="centerInside"
+                    android:scaleX="1.5"
+                    android:scaleY="1.5"
                     android:src="@drawable/student_placeholder" />
 
             </LinearLayout>

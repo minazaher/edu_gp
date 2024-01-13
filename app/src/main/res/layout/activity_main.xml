@@ -9,27 +9,43 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="113dp"
-        android:layout_height="127dp"
-        android:src="@drawable/logo"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:src="@drawable/icon_gamification"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.327" />
+        app:layout_constraintVertical_bias="0.354" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/notokufiarabic_bold"
-        android:text="عَــلِّــمـَنــي\n عـُــلــــوم"
+        android:textStyle="bold"
+        android:text="عَلِّمْـنِي"
         android:textColor="@color/white"
         android:textSize="42sp"
         android:gravity="center_vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imageView2"
         app:layout_constraintStart_toStartOf="@id/imageView2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/imageView2" />
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-35dp"
+        android:fontFamily="@font/notokufiarabic_bold"
+        android:gravity="center_vertical"
+        android:text="عـــــلُــــوم"
+        android:textColor="@color/white"
+        android:textSize="42sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toStartOf="@id/textView"
+        app:layout_constraintTop_toBottomOf="@id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
