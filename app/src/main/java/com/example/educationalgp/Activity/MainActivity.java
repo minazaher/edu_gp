@@ -14,13 +14,15 @@ import com.example.educationalgp.R;
 import com.example.educationalgp.Repository.TeacherRepository;
 import com.example.educationalgp.ViewModel.QuizViewModel;
 import com.example.educationalgp.ViewModel.TeacherViewModel;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,5 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
 }

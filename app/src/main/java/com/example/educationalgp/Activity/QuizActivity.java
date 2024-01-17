@@ -43,9 +43,8 @@ public class QuizActivity extends AppCompatActivity {
     GradeRepository gradeRepository;
     String studentName = "";
     boolean isTeacher;
-    private int currentQuestionNumber = 10;
+    private int currentQuestionNumber = 0;
     private AlertDialog dialogViewResult;
-
     private CountDownTimer countDownTimer;
     private long timeLeftInMillis;
     private final long COUNTDOWN_INTERVAL = 1000;
@@ -57,7 +56,7 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityQuizBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
         quizViewModel = new QuizViewModel();
         gradeRepository = new GradeRepository();
