@@ -77,7 +77,17 @@ public class EditQuizActivity extends AppCompatActivity {
         }
         binding.imageSave.setOnClickListener(v -> {
             newQuestion = getNewQuestion();
-            updateQuiz();
+            updateQuiz(new onQuizUpdateCompleted() {
+                @Override
+                public void onUpdateCompleted() {
+                    Toast.makeText(EditQuizActivity.this, "تم تعديل الاختبار", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(EditQuizActivity.this, QuizActivity.class);
+                    intent.putExtra("isTeacher", true);
+                    intent.putExtra("teacherId", teacherId);
+                    intent.putExtra("quizId", quizId);
+                    startActivity(intent);
+                }
+            });
         });
         binding.imageDeleteImage.setOnClickListener(v -> {
             imgUrlBeforeSaving = "";
@@ -107,17 +117,18 @@ public class EditQuizActivity extends AppCompatActivity {
     }
 
 
-    private void updateQuiz(){
+    private void updateQuiz(onQuizUpdateCompleted callback){
             quizViewModel.loadQuiz(quizId, new QuizRepository.OnQuizFetchListener() {
                 @Override
                 public void onQuizFetched(Quiz quiz) {
                     quiz.getQuestionList().removeIf(question -> question.getQuestionText().equals(oldQuestion.getQuestionText()));
                     quiz.getQuestionList().add(newQuestion);
-                    if (!editedBySameTeacher(quizId,teacherId)){
+                    if (!editedBySameTeacher(quiz.getId(),teacherId)){
                         quiz.setId(quiz.getId().concat(teacherId));
+                        quizId = quiz.getId().concat(teacherId);
                     }
                     quizViewModel.createQuiz(quiz);
-                    Toast.makeText(EditQuizActivity.this, "تم تعديل الاختبار", Toast.LENGTH_SHORT).show();
+                    callback.onUpdateCompleted();
                 }
                 @Override
                 public void onQuizFetchFailure(String errorMessage) {
@@ -126,6 +137,9 @@ public class EditQuizActivity extends AppCompatActivity {
             });
     }
 
+    interface onQuizUpdateCompleted{
+        void onUpdateCompleted();
+    }
     private boolean editedBySameTeacher(String quizId, String teacherId){
         return quizId.contains(teacherId);
     }
