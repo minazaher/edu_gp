@@ -49,11 +49,10 @@ public class GameActivity extends AppCompatActivity {
         }
 
         webSettings.setBuiltInZoomControls(true);
-        webSettings.setDisplayZoomControls(false); // Hide the zoom controls
+        webSettings.setDisplayZoomControls(true); // Hide the zoom controls
         webSettings.setSupportZoom(true);
         gameWebView.getSettings().setLoadWithOverviewMode(true);
         gameWebView.getSettings().setUseWideViewPort(true);
-        gameWebView.setInitialScale(1); // Set initial zoom level
         gameWebView.getSettings().setBuiltInZoomControls(true);
         gameWebView.getSettings().setDisplayZoomControls(false);
         gameWebView.getSettings().setSupportZoom(true);
