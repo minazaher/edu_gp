@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    android:layoutDirection="rtl"
     android:paddingTop="20dp"
+    android:layoutDirection="ltr"
     android:layout_gravity="center"
     tools:context=".Activity.RoleSelectorActivity">
 
@@ -71,7 +71,7 @@
                     android:fontFamily="@font/notokufiarabic_medium"
                     android:text="مُــعــلــم"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_24ssp"
+                    android:textSize="36sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView3"
                     app:layout_constraintEnd_toStartOf="@+id/imageView3"
@@ -113,14 +113,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="192dp"
-                    android:fontFamily="@font/notokufiarabic_bold"
-                    android:text="طـــالب"
+                    android:fontFamily="@font/notokufiarabic_regular"
+                    android:text="  طـــالب"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_24ssp"
+                    android:textSize="36sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/imageView" />
 
                 <ImageView

@@ -53,9 +53,6 @@ public class GameActivity extends AppCompatActivity {
         webSettings.setSupportZoom(true);
         gameWebView.getSettings().setLoadWithOverviewMode(true);
         gameWebView.getSettings().setUseWideViewPort(true);
-        gameWebView.getSettings().setBuiltInZoomControls(true);
-        gameWebView.getSettings().setDisplayZoomControls(false);
-        gameWebView.getSettings().setSupportZoom(true);
 
         // Set WebView to fit screen size
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
