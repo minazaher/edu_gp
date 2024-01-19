@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="@dimen/_18sdp"
+    android:layoutDirection="ltr"
     tools:context=".Fragment.StudentLoginFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
