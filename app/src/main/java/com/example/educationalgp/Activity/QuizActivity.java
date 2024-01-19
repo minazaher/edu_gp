@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.educationalgp.Model.Grade;
@@ -74,6 +75,21 @@ public class QuizActivity extends AppCompatActivity {
             loadQuizForStudent();
         }
 
+        binding.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                if (isTeacher) {
+                    setTeacherUI();
+                    loadQuizForTeacher();
+                } else {
+                    setStudentUI();
+                    loadQuizForStudent();
+                }
+
+                binding.refreshLayout.setRefreshing(false);
+            }
+        });
     }
 
 
