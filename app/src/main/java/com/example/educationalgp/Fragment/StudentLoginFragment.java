@@ -51,7 +51,7 @@ public class StudentLoginFragment extends Fragment {
 
 
     private void loginStudent() {
-        username = binding.etStudentName.getText().toString();
+        username = binding.etStudentName.getText().toString().trim();
         code = binding.etStudentEnterCode.getText().toString();
         if (isUsernameValid() && isTeacherCodeValid()){
             studentViewModel.loginUser(username, code,new onAuthenticationListener() {
@@ -88,7 +88,7 @@ public class StudentLoginFragment extends Fragment {
             @Override
             public void onFailure(String errorMessage) {
                 String toastMessage = String.format("لم نستطع انشاء حساب جديد بسبب:  %s", errorMessage);
-                showToast(toastMessage);
+//                showToast(toastMessage);
             }
         });
     }

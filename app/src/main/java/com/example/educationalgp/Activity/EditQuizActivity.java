@@ -113,7 +113,9 @@ public class EditQuizActivity extends AppCompatActivity {
                 public void onQuizFetched(Quiz quiz) {
                     quiz.getQuestionList().removeIf(question -> question.getQuestionText().equals(oldQuestion.getQuestionText()));
                     quiz.getQuestionList().add(newQuestion);
-                    quiz.setId(quiz.getId().concat(teacherId));
+                    if (!editedBySameTeacher(quizId,teacherId)){
+                        quiz.setId(quiz.getId().concat(teacherId));
+                    }
                     quizViewModel.createQuiz(quiz);
                     Toast.makeText(EditQuizActivity.this, "تم تعديل الاختبار", Toast.LENGTH_SHORT).show();
                 }
@@ -122,6 +124,10 @@ public class EditQuizActivity extends AppCompatActivity {
                     Toast.makeText(EditQuizActivity.this, "لم يتم تعديل الاختبار بسبب : " + errorMessage, Toast.LENGTH_SHORT).show();
                 }
             });
+    }
+
+    private boolean editedBySameTeacher(String quizId, String teacherId){
+        return quizId.contains(teacherId);
     }
     private Question getNewQuestion() {
         String head = binding.etQuestionTitle.getText().toString();
