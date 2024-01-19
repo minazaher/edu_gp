@@ -2,6 +2,7 @@ package com.example.educationalgp.Repository;
 
 import androidx.annotation.NonNull;
 
+import com.example.educationalgp.Activity.EditQuizActivity;
 import com.example.educationalgp.Model.Question;
 import com.example.educationalgp.Model.Quiz;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,9 +19,12 @@ public class QuizRepository {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final CollectionReference quizCollection = db.collection("quizzes");
 
-    public void createQuiz(Quiz quiz) {
+    public void createQuiz(Quiz quiz, EditQuizActivity.onQuizUpdateCompleted callback) {
         quizCollection.document(quiz.getId()).set(quiz)
-                .addOnCompleteListener(task -> System.out.println("quiz added"))
+                .addOnCompleteListener(task -> {
+                    System.out.println("quiz added");
+                    callback.onUpdateCompleted(quiz);
+                })
                 .addOnFailureListener(e -> System.out.println("quiz not added cus" +e.getMessage()));
 
     }

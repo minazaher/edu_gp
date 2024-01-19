@@ -75,20 +75,17 @@ public class QuizActivity extends AppCompatActivity {
             loadQuizForStudent();
         }
 
-        binding.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+        binding.refreshLayout.setOnRefreshListener(() -> {
 
-                if (isTeacher) {
-                    setTeacherUI();
-                    loadQuizForTeacher();
-                } else {
-                    setStudentUI();
-                    loadQuizForStudent();
-                }
-
-                binding.refreshLayout.setRefreshing(false);
+            if (isTeacher) {
+                setTeacherUI();
+                loadQuizForTeacher();
+            } else {
+                setStudentUI();
+                loadQuizForStudent();
             }
+
+            binding.refreshLayout.setRefreshing(false);
         });
     }
 

@@ -77,16 +77,14 @@ public class EditQuizActivity extends AppCompatActivity {
         }
         binding.imageSave.setOnClickListener(v -> {
             newQuestion = getNewQuestion();
-            updateQuiz(new onQuizUpdateCompleted() {
-                @Override
-                public void onUpdateCompleted() {
-                    Toast.makeText(EditQuizActivity.this, "تم تعديل الاختبار", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(EditQuizActivity.this, QuizActivity.class);
-                    intent.putExtra("isTeacher", true);
-                    intent.putExtra("teacherId", teacherId);
-                    intent.putExtra("quizId", quizId);
-                    startActivity(intent);
-                }
+            updateQuiz((quiz) -> {
+                Toast.makeText(EditQuizActivity.this, "تم تعديل الاختبار", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(EditQuizActivity.this, QuizActivity.class);
+                Toast.makeText(this, "Quiz ID is : " + quiz.getId(), Toast.LENGTH_SHORT).show();
+                intent.putExtra("isTeacher", true);
+                intent.putExtra("teacherId", teacherId);
+                intent.putExtra("quizId", quiz.getId());
+                startActivity(intent);
             });
         });
         binding.imageDeleteImage.setOnClickListener(v -> {
@@ -127,8 +125,7 @@ public class EditQuizActivity extends AppCompatActivity {
                         quiz.setId(quiz.getId().concat(teacherId));
                         quizId = quiz.getId().concat(teacherId);
                     }
-                    quizViewModel.createQuiz(quiz);
-                    callback.onUpdateCompleted();
+                    quizViewModel.createQuiz(quiz, callback);
                 }
                 @Override
                 public void onQuizFetchFailure(String errorMessage) {
@@ -137,8 +134,8 @@ public class EditQuizActivity extends AppCompatActivity {
             });
     }
 
-    interface onQuizUpdateCompleted{
-        void onUpdateCompleted();
+    public interface onQuizUpdateCompleted{
+        void onUpdateCompleted(Quiz quiz);
     }
     private boolean editedBySameTeacher(String quizId, String teacherId){
         return quizId.contains(teacherId);

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.educationalgp.Activity.EditQuizActivity;
 import com.example.educationalgp.Model.Question;
 import com.example.educationalgp.Model.Quiz;
 import com.example.educationalgp.Repository.QuizRepository;
@@ -24,8 +25,8 @@ public class QuizViewModel extends ViewModel {
     public void getQuizForTeacher(String quizId, String teacherCode, QuizRepository.OnQuizFetchListener listener){
         quizRepository.getQuizForTeacher(quizId, teacherCode, listener);
     }
-    public void createQuiz(Quiz quiz) {
-        quizRepository.createQuiz(quiz);
+    public void createQuiz(Quiz quiz, EditQuizActivity.onQuizUpdateCompleted callback) {
+        quizRepository.createQuiz(quiz, callback);
     }
 
 
