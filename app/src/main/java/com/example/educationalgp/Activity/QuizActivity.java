@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
@@ -57,7 +58,8 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityQuizBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         quizViewModel = new QuizViewModel();
         gradeRepository = new GradeRepository();
@@ -67,6 +69,14 @@ public class QuizActivity extends AppCompatActivity {
         isTeacher = getIntent().getBooleanExtra("isTeacher", false);
         studentName = getIntent().getStringExtra("studentName");
 
+        setSuitableUI(isTeacher);
+    }
+
+
+
+
+
+    private void setSuitableUI(boolean isTeacher){
         if (isTeacher) {
             setTeacherUI();
             loadQuizForTeacher();
@@ -74,21 +84,7 @@ public class QuizActivity extends AppCompatActivity {
             setStudentUI();
             loadQuizForStudent();
         }
-
-        binding.refreshLayout.setOnRefreshListener(() -> {
-
-            if (isTeacher) {
-                setTeacherUI();
-                loadQuizForTeacher();
-            } else {
-                setStudentUI();
-                loadQuizForStudent();
-            }
-
-            binding.refreshLayout.setRefreshing(false);
-        });
     }
-
 
     private void confirmBackToProfile() {
         Snackbar snackbar = Snackbar.make(binding.getRoot(), "هل تريد العودة للحساب؟", Snackbar.LENGTH_LONG);
@@ -118,7 +114,15 @@ public class QuizActivity extends AppCompatActivity {
                 confirmBackToProfile();
             }
         });
+
+        binding.refreshLayout.setOnRefreshListener(() -> {
+            setTeacherUI();
+            loadQuizForTeacher();
+
+            binding.refreshLayout.setRefreshing(false);
+        });
     }
+
 
     private void setStudentUI() {
         binding.layoutTeacherButtons.setVisibility(View.GONE);

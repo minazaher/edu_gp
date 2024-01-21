@@ -58,11 +58,8 @@ public class QuestionRepository {
         StorageReference imageRef = storageRef.child("images").child(name);
         imageRef.putFile(uri)
                 .addOnSuccessListener(taskSnapshot -> {
-                    System.out.println("Image Uploaded Successfully");
                     imageRef.getDownloadUrl().addOnSuccessListener(uri1 -> {
                         String downloadUrl = uri1.toString();
-                        System.out.println("before "+ uri1);
-                        System.out.println("after "+ uri1.toString());
                         listener.onSuccess(downloadUrl);
                     });
                 }).addOnFailureListener(e -> listener.onFailure(e.getMessage()));

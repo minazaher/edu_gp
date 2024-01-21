@@ -8,6 +8,8 @@ import com.example.educationalgp.R;
 import com.example.educationalgp.Fragment.StudentLoginFragment;
 import com.example.educationalgp.Fragment.TeacherLoginFragment;
 import com.example.educationalgp.databinding.ActivityLoginBinding;
+
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 public class LoginActivity extends AppCompatActivity {
@@ -17,8 +19,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityLoginBinding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(activityLoginBinding.getRoot());
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        Boolean isStudent = getIntent().getBooleanExtra("isStudent", false);
+        boolean isStudent = getIntent().getBooleanExtra("isStudent", false);
         setSuitableInterface(isStudent);
 
     }

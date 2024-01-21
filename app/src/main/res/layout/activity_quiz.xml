@@ -186,12 +186,14 @@
             </LinearLayout>
 
             <LinearLayout
+
                 android:id="@+id/layout_option3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginVertical="@dimen/_5sdp"
                 android:gravity="end"
+                android:visibility="invisible"
                 android:orientation="horizontal">
 
                 <TextView
@@ -222,6 +224,7 @@
                 android:layout_gravity="end"
                 android:layout_marginVertical="@dimen/_5sdp"
                 android:gravity="end"
+                android:visibility="invisible"
                 android:orientation="horizontal">
 
                 <TextView

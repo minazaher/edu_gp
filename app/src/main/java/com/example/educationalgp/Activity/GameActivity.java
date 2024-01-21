@@ -1,6 +1,7 @@
 package com.example.educationalgp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ public class GameActivity extends AppCompatActivity {
         WebView gameWebView = findViewById(R.id.game_webview);
         WebSettings webSettings = gameWebView.getSettings();
         webSettings.setJavaScriptEnabled(true); // Enable JavaScript (if required by the website)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         gameId = getIntent().getStringExtra("gameId");
 

@@ -2,6 +2,7 @@ package com.example.educationalgp.Activity;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,8 +34,6 @@ public class TeacherProfileActivity extends AppCompatActivity {
     TeacherViewModel teacherViewModel;
     Teacher accountOwner;
     String id;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +41,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         teacherViewModel = new TeacherViewModel();
         id = getIntent().getStringExtra("teacherId");
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         if (id != null){
             teacherViewModel.getTeacherById(id, teacher1 -> {

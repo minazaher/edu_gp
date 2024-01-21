@@ -36,7 +36,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:background="@color/white"
@@ -97,10 +97,12 @@
             android:id="@+id/student_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             app:cardBackgroundColor="#d0ccce"
             app:cardCornerRadius="10dp"
             app:cardElevation="15dp"
-            android:layout_marginTop="15dp">
+            android:layout_gravity="center"
+            android:paddingTop="20dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -113,24 +115,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:fontFamily="@font/notokufiarabic_regular"
-                    android:text="  طـــالب"
+                    android:fontFamily="@font/notokufiarabic_medium"
+                    android:text="مُــعــلــم"
                     android:textColor="@color/white"
                     android:textSize="36sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView"
+                    app:layout_constraintBottom_toBottomOf="@+id/img"
+                    app:layout_constraintEnd_toStartOf="@+id/img"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/imageView" />
+                    app:layout_constraintTop_toTopOf="@+id/img" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/img"
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="@dimen/_120sdp"
-                    android:scaleType="centerInside"
-                    android:scaleX="1.5"
-                    android:scaleY="1.5"
+                    android:layout_gravity="end"
                     android:src="@drawable/student_placeholder"
+                    android:scaleType="fitCenter"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -138,6 +139,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
+
 
 
     </LinearLayout>

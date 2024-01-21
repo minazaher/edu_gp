@@ -1,6 +1,7 @@
 package com.example.educationalgp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ public class ActivitySelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySelectActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         activityId = getIntent().getStringExtra("activityId");
         teacherCode = getIntent().getStringExtra("teacherCode");

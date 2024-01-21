@@ -3,6 +3,7 @@ package com.example.educationalgp.Activity;
 import static com.example.educationalgp.ApplicationClass.isValidEmail;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ public class SignUpActivity extends AppCompatActivity {
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         teacherViewModel = new TeacherViewModel();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         binding.btnSignup.setOnClickListener(v -> signup());
         binding.btnLoginNow.setOnClickListener(v -> goToLoginPage());

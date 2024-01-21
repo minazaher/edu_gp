@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.educationalgp.Adapter.CourseAdapter;
@@ -32,6 +33,7 @@ public class StudentProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityStudentProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         isTeacher = getIntent().getBooleanExtra("isTeacher", false);
         teacherId = getIntent().getStringExtra("teacherId");

@@ -6,6 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
@@ -30,6 +31,7 @@ import com.example.educationalgp.ViewModel.QuizViewModel;
 import com.example.educationalgp.databinding.ActivityEditQuizBinding;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
+import java.net.URL;
 import java.util.UUID;
 
 
@@ -51,6 +53,8 @@ public class EditQuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityEditQuizBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         questionViewModel = new QuestionViewModel();
         quizViewModel = new QuizViewModel();
         initializeMisc();
@@ -114,7 +118,6 @@ public class EditQuizActivity extends AppCompatActivity {
 
     }
 
-
     private void updateQuiz(onQuizUpdateCompleted callback){
             quizViewModel.loadQuiz(quizId, new QuizRepository.OnQuizFetchListener() {
                 @Override
@@ -133,10 +136,6 @@ public class EditQuizActivity extends AppCompatActivity {
                 }
             });
     }
-
-    public interface onQuizUpdateCompleted{
-        void onUpdateCompleted(Quiz quiz);
-    }
     private boolean editedBySameTeacher(String quizId, String teacherId){
         return quizId.contains(teacherId);
     }
@@ -152,10 +151,13 @@ public class EditQuizActivity extends AppCompatActivity {
         Question question = new Question(head,ch1, ch2,ch3,ch4,rightAnswer);
         if (!url.isEmpty()){
             question.setImgUrl(url);
+            Toast.makeText(this, "Question Image is saved with URL : " + url, Toast.LENGTH_SHORT).show();
         }
+        else
+            Toast.makeText(this, "URL is empty", Toast.LENGTH_SHORT).show();
+
         return question;
     }
-
     private void setQuestion() {
         binding.etQuestionTitle.setText(oldQuestion.getQuestionText());
         binding.layoutQuestionAnswer1.setText(oldQuestion.getOption_1());
@@ -169,7 +171,6 @@ public class EditQuizActivity extends AppCompatActivity {
             setAsTorF();
 
     }
-
     private void setAsMCQ(){
         binding.layoutQuestionAnswer3.setText(oldQuestion.getOption_3());
         binding.layoutQuestionAnswer4.setText(oldQuestion.getOption_4());
@@ -191,8 +192,6 @@ public class EditQuizActivity extends AppCompatActivity {
             Glide.with(this).asBitmap().load(oldQuestion.getImgUrl()).into(binding.questionImage);
         }
     }
-
-
     private void initializeMisc() {
         BottomSheetBehavior<LinearLayout> bottomSheetBehavior = BottomSheetBehavior.from(binding.misc.getRoot());
         binding.misc.layoutClearFields.setOnClickListener(v -> clearAllFields());
@@ -204,7 +203,6 @@ public class EditQuizActivity extends AppCompatActivity {
         });
 
     }
-
     private void clearAllFields() {
         binding.etQuestionTitle.setText("");
         binding.layoutQuestionAnswer1.setText("");
@@ -213,21 +211,6 @@ public class EditQuizActivity extends AppCompatActivity {
         binding.layoutQuestionAnswer4.setText("");
         binding.etRightAnswer.setText("");
     }
-
-
-    public void selectImage() {
-        selectPhoto.launch("image/*");
-    }
-    private boolean isPermissionGranted() {
-        return ContextCompat.checkSelfPermission(getApplicationContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-    }
-    private void grantPermission() {
-        ActivityCompat.requestPermissions(EditQuizActivity.this, new String[]
-                {Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
-
-    }
-
     private void saveQuestionImage(Uri result ){
         questionViewModel.saveQuestionImage(result, UUID.randomUUID().toString(), new QuestionRepository.onImageSaved() {
             @Override
@@ -241,7 +224,18 @@ public class EditQuizActivity extends AppCompatActivity {
             }
         });
     }
+    public void selectImage() {
+        selectPhoto.launch("image/*");
+    }
+    private boolean isPermissionGranted() {
+        return ContextCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+    private void grantPermission() {
+        ActivityCompat.requestPermissions(EditQuizActivity.this, new String[]
+                {Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
 
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -249,8 +243,13 @@ public class EditQuizActivity extends AppCompatActivity {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 selectImage();
             else {
-                Toast.makeText(this, "تم رفض الاذن!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
+    public interface onQuizUpdateCompleted{
+        void onUpdateCompleted(Quiz quiz);
+    }
+
 }

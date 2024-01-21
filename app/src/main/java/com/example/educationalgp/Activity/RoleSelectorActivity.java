@@ -1,6 +1,7 @@
 package com.example.educationalgp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ public class RoleSelectorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         roleSelectorBinding = ActivityRoleSelectorBinding.inflate(getLayoutInflater());
         setContentView(roleSelectorBinding.getRoot());
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
 
         roleSelectorBinding.studentCard.setOnClickListener(v -> {
