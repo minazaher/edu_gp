@@ -51,7 +51,7 @@ public class StudentLoginFragment extends Fragment {
 
 
     private void loginStudent() {
-        username = binding.etStudentName.getText().toString().trim();
+        username = binding.etStudentName.getText().toString().trim().replaceAll("\\s","");
         code = binding.etStudentEnterCode.getText().toString();
         if (isUsernameValid() && isTeacherCodeValid()){
             studentViewModel.loginUser(username, code,new onAuthenticationListener() {
@@ -70,7 +70,7 @@ public class StudentLoginFragment extends Fragment {
 
             studentViewModel.getLoggedInUser().observe(getViewLifecycleOwner(), user -> {
                 if (user == null) {
-                    signupStudent(username);
+                    signupStudent(username.trim());
                 }
             });
         }
@@ -87,8 +87,8 @@ public class StudentLoginFragment extends Fragment {
 
             @Override
             public void onFailure(String errorMessage) {
-                String toastMessage = String.format("لم نستطع انشاء حساب جديد بسبب:  %s", errorMessage);
-//                showToast(toastMessage);
+                showToast(errorMessage);
+
             }
         });
     }

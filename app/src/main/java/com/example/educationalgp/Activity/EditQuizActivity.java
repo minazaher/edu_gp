@@ -140,6 +140,7 @@ public class EditQuizActivity extends AppCompatActivity {
         return quizId.contains(teacherId);
     }
     private Question getNewQuestion() {
+        Question question;
         String head = binding.etQuestionTitle.getText().toString();
         String ch1 = binding.layoutQuestionAnswer1.getText().toString();
         String ch2 = binding.layoutQuestionAnswer2.getText().toString();
@@ -148,13 +149,18 @@ public class EditQuizActivity extends AppCompatActivity {
         String rightAnswer = binding.etRightAnswer.getText().toString();
         String url = imgUrlBeforeSaving;
 
-        Question question = new Question(head,ch1, ch2,ch3,ch4,rightAnswer);
-        if (!url.isEmpty()){
-            question.setImgUrl(url);
-            Toast.makeText(this, "Question Image is saved with URL : " + url, Toast.LENGTH_SHORT).show();
-        }
+        if (ch2.isEmpty() && ch1.isEmpty())
+            question = new Question(head,ch1, ch2,null,null,rightAnswer);
         else
-            Toast.makeText(this, "URL is empty", Toast.LENGTH_SHORT).show();
+            question = new Question(head,ch1, ch2,ch3,ch4,rightAnswer);
+/*
+ *        if (!url.isEmpty()){
+ *             question.setImgUrl(url);
+ *             Toast.makeText(this, "Question Image is saved with URL : " + url, Toast.LENGTH_SHORT).show();
+ *         }
+ *         else
+ *             Toast.makeText(this, "URL is empty", Toast.LENGTH_SHORT).show();
+ */
 
         return question;
     }
@@ -243,7 +249,7 @@ public class EditQuizActivity extends AppCompatActivity {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 selectImage();
             else {
-                Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "تم رفض الاذن!", Toast.LENGTH_SHORT).show();
             }
         }
     }

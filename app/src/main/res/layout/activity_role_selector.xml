@@ -116,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/notokufiarabic_medium"
-                    android:text="مُــعــلــم"
+                    android:text="طالب"
                     android:textColor="@color/white"
                     android:textSize="36sp"
                     android:textStyle="bold"

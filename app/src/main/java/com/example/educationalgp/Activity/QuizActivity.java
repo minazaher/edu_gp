@@ -208,15 +208,19 @@ public class QuizActivity extends AppCompatActivity {
         binding.option1.setText(currentQuestion.getOption_1());
         binding.option2.setText(currentQuestion.getOption_2());
 
-        if (isMCQ(currentQuestion)) {
-            binding.option3.setText(currentQuestion.getOption_3());
-            binding.option4.setText(currentQuestion.getOption_4());
+
+
+        if (isTrueOrFalse(currentQuestion)){
+            binding.layoutOption3.setVisibility(View.INVISIBLE);
+            binding.layoutOption4.setVisibility(View.INVISIBLE);
+        }
+        else{
             binding.layoutOption3.setVisibility(View.VISIBLE);
             binding.layoutOption4.setVisibility(View.VISIBLE);
-        } else {
-            binding.layoutOption3.setVisibility(View.GONE);
-            binding.layoutOption4.setVisibility(View.GONE);
+            binding.option3.setText(currentQuestion.getOption_3());
+            binding.option4.setText(currentQuestion.getOption_4());
         }
+
 
         if (currentQuestion.getImgUrl() == null) {
             binding.imgQuestion.setVisibility(View.GONE);
@@ -261,14 +265,15 @@ public class QuizActivity extends AppCompatActivity {
         binding.option1.setText(currentQuestion.getOption_1());
         binding.option2.setText(currentQuestion.getOption_2());
 
-        if (isMCQ(currentQuestion)) {
-            binding.option3.setText(currentQuestion.getOption_3());
-            binding.option4.setText(currentQuestion.getOption_4());
+        if (isTrueOrFalse(currentQuestion)){
+            binding.layoutOption3.setVisibility(View.INVISIBLE);
+            binding.layoutOption4.setVisibility(View.INVISIBLE);
+        }
+        else{
             binding.layoutOption3.setVisibility(View.VISIBLE);
             binding.layoutOption4.setVisibility(View.VISIBLE);
-        } else {
-            binding.layoutOption3.setVisibility(View.GONE);
-            binding.layoutOption4.setVisibility(View.GONE);
+            binding.option3.setText(currentQuestion.getOption_3());
+            binding.option4.setText(currentQuestion.getOption_4());
         }
 
         if (currentQuestion.getImgUrl() == null) {
@@ -287,7 +292,12 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private boolean isMCQ(Question currentQuestion) {
-        return currentQuestion.getOption_3() != null && currentQuestion.getOption_4() != null;
+        return !(currentQuestion.getOption_3().length() <2) && !(currentQuestion.getOption_4().length() <2);
+    }
+
+    private boolean isTrueOrFalse(Question currentQuestion){
+        return currentQuestion.getOption_4() == null && currentQuestion.getOption_3() == null;
+
     }
 
     private void setCounter(int position, int total) {
@@ -338,6 +348,8 @@ public class QuizActivity extends AppCompatActivity {
                 if (quiz != null) {
                     questionList = quiz.getQuestionList();
                     Collections.shuffle(questionList);
+                    binding.layoutOption3.setVisibility(View.GONE);
+                    binding.layoutOption4.setVisibility(View.GONE);
                     getQuestionForStudent(currentQuestionNumber);
                     setCounter(currentQuestionNumber + 1, questionList.size());
                     startTimer(questionList.size());
