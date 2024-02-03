@@ -5,10 +5,10 @@ This is a Java and XML-based E-Learning App that uses Firebase services for data
 ## Features
 
 - Custom login system for students using Firebase Authentication
-- Online quizzes with multiple choice and short answer questions
+- Online quizzes with multiple choice.
 - Online games in webview mode with educational content
 - Teacher dashboard to view student progress and performance
-- Firebase Firestore to store quiz and game data
+- Firebase Firestore to store quizzes, grades, and user data.
 - Firebase Storage to store images and videos
 
 ## How to use the app
